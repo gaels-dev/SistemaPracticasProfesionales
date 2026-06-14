@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<BorderPane prefHeight="650.0" prefWidth="850.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="mx.uv.sistemapracticasprofesionales.controller.FXMLSubirDocumentosController">
+   <top>
+      <HBox alignment="CENTER_LEFT" prefHeight="90.0" spacing="15.0" style="-fx-background-color: #D3D3D3;" BorderPane.alignment="CENTER">
+         <padding>
+            <Insets left="20.0" right="20.0" />
+         </padding>
+         <children>
+            <Button fx:id="btnVolver" mnemonicParsing="false" style="-fx-background-color: transparent; -fx-cursor: hand;" text="←">
+               <font>
+                  <Font name="System Bold" size="22.0" />
+               </font>
+            </Button>
+            <VBox alignment="CENTER_LEFT">
+               <children>
+                  <Label text="Subida de reportes">
+                     <font>
+                        <Font name="System Bold" size="22.0" />
+                     </font>
+                  </Label>
+                  <Label text="Suba sus reportes parciales, mensuales y finales">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+               </children>
+            </VBox>
+         </children>
+      </HBox>
+   </top>
+   <center>
+      <ScrollPane fitToWidth="true" style="-fx-background-color: #D6E0F0; -fx-background: #D6E0F0;" BorderPane.alignment="CENTER">
+         <content>
+            <VBox alignment="TOP_CENTER" spacing="25.0">
+               <padding>
+                  <Insets bottom="30.0" left="80.0" right="80.0" top="30.0" />
+               </padding>
+               <children>
+                  <VBox spacing="20.0" style="-fx-background-color: white; -fx-background-radius: 15; -fx-border-color: #CCCCCC; -fx-border-radius: 15;">
+                     <padding>
+                        <Insets bottom="30.0" left="40.0" right="40.0" top="20.0" />
+                     </padding>
+                     <children>
+                        <Label text="Subir nuevo reporte">
+                           <font>
+                              <Font name="System Bold" size="20.0" />
+                           </font>
+                        </Label>
+                        <VBox spacing="10.0">
+                           <children>
+                              <Label text="Archivo">
+                                 <font>
+                                    <Font name="System Bold" size="14.0" />
+                                 </font>
+                              </Label>
+                              <VBox fx:id="vboxDropArea" alignment="CENTER" prefHeight="150.0" spacing="10.0" style="-fx-border-color: #CCCCCC; -fx-border-style: dashed; -fx-border-width: 2; -fx-border-radius: 10; -fx-cursor: hand;">
+                                 <children>
+                                    <Label text="↑" textFill="#999999">
+                                       <font>
+                                          <Font size="40.0" />
+                                       </font>
+                                    </Label>
+                                    <Label text="Haga clic para seleccionar o arrastre el archivo" textFill="#666666">
+                                       <font>
+                                          <Font size="13.0" />
+                                       </font>
+                                    </Label>
+                                    <Label text="PDF, DOC, DOCX hasta 10MB" textFill="#999999">
+                                       <font>
+                                          <Font size="11.0" />
+                                       </font>
+                                    </Label>
+                                    <TextField fx:id="txtRutaArchivo" editable="false" visible="false" managed="false" />
+                                    <Button fx:id="btnExaminar" visible="false" managed="false" />
+                                 </children>
+                              </VBox>
+                           </children>
+                        </VBox>
+                        <HBox alignment="CENTER_LEFT" spacing="20.0">
+                           <children>
+                              <Button fx:id="btnSubirReporte" mnemonicParsing="false" prefHeight="40.0" prefWidth="150.0" style="-fx-background-color: #222222; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5; -fx-cursor: hand;" text="Subir reporte" />
+                              <Button fx:id="btnCancelar" mnemonicParsing="false" prefHeight="40.0" prefWidth="120.0" style="-fx-background-color: white; -fx-border-color: #222222; -fx-border-radius: 5; -fx-cursor: hand;" text="Cancelar" />
+                           </children>
+                        </HBox>
+                     </children>
+                  </VBox>
+                  <VBox spacing="20.0" style="-fx-background-color: white; -fx-background-radius: 15; -fx-border-color: #CCCCCC; -fx-border-radius: 15;">
+                     <padding>
+                        <Insets bottom="30.0" left="40.0" right="40.0" top="20.0" />
+                     </padding>
+                     <children>
+                        <Label text="Mis reportes">
+                           <font>
+                              <Font name="System Bold" size="20.0" />
+                           </font>
+                        </Label>
+                        <VBox fx:id="vboxReportes" spacing="15.0" />
+                        <VBox fx:id="vboxDocumentos" visible="false" managed="false" />
+                     </children>
+                  </VBox>
+               </children>
+            </VBox>
+         </content>
+      </ScrollPane>
+   </center>
+</BorderPane>

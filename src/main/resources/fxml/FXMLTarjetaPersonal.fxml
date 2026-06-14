@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<HBox alignment="CENTER_LEFT" spacing="15.0" style="-fx-background-color: #F8F8F8; -fx-background-radius: 5; -fx-padding: 12;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="mx.uv.sistemapracticasprofesionales.controller.FXMLTarjetaPersonalController">
+   <children>
+      <VBox alignment="CENTER_LEFT" HBox.hgrow="ALWAYS">
+         <children>
+            <Label fx:id="lblNombre" text="Nombre del Personal">
+               <font>
+                  <Font name="System Bold" size="15.0" />
+               </font>
+            </Label>
+         </children>
+      </VBox>
+      <HBox spacing="10.0">
+         <children>
+            <Button fx:id="btnEditar" mnemonicParsing="false" prefWidth="90.0" style="-fx-background-color: white; -fx-border-color: #222222; -fx-border-radius: 5; -fx-cursor: hand;" text="Editar" />
+            <Button fx:id="btnEliminar" mnemonicParsing="false" prefWidth="90.0" style="-fx-background-color: #CC0000; -fx-text-fill: white; -fx-background-radius: 5; -fx-cursor: hand;" text="Eliminar" />
+         </children>
+      </HBox>
+   </children>
+</HBox>

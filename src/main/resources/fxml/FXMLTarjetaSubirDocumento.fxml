@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<HBox alignment="CENTER_LEFT" spacing="15.0" style="-fx-background-color: #F3F3F3; -fx-background-radius: 10; -fx-padding: 12; -fx-border-color: #DDDDDD; -fx-border-radius: 10;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="mx.uv.sistemapracticasprofesionales.controller.FXMLTarjetaSubirDocumentoController">
+   <children>
+      <VBox spacing="2.0" HBox.hgrow="ALWAYS">
+         <children>
+            <Label fx:id="lblNombreDocumento" text="Nombre del Documento">
+               <font>
+                  <Font name="System Bold" size="15.0" />
+               </font>
+            </Label>
+            <Label fx:id="lblEstado" text="Estado: Pendiente" textFill="#888888">
+               <font>
+                  <Font size="13.0" />
+               </font>
+            </Label>
+         </children>
+      </VBox>
+      <Button fx:id="btnSubir" mnemonicParsing="false" prefWidth="100.0" style="-fx-background-color: white; -fx-border-color: #222222; -fx-border-radius: 5; -fx-cursor: hand;" text="Subir archivo" />
+   </children>
+</HBox>

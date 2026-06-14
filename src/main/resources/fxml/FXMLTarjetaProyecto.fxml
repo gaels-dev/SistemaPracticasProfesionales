@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<VBox spacing="10.0" style="-fx-background-color: white; -fx-background-radius: 10; -fx-border-color: #CCCCCC; -fx-border-radius: 10;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="mx.uv.sistemapracticasprofesionales.controller.FXMLTarjetaProyectoController">
+   <padding>
+      <Insets bottom="20.0" left="25.0" right="25.0" top="20.0" />
+   </padding>
+   <children>
+      <HBox alignment="TOP_LEFT">
+         <children>
+            <VBox spacing="5.0" HBox.hgrow="ALWAYS">
+               <children>
+                  <Label fx:id="lblNombreProyecto" text="Nombre del Proyecto">
+                     <font>
+                        <Font name="System Bold" size="18.0" />
+                     </font>
+                  </Label>
+                  <HBox spacing="20.0">
+                     <children>
+                        <Label fx:id="lblOrganizacion" text="Organización" textFill="#666666" />
+                        <Label fx:id="lblAsignados" text="0/0 asignados" textFill="#666666" />
+                     </children>
+                  </HBox>
+               </children>
+            </VBox>
+            <HBox spacing="10.0">
+               <children>
+                  <Button fx:id="btnEditar" mnemonicParsing="false" prefWidth="80.0" style="-fx-background-color: white; -fx-border-color: #222222; -fx-border-radius: 5; -fx-cursor: hand;" text="Editar" />
+                  <Button fx:id="btnEliminar" mnemonicParsing="false" prefWidth="80.0" style="-fx-background-color: #CC0000; -fx-text-fill: white; -fx-background-radius: 5; -fx-cursor: hand;" text="Eliminar" />
+               </children>
+            </HBox>
+         </children>
+      </HBox>
+      <Label fx:id="lblDescripcion" prefWidth="500.0" text="Descripción del proyecto..." wrapText="true" />
+      <Label fx:id="lblResponsable" text="Responsable: Nombre del Responsable" textFill="#666666">
+         <VBox.margin>
+            <Insets top="10.0" />
+         </VBox.margin>
+      </Label>
+   </children>
+</VBox>

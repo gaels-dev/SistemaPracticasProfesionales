@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<VBox alignment="CENTER_LEFT" spacing="10.0" style="-fx-background-color: #F8F8F8; -fx-background-radius: 10; -fx-padding: 15; -fx-border-color: #DDDDDD; -fx-border-radius: 10;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="mx.uv.sistemapracticasprofesionales.controller.FXMLTarjetaActividadController">
+   <children>
+      <HBox alignment="CENTER_LEFT">
+         <children>
+            <VBox spacing="2.0" HBox.hgrow="ALWAYS">
+               <children>
+                  <Label fx:id="lblTitulo" text="Nombre de la Actividad">
+                     <font>
+                        <Font name="System Bold" size="16.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="lblFecha" text="Fecha límite: 00/00/0000" textFill="#666666">
+                     <font>
+                        <Font size="13.0" />
+                     </font>
+                  </Label>
+               </children>
+            </VBox>
+            <HBox spacing="10.0">
+               <children>
+                  <Button fx:id="btnEditar" mnemonicParsing="false" prefWidth="80.0" style="-fx-background-color: white; -fx-border-color: #222222; -fx-border-radius: 5; -fx-cursor: hand;" text="Editar" />
+                  <Button fx:id="btnEliminar" mnemonicParsing="false" prefWidth="80.0" style="-fx-background-color: #CC0000; -fx-text-fill: white; -fx-background-radius: 5; -fx-cursor: hand;" text="Eliminar" />
+               </children>
+            </HBox>
+         </children>
+      </HBox>
+      <Label fx:id="lblDescripcion" text="Descripción breve de la actividad..." wrapText="true" textFill="#444444" />
+   </children>
+</VBox>

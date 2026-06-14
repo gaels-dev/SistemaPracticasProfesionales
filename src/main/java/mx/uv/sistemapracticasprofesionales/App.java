@@ -18,12 +18,12 @@ public class App extends Application {
     @Override
     public void start(Stage primaryStage) {
         try {
-            Parent root = FXMLLoader.load(getClass().getResource("/fxml/FXMLInicioSesion.fxml"));
+            Parent raiz = FXMLLoader.load(getClass().getResource("/fxml/FXMLInicioSesion.fxml"));
 
-            Scene escena = new Scene(root);
+            Scene escena = new Scene(raiz);
             primaryStage.setScene(escena);
             primaryStage.setTitle("Iniciar sesión - Sistema Practicas Profesionales");
-            primaryStage.setResizable(false);
+            primaryStage.setResizable(true);
             primaryStage.sizeToScene();
             primaryStage.show();
             primaryStage.centerOnScreen();

@@ -5,22 +5,21 @@ import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
+import javafx.scene.control.Label;
 
 /**
  * FXML Controller class
  *
- * @author gaels
+ * @author oscar
  */
-public class FXMLInicioSesionController implements Initializable {
+public class FXMLTarjetaSubirDocumentoController implements Initializable {
 
     @FXML
-    private TextField txtUsuario;
+    private Label lblNombreDocumento;
     @FXML
-    private PasswordField txtContrasenia;
+    private Label lblEstado;
     @FXML
-    private Button btnIniciarSesion;
+    private Button btnSubir;
 
     /**
      * Initializes the controller class.

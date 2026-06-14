@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<HBox alignment="CENTER_LEFT" spacing="15.0" style="-fx-background-color: #F5EFEF; -fx-background-radius: 12; -fx-padding: 15;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="mx.uv.sistemapracticasprofesionales.controller.FXMLTarjetaDocumentoController">
+   <children>
+      <VBox spacing="4.0" HBox.hgrow="ALWAYS">
+         <children>
+            <Label fx:id="lblTipoDocumento" text="Reporte parcial mes de Marzo">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font>
+            </Label>
+            <Label fx:id="lblInfoSubida" text="Subido: 01/04/2026 - reporteMesMarzo.pdf" textFill="#666666">
+               <font>
+                  <Font size="13.0" />
+               </font>
+            </Label>
+         </children>
+      </VBox>
+      <HBox alignment="CENTER" spacing="15.0">
+         <children>
+            <Label fx:id="lblEstado" alignment="CENTER" prefWidth="90.0" style="-fx-background-color: #008000; -fx-text-fill: white; -fx-background-radius: 8; -fx-padding: 5 10 5 10;" text="Validado">
+               <font>
+                  <Font name="System Bold" size="13.0" />
+               </font>
+            </Label>
+            <Button fx:id="btnVer" mnemonicParsing="false" style="-fx-background-color: transparent; -fx-cursor: hand; -fx-padding: 0;" text="Descargar">
+               <font>
+                  <Font name="System Bold" size="16.0" />
+               </font>
+            </Button>
+         </children>
+      </HBox>
+   </children>
+</HBox>

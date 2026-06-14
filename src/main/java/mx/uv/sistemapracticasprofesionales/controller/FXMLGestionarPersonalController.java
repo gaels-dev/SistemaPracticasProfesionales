@@ -5,22 +5,28 @@ import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
-import javafx.scene.control.PasswordField;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 
 /**
  * FXML Controller class
  *
- * @author gaels
+ * @author oscar
  */
-public class FXMLInicioSesionController implements Initializable {
+public class FXMLGestionarPersonalController implements Initializable {
 
     @FXML
-    private TextField txtUsuario;
+    private Label lblTitulo;
     @FXML
-    private PasswordField txtContrasenia;
+    private TextField txtNombre;
     @FXML
-    private Button btnIniciarSesion;
+    private TextField txtNumPersonal;
+    @FXML
+    private TextField txtCorreo;
+    @FXML
+    private Button btnCancelar;
+    @FXML
+    private Button btnGuardar;
 
     /**
      * Initializes the controller class.

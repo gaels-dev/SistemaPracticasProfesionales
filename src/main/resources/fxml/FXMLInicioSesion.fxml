@@ -1,13 +1,73 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
+<?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.text.*?>
 
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="mx.uv.sistemapracticasprofesionales.controller.FXMLInicioSesionController">
-   <children>
-      <Label layoutX="220.0" layoutY="179.0" text="Pantalla Inicio de Sesion" />
-   </children>
-</AnchorPane>
+<BorderPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="mx.uv.sistemapracticasprofesionales.controller.FXMLInicioSesionController">
+   <top>
+      <HBox alignment="CENTER_LEFT" prefHeight="70.0" style="-fx-background-color: #D3D3D3;" BorderPane.alignment="CENTER">
+         <padding>
+            <Insets left="30.0" />
+         </padding>
+         <children>
+            <Label text="Sistema de prácticas profesionales">
+               <font>
+                  <Font name="System Bold" size="24.0" />
+               </font>
+            </Label>
+         </children>
+      </HBox>
+   </top>
+   <center>
+      <StackPane prefHeight="150.0" prefWidth="200.0" style="-fx-background-color: #D6E0F0;" BorderPane.alignment="CENTER">
+         <children>
+            <VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="450.0" prefWidth="400.0" spacing="30.0" style="-fx-background-color: white; -fx-background-radius: 15; -fx-border-color: #CCCCCC; -fx-border-radius: 15;">
+               <padding>
+                  <Insets bottom="40.0" left="50.0" right="50.0" top="40.0" />
+               </padding>
+               <children>
+                  <VBox alignment="CENTER" spacing="5.0">
+                     <children>
+                        <Circle fill="#222222" radius="18.0" />
+                        <Arc fill="#222222" length="180.0" radiusX="25.0" radiusY="15.0" startAngle="0.0" type="ROUND" />
+                     </children>
+                     <VBox.margin>
+                        <Insets bottom="10.0" />
+                     </VBox.margin>
+                  </VBox>
+                  <VBox spacing="10.0">
+                     <children>
+                        <Label text="Usuario">
+                           <font>
+                              <Font name="System Bold" size="14.0" />
+                           </font>
+                        </Label>
+                        <TextField fx:id="txtUsuario" prefHeight="35.0" promptText="zS2401322583" style="-fx-background-color: #F0F0F0;" />
+                     </children>
+                  </VBox>
+                  <VBox spacing="10.0">
+                     <children>
+                        <Label text="Contraseña">
+                           <font>
+                              <Font name="System Bold" size="14.0" />
+                           </font>
+                        </Label>
+                        <PasswordField fx:id="txtContrasenia" prefHeight="35.0" promptText="cont123" style="-fx-background-color: #F0F0F0;" />
+                     </children>
+                  </VBox>
+                  <Button fx:id="btnIniciarSesion" maxWidth="-Infinity" mnemonicParsing="false" prefHeight="40.0" prefWidth="150.0" style="-fx-background-color: #222222; -fx-text-fill: white; -fx-font-weight: bold; -fx-cursor: hand;" text="Iniciar sesión">
+                     <VBox.margin>
+                        <Insets top="10.0" />
+                     </VBox.margin>
+                  </Button>
+               </children>
+            </VBox>
+         </children>
+      </StackPane>
+   </center>
+</BorderPane>
+
