@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<HBox alignment="CENTER_LEFT" spacing="15.0" style="-fx-background-color: #F5EFEF; -fx-background-radius: 12; -fx-padding: 15;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="mx.uv.sistemapracticasprofesionales.controller.FXMLTarjetaDocumentoController">
+<HBox alignment="CENTER_LEFT" spacing="15.0" style="-fx-background-color: #F5EFEF; -fx-background-radius: 12; -fx-padding: 15;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="mx.uv.sistemapracticasprofesionales.controlador.FXMLTarjetaDocumentoController">
    <children>
       <VBox spacing="4.0" HBox.hgrow="ALWAYS">
          <children>

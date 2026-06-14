@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<BorderPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="mx.uv.sistemapracticasprofesionales.controller.FXMLMenuPracticanteController">
+<BorderPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="mx.uv.sistemapracticasprofesionales.controlador.FXMLMenuPracticanteController">
    <top>
       <HBox alignment="CENTER_LEFT" prefHeight="90.0" spacing="10.0" style="-fx-background-color: #D3D3D3;" BorderPane.alignment="CENTER">
          <padding>

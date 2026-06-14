@@ -1,4 +1,4 @@
-package mx.uv.sistemapracticasprofesionales.controller;
+package mx.uv.sistemapracticasprofesionales.controlador;
 
 import java.net.URL;
 import java.util.ResourceBundle;

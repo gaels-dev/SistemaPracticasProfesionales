@@ -2,28 +2,37 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/javafx/FXMLController.java to edit this template
  */
-package mx.uv.sistemapracticasprofesionales.controller;
+package mx.uv.sistemapracticasprofesionales.controlador;
 
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
-import javafx.scene.layout.VBox;
+import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
 
 /**
  * FXML Controller class
  *
  * @author oscar
  */
-public class FXMLGestionProyectosController implements Initializable {
+public class FXMLGestionarProyectoController implements Initializable {
 
     @FXML
-    private Button btnVolver;
+    private TextArea txaDescripcion;
     @FXML
-    private Button btnNuevoProyecto;
+    private Button btnGuardar;
     @FXML
-    private VBox vboxProyectos;
+    private Button btnCancelar;
+    @FXML
+    private TextField txfNombreProyecto;
+    @FXML
+    private TextField txfNombreEmpresa;
+    @FXML
+    private TextField txfResponsable;
+    @FXML
+    private TextField txfVacantes;
 
     /**
      * Initializes the controller class.

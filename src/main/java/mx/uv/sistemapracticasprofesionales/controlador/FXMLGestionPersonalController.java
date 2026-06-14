@@ -1,10 +1,11 @@
-package mx.uv.sistemapracticasprofesionales.controller;
+package mx.uv.sistemapracticasprofesionales.controlador;
 
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 
 /**
@@ -12,16 +13,20 @@ import javafx.scene.layout.VBox;
  *
  * @author oscar
  */
-public class FXMLGestionPracticantesController implements Initializable {
+public class FXMLGestionPersonalController implements Initializable {
 
     @FXML
     private Button btnVolver;
     @FXML
-    private VBox vboxPracticantes;
+    private Label lblTitulo;
     @FXML
-    private Button btnRegistrarPracticante;
+    private Label lblSubtitulo;
     @FXML
-    private Button btnValidarDocumentos;
+    private Label lblListaTitulo;
+    @FXML
+    private VBox vboxPersonal;
+    @FXML
+    private Button btnAgregar;
 
     /**
      * Initializes the controller class.

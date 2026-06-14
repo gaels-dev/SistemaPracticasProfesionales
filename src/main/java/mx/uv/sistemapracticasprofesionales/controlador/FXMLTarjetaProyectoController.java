@@ -1,4 +1,4 @@
-package mx.uv.sistemapracticasprofesionales.controller;
+package mx.uv.sistemapracticasprofesionales.controlador;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -12,14 +12,22 @@ import javafx.scene.control.Label;
  *
  * @author oscar
  */
-public class FXMLTarjetaSubirDocumentoController implements Initializable {
+public class FXMLTarjetaProyectoController implements Initializable {
 
     @FXML
-    private Label lblNombreDocumento;
+    private Label lblNombreProyecto;
     @FXML
-    private Label lblEstado;
+    private Label lblOrganizacion;
     @FXML
-    private Button btnSubir;
+    private Label lblAsignados;
+    @FXML
+    private Button btnEditar;
+    @FXML
+    private Button btnEliminar;
+    @FXML
+    private Label lblDescripcion;
+    @FXML
+    private Label lblResponsable;
 
     /**
      * Initializes the controller class.

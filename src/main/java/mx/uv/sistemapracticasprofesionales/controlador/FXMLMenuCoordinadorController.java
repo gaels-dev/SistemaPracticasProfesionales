@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/javafx/FXMLController.java to edit this template
  */
-package mx.uv.sistemapracticasprofesionales.controller;
+package mx.uv.sistemapracticasprofesionales.controlador;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -16,7 +16,7 @@ import javafx.scene.control.Label;
  *
  * @author oscar
  */
-public class FXMLMenuProfesorController implements Initializable {
+public class FXMLMenuCoordinadorController implements Initializable {
 
     @FXML
     private Button btnNotificaciones;
@@ -25,9 +25,13 @@ public class FXMLMenuProfesorController implements Initializable {
     @FXML
     private Button btnCerrarSesion;
     @FXML
-    private Button btnPracticantesAsignados;
+    private Button btnGestionPracticantes;
     @FXML
-    private Button btnActividades;
+    private Button btnGestionProyectos;
+    @FXML
+    private Button btnVerIndicadores;
+    @FXML
+    private Button btnAsignarProyectos;
     @FXML
     private Label lblNombre;
 

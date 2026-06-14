@@ -1,11 +1,10 @@
-package mx.uv.sistemapracticasprofesionales.controller;
+package mx.uv.sistemapracticasprofesionales.controlador;
 
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
-import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
 
 /**
@@ -13,22 +12,18 @@ import javafx.scene.layout.VBox;
  *
  * @author oscar
  */
-public class FXMLSubirDocumentosController implements Initializable {
+public class FXMLValidarDocumentosController implements Initializable {
 
     @FXML
     private Button btnVolver;
     @FXML
+    private VBox vboxPracticantes;
+    @FXML
     private VBox vboxDocumentos;
     @FXML
-    private VBox vboxReportes;
+    private Button btnRechazarDocumento;
     @FXML
-    private TextField txtRutaArchivo;
-    @FXML
-    private Button btnExaminar;
-    @FXML
-    private Button btnCancelar;
-    @FXML
-    private Button btnSubirReporte;
+    private Button btnValidarDocumento;
 
     /**
      * Initializes the controller class.
