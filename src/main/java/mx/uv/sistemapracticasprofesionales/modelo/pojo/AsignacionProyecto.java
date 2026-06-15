@@ -6,7 +6,7 @@ import java.util.Date;
  * Autor:           Oscar Turrent Peña
  * Fecha creación:  14/06/2026
  * Descripción:     Representa la asignación de un practicante a un proyecto,
- *                  inclyendo fechas y estado de la asignación
+ *                  incluyendo fechas y estado de la asignación
  */
 public class AsignacionProyecto {
     private Integer idAsignacionProyecto;
