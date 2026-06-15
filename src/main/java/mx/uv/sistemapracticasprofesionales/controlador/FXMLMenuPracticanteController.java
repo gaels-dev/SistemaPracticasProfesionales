@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/javafx/FXMLController.java to edit this template
- */
 package mx.uv.sistemapracticasprofesionales.controlador;
 
 import java.net.URL;
@@ -15,6 +11,14 @@ import javafx.scene.control.Label;
  * FXML Controller class
  *
  * @author oscar
+ */
+import mx.uv.sistemapracticasprofesionales.utilidades.Sesion;
+
+/**
+ * FXML Controller class
+ * Autor: Gael Samei Amores Rivas
+ * Fecha creación: 14/06/2026
+ * Descripción: Controlador para el menú principal del practicante.
  */
 public class FXMLMenuPracticanteController implements Initializable {
 
@@ -33,12 +37,11 @@ public class FXMLMenuPracticanteController implements Initializable {
     @FXML
     private Label lblNombre;
 
-    /**
-     * Initializes the controller class.
-     */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+        if (Sesion.getUsuario() != null) {
+            lblNombre.setText(Sesion.getUsuario().getNombre());
+        }
     }    
     
 }

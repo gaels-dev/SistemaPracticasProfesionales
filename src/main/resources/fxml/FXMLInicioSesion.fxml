@@ -59,7 +59,8 @@
                         <PasswordField fx:id="txtContrasenia" prefHeight="35.0" promptText="cont123" style="-fx-background-color: #F0F0F0;" />
                      </children>
                   </VBox>
-                  <Button fx:id="btnIniciarSesion" maxWidth="-Infinity" mnemonicParsing="false" prefHeight="40.0" prefWidth="150.0" style="-fx-background-color: #222222; -fx-text-fill: white; -fx-font-weight: bold; -fx-cursor: hand;" text="Iniciar sesión">
+                  <Label fx:id="lblError" style="-fx-text-fill: #cc0000; -fx-font-size: 12;" text="Usuario y/o contraseña incorrecta" visible="false" />
+                  <Button fx:id="btnIniciarSesion" maxWidth="-Infinity" mnemonicParsing="false" onAction="#handleLogin" prefHeight="40.0" prefWidth="150.0" style="-fx-background-color: #222222; -fx-text-fill: white; -fx-font-weight: bold; -fx-cursor: hand;" text="Iniciar sesión">
                      <VBox.margin>
                         <Insets top="10.0" />
                      </VBox.margin>
@@ -70,4 +71,3 @@
       </StackPane>
    </center>
 </BorderPane>
-

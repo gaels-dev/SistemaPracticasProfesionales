@@ -34,15 +34,7 @@ public class UsuarioDAO {
             resultado = prepararSentencia.executeQuery();
             
             if (resultado.next()) {
-                usuario = new Usuario();
-                usuario.setIdUsuario(resultado.getInt("id_usuario"));
-                usuario.setNombre(resultado.getString("nombre"));
-                usuario.setActivo(resultado.getBoolean("activo"));
-                
-                TipoUsuario tipoUsuario = new TipoUsuario();
-                tipoUsuario.setIdTipoUsuario(resultado.getInt("id_tipo_usuario"));
-                tipoUsuario.setRol(resultado.getString("rol"));
-                usuario.setTipoUsuario(tipoUsuario);
+                usuario = mapearUsuario(resultado);
             }
         } finally {
             if (resultado != null) {
@@ -52,6 +44,46 @@ public class UsuarioDAO {
                 prepararSentencia.close();
             }
             ConexionBD.cerrarConexion(conexion);
+        }
+        return usuario;
+    }
+
+    public Usuario buscarPorNombre(String nombre) throws SQLException {
+        Usuario usuario = null;
+        String consulta = "SELECT u.id_usuario, u.nombre, u.contrasenia, u.id_tipo_usuario, u.activo, tu.rol " +
+                          "FROM usuario u " +
+                          "INNER JOIN tipo_usuario tu ON u.id_tipo_usuario = tu.id_tipo_usuario " +
+                          "WHERE u.nombre = ? AND u.activo = 1";
+        
+        try (Connection conexion = ConexionBD.abrirConexion();
+             PreparedStatement prepararSentencia = conexion.prepareStatement(consulta)) {
+            prepararSentencia.setString(1, nombre);
+            try (ResultSet resultado = prepararSentencia.executeQuery()) {
+                if (resultado.next()) {
+                    usuario = mapearUsuario(resultado);
+                    usuario.setContrasenia(resultado.getString("contrasenia"));
+                }
+            }
+        }
+        return usuario;
+    }
+
+    public Usuario obtenerPorId(int idUsuario) throws SQLException {
+        Usuario usuario = null;
+        String consulta = "SELECT u.id_usuario, u.nombre, u.contrasenia, u.id_tipo_usuario, u.activo, tu.rol " +
+                          "FROM usuario u " +
+                          "INNER JOIN tipo_usuario tu ON u.id_tipo_usuario = tu.id_tipo_usuario " +
+                          "WHERE u.id_usuario = ?";
+        
+        try (Connection conexion = ConexionBD.abrirConexion();
+             PreparedStatement prepararSentencia = conexion.prepareStatement(consulta)) {
+            prepararSentencia.setInt(1, idUsuario);
+            try (ResultSet resultado = prepararSentencia.executeQuery()) {
+                if (resultado.next()) {
+                    usuario = mapearUsuario(resultado);
+                    usuario.setContrasenia(resultado.getString("contrasenia"));
+                }
+            }
         }
         return usuario;
     }
@@ -153,5 +185,18 @@ public class UsuarioDAO {
             ConexionBD.cerrarConexion(conexion);
         }
         return actualizado;
+    }
+    
+        private Usuario mapearUsuario(ResultSet resultado) throws SQLException {
+        Usuario usuario = new Usuario();
+        usuario.setIdUsuario(resultado.getInt("id_usuario"));
+        usuario.setNombre(resultado.getString("nombre"));
+        usuario.setActivo(resultado.getBoolean("activo"));
+
+        TipoUsuario tipoUsuario = new TipoUsuario();
+        tipoUsuario.setIdTipoUsuario(resultado.getInt("id_tipo_usuario"));
+        tipoUsuario.setRol(resultado.getString("rol"));
+        usuario.setTipoUsuario(tipoUsuario);
+        return usuario;
     }
 }
