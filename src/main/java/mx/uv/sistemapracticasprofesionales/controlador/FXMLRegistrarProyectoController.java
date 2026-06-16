@@ -27,7 +27,7 @@ import mx.uv.sistemapracticasprofesionales.servicio.ProyectoService;
 
 /**
  * Autor: Gael Samei Amores Rivas
- * Fecha creación: 2026-06-15
+ * Fecha creación: 15/06/2026
  * Descripción: Controlador para la vista de registro de proyectos.
  */
 public class FXMLRegistrarProyectoController implements Initializable {

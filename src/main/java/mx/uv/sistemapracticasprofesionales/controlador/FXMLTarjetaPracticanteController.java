@@ -6,6 +6,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import mx.uv.sistemapracticasprofesionales.modelo.pojo.Practicante;
 
 /**
  * FXML Controller class
@@ -23,6 +24,8 @@ public class FXMLTarjetaPracticanteController implements Initializable {
     @FXML
     private Button btnEliminar;
 
+    private Practicante practicante;
+
     /**
      * Initializes the controller class.
      */
@@ -30,5 +33,14 @@ public class FXMLTarjetaPracticanteController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
     }    
-    
+
+    public void inicializarPracticante(Practicante practicante) {
+        this.practicante = practicante;
+        
+        String nombreCompleto = practicante.getNombres() + " " + 
+                                practicante.getApellidoPaterno() + " " + 
+                                (practicante.getApellidoMaterno() != null ? practicante.getApellidoMaterno() : "");
+        lblNombre.setText(nombreCompleto.trim());
+        lblMatricula.setText("Matrícula: " + practicante.getMatricula());
+    }
 }

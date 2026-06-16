@@ -50,7 +50,12 @@ public class FXMLTarjetaProyectoController implements Initializable {
             lblOrganizacion.setText("Sin organización");
         }
         
-        int asignados = proyecto.getPracticantesAsignados() != null ? proyecto.getPracticantesAsignados() : 0;
+        int asignados;
+        if (proyecto.getPracticantesAsignados() != null) {
+            asignados = proyecto.getPracticantesAsignados();
+        } else {
+            asignados = 0;
+        }
         lblAsignados.setText(asignados + "/" + proyecto.getCupoMaximo() + " asignados");
         
         lblDescripcion.setText(proyecto.getDescripcion());

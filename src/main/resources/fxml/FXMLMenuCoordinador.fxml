@@ -58,7 +58,7 @@
                <children>
                   <HBox alignment="CENTER" spacing="30.0">
                      <children>
-                        <Button fx:id="btnGestionPracticantes" mnemonicParsing="false" prefHeight="130.0" prefWidth="220.0" style="-fx-background-color: #222222; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5; -fx-cursor: hand;" text="Gestión Practicantes">
+                        <Button fx:id="btnGestionPracticantes" mnemonicParsing="false" onAction="#handleGestionPracticantes" prefHeight="130.0" prefWidth="220.0" style="-fx-background-color: #222222; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5; -fx-cursor: hand;" text="Gestión Practicantes">
                            <font>
                               <Font size="15.0" />
                            </font>

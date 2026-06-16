@@ -13,7 +13,7 @@
             <Insets left="20.0" right="20.0" />
          </padding>
          <children>
-            <Button fx:id="btnVolver" mnemonicParsing="false" style="-fx-background-color: transparent; -fx-cursor: hand;" text="←">
+            <Button fx:id="btnVolver" mnemonicParsing="false" onAction="#handleVolver" style="-fx-background-color: transparent; -fx-cursor: hand;" text="←">
                <font>
                   <Font name="System Bold" size="22.0" />
                </font>
@@ -66,7 +66,7 @@
                   </VBox>
                   <HBox alignment="CENTER" spacing="50.0">
                      <children>
-                        <Button fx:id="btnRegistrarPracticante" mnemonicParsing="false" prefHeight="45.0" prefWidth="200.0" style="-fx-background-color: #222222; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5; -fx-cursor: hand;" text="Registrar practicante" />
+                        <Button fx:id="btnRegistrarPracticante" mnemonicParsing="false" onAction="#handleRegistrarPracticante" prefHeight="45.0" prefWidth="200.0" style="-fx-background-color: #222222; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5; -fx-cursor: hand;" text="Registrar practicante" />
                         <Button fx:id="btnValidarDocumentos" mnemonicParsing="false" prefHeight="45.0" prefWidth="200.0" style="-fx-background-color: #222222; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5; -fx-cursor: hand;" text="Validar documentos del practicante" wrapText="true" />
                      </children>
                   </HBox>

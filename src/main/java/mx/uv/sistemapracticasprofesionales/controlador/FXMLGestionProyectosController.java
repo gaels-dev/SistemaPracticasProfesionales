@@ -21,7 +21,7 @@ import mx.uv.sistemapracticasprofesionales.servicio.ProyectoService;
 
 /**
  * Autor: Gael Samei Amores Rivas
- * Fecha creación: 2026-06-15
+ * Fecha creación: 15/06/2026
  * Descripción: Controlador para la vista de gestión de proyectos.
  */
 public class FXMLGestionProyectosController implements Initializable {
@@ -79,11 +79,13 @@ public class FXMLGestionProyectosController implements Initializable {
     private void handleNuevoProyecto(ActionEvent event) {
         try {
             if (proyectoService.obtenerPeriodoActual() == null) {
-                mostrarAlerta("Advertencia", "No existe un periodo abierto en el sistema. No podrá registrar proyectos.", Alert.AlertType.WARNING);
+                mostrarAlerta("Advertencia", "No existe un periodo abierto en el sistema. " +
+                              "No podrá registrar proyectos.", Alert.AlertType.WARNING);
                 return;
             }
             if (proyectoService.obtenerOrganizacionesActivas().isEmpty()) {
-                mostrarAlerta("Información", "No hay organizaciones vinculadas registradas. Debe registrar una primero.", Alert.AlertType.WARNING);
+                mostrarAlerta("Información", "No hay organizaciones vinculadas registradas. " +
+                              "Debe registrar una primero.", Alert.AlertType.WARNING);
                 return;
             }
 

@@ -52,4 +52,23 @@ public class TipoUsuarioDAO {
         }
         return tipoUsuario;
     }
+
+    public TipoUsuario buscarTipoUsuarioPorRol(String rol) throws SQLException {
+        TipoUsuario tipoUsuario = null;
+        String consulta = "SELECT id_tipo_usuario, rol FROM tipo_usuario WHERE rol = ?";
+        
+        try (Connection conexion = ConexionBD.abrirConexion();
+             PreparedStatement prepararSentencia = conexion.prepareStatement(consulta)) {
+            
+            prepararSentencia.setString(1, rol);
+            try (ResultSet resultado = prepararSentencia.executeQuery()) {
+                if (resultado.next()) {
+                    tipoUsuario = new TipoUsuario();
+                    tipoUsuario.setIdTipoUsuario(resultado.getInt("id_tipo_usuario"));
+                    tipoUsuario.setRol(resultado.getString("rol"));
+                }
+            }
+        }
+        return tipoUsuario;
+    }
 }

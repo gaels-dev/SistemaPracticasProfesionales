@@ -116,6 +116,41 @@ public class PracticanteDAO {
         return idGenerado;
     }
 
+    public int registrarPracticante(Practicante practicante, Connection conexion) throws SQLException {
+        int idGenerado = -1;
+        PreparedStatement prepararSentencia = null;
+        ResultSet resultado = null;
+        String consulta = "INSERT INTO practicante (matricula, nombres, apellido_paterno, " +
+                          "apellido_materno, correo, sexo, id_usuario, activo) " +
+                          "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+        
+        try {
+            prepararSentencia = conexion.prepareStatement(consulta, Statement.RETURN_GENERATED_KEYS);
+            prepararSentencia.setString(1, practicante.getMatricula());
+            prepararSentencia.setString(2, practicante.getNombres());
+            prepararSentencia.setString(3, practicante.getApellidoPaterno());
+            prepararSentencia.setString(4, practicante.getApellidoMaterno());
+            prepararSentencia.setString(5, practicante.getCorreo());
+            prepararSentencia.setString(6, practicante.getSexo());
+            prepararSentencia.setInt(7, practicante.getUsuario().getIdUsuario());
+            prepararSentencia.setBoolean(8, practicante.getActivo());
+            
+            prepararSentencia.executeUpdate();
+            resultado = prepararSentencia.getGeneratedKeys();
+            if (resultado.next()) {
+                idGenerado = resultado.getInt(1);
+            }
+        } finally {
+            if (resultado != null) {
+                resultado.close();
+            }
+            if (prepararSentencia != null) {
+                prepararSentencia.close();
+            }
+        }
+        return idGenerado;
+    }
+
     public boolean reactivarPracticante(int idPracticante) throws SQLException {
         boolean reactivado = false;
         Connection conexion = null;
@@ -134,6 +169,41 @@ public class PracticanteDAO {
             ConexionBD.cerrarConexion(conexion);
         }
         return reactivado;
+    }
+
+    public List<Practicante> obtenerPracticantesInscritosPeriodoActual() throws SQLException {
+        List<Practicante> listaPracticantes = new ArrayList<>();
+        Connection conexion = null;
+        PreparedStatement prepararSentencia = null;
+        ResultSet resultado = null;
+        
+        // NOTA: Temporalmente esta consulta trae a todos los practicantes activos,
+        // ya que la lógica de "Inscripción a Experiencia Educativa" aún no está implementada en los datos de la BD
+        String consulta = "SELECT p.id_practicante, p.matricula, p.nombres, p.apellido_paterno, " +
+                          "p.apellido_materno, p.correo, p.sexo, p.activo, " +
+                          "u.id_usuario, u.nombre " +
+                          "FROM practicante p " +
+                          "INNER JOIN usuario u ON p.id_usuario = u.id_usuario " +
+                          "WHERE p.activo = 1 " +
+                          "ORDER BY p.nombres ASC, p.apellido_paterno ASC";
+        
+        try {
+            conexion = ConexionBD.abrirConexion();
+            prepararSentencia = conexion.prepareStatement(consulta);
+            resultado = prepararSentencia.executeQuery();
+            while (resultado.next()) {
+                listaPracticantes.add(mapearPracticante(resultado));
+            }
+        } finally {
+            if (resultado != null) {
+                resultado.close();
+            }
+            if (prepararSentencia != null) {
+                prepararSentencia.close();
+            }
+            ConexionBD.cerrarConexion(conexion);
+        }
+        return listaPracticantes;
     }
 
     public List<Practicante> obtenerPracticantesDisponiblesParaProyecto() throws SQLException {

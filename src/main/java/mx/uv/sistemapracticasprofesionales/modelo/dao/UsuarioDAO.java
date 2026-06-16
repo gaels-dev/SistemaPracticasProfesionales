@@ -48,6 +48,33 @@ public class UsuarioDAO {
         return usuario;
     }
 
+    public boolean existeUsuarioPorNombre(String nombre) throws SQLException {
+        boolean existe = false;
+        Connection conexion = null;
+        PreparedStatement prepararSentencia = null;
+        ResultSet resultado = null;
+        String consulta = "SELECT COUNT(*) FROM usuario WHERE nombre = ?";
+        
+        try {
+            conexion = ConexionBD.abrirConexion();
+            prepararSentencia = conexion.prepareStatement(consulta);
+            prepararSentencia.setString(1, nombre);
+            resultado = prepararSentencia.executeQuery();
+            if (resultado.next()) {
+                existe = resultado.getInt(1) > 0;
+            }
+        } finally {
+            if (resultado != null) {
+                resultado.close();
+            }
+            if (prepararSentencia != null) {
+                prepararSentencia.close();
+            }
+            ConexionBD.cerrarConexion(conexion);
+        }
+        return existe;
+    }
+
     public Usuario buscarPorNombre(String nombre) throws SQLException {
         Usuario usuario = null;
         Connection conexion = null;
@@ -152,6 +179,36 @@ public class UsuarioDAO {
                 prepararSentencia.close();
             }
             ConexionBD.cerrarConexion(conexion);
+        }
+        return idGenerado;
+    }
+
+    public int registrarUsuario(Usuario usuario, Connection conexion) throws SQLException {
+        int idGenerado = -1;
+        PreparedStatement prepararSentencia = null;
+        ResultSet resultado = null;
+        String consulta = "INSERT INTO usuario (nombre, contrasenia, id_tipo_usuario, activo) " +
+                          "VALUES (?, ?, ?, ?)";
+        
+        try {
+            prepararSentencia = conexion.prepareStatement(consulta, Statement.RETURN_GENERATED_KEYS);
+            prepararSentencia.setString(1, usuario.getNombre());
+            prepararSentencia.setString(2, usuario.getContrasenia());
+            prepararSentencia.setInt(3, usuario.getTipoUsuario().getIdTipoUsuario());
+            prepararSentencia.setBoolean(4, usuario.getActivo());
+            
+            prepararSentencia.executeUpdate();
+            resultado = prepararSentencia.getGeneratedKeys();
+            if (resultado.next()) {
+                idGenerado = resultado.getInt(1);
+            }
+        } finally {
+            if (resultado != null) {
+                resultado.close();
+            }
+            if (prepararSentencia != null) {
+                prepararSentencia.close();
+            }
         }
         return idGenerado;
     }

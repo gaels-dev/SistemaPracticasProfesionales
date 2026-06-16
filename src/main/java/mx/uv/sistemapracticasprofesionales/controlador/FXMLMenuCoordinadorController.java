@@ -7,13 +7,6 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import mx.uv.sistemapracticasprofesionales.utilidades.Sesion;
-
-/**
- * FXML Controller class
- * Autor: Gael Samei Amores Rivas
- * Fecha creación: 14/06/2026
- * Descripción: Controlador para el menú principal del coordinador.
- */
 import java.io.IOException;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
@@ -22,8 +15,9 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 /**
+ * FXML Controller class
  * Autor: Gael Samei Amores Rivas
- * Fecha creación: 2026-06-15
+ * Fecha creación: 14/06/2026
  * Descripción: Controlador para el menú principal del coordinador.
  */
 public class FXMLMenuCoordinadorController implements Initializable {
@@ -64,6 +58,21 @@ public class FXMLMenuCoordinadorController implements Initializable {
             stage.show();
         } catch (IOException e) {
             System.err.println("Error al cargar la vista de gestión de proyectos: " + e.getMessage());
+        }
+    }
+
+    @FXML
+    private void handleGestionPracticantes(ActionEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/FXMLGestionPracticantes.fxml"));
+            Parent root = loader.load();
+            Scene scene = new Scene(root);
+            Stage stage = (Stage) btnGestionPracticantes.getScene().getWindow();
+            stage.setScene(scene);
+            stage.setTitle("Gestión de Practicantes");
+            stage.show();
+        } catch (IOException e) {
+            System.err.println("Error al cargar la vista de gestión de practicantes: " + e.getMessage());
         }
     }
 }
