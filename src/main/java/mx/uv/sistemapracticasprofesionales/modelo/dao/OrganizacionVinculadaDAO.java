@@ -5,6 +5,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 import mx.uv.sistemapracticasprofesionales.configuracion.ConexionBD;
 import mx.uv.sistemapracticasprofesionales.modelo.pojo.OrganizacionVinculada;
 
@@ -14,6 +16,39 @@ import mx.uv.sistemapracticasprofesionales.modelo.pojo.OrganizacionVinculada;
  * Descripción: Clase para el acceso a datos de las organizaciones vinculadas.
  */
 public class OrganizacionVinculadaDAO {
+
+    public List<OrganizacionVinculada> obtenerOrganizacionesActivas() throws SQLException {
+        List<OrganizacionVinculada> listaOrganizaciones = new ArrayList<>();
+        Connection conexion = null;
+        PreparedStatement prepararSentencia = null;
+        ResultSet resultado = null;
+        String consulta = "SELECT id_organizacion_vinculada, razon_social, domicilio_fiscal, telefono, rfc, activo " +
+                          "FROM organizacion_vinculada WHERE activo = 1";
+        try {
+            conexion = ConexionBD.abrirConexion();
+            prepararSentencia = conexion.prepareStatement(consulta);
+            resultado = prepararSentencia.executeQuery();
+            while (resultado.next()) {
+                OrganizacionVinculada ov = new OrganizacionVinculada();
+                ov.setIdOrganizacionVinculada(resultado.getInt("id_organizacion_vinculada"));
+                ov.setRazonSocial(resultado.getString("razon_social"));
+                ov.setDomicilioFiscal(resultado.getString("domicilio_fiscal"));
+                ov.setTelefono(resultado.getString("telefono"));
+                ov.setRfc(resultado.getString("rfc"));
+                ov.setActivo(resultado.getBoolean("activo"));
+                listaOrganizaciones.add(ov);
+            }
+        } finally {
+            if (resultado != null) {
+                resultado.close();
+            }
+            if (prepararSentencia != null) {
+                prepararSentencia.close();
+            }
+            ConexionBD.cerrarConexion(conexion);
+        }
+        return listaOrganizaciones;
+    }
 
     public boolean existeOrganizacionPorRfc(String rfc) throws SQLException {
         boolean existe = false;

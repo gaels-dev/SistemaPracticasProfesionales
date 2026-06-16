@@ -15,6 +15,7 @@ public class Proyecto {
     private Periodo periodo;
     private OrganizacionVinculada organizacionVinculada;
     private ResponsableTecnico responsableTecnico;
+    private Integer practicantesAsignados;
 
     public Proyecto() {
     }
@@ -96,6 +97,12 @@ public class Proyecto {
     public void setResponsableTecnico(ResponsableTecnico responsableTecnico) {
         this.responsableTecnico = responsableTecnico;
     }
-    
-    
+
+    public Integer getPracticantesAsignados() {
+        return practicantesAsignados;
+    }
+
+    public void setPracticantesAsignados(Integer practicantesAsignados) {
+        this.practicantesAsignados = practicantesAsignados;
+    }
 }

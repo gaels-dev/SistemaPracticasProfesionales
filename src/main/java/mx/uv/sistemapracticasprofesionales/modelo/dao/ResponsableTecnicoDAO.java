@@ -16,6 +16,42 @@ import mx.uv.sistemapracticasprofesionales.modelo.pojo.ResponsableTecnico;
  */
 public class ResponsableTecnicoDAO {
 
+    public ResponsableTecnico buscarResponsablePorCorreo(String correo) throws SQLException {
+        ResponsableTecnico responsable = null;
+        Connection conexion = null;
+        PreparedStatement prepararSentencia = null;
+        ResultSet resultado = null;
+        String consulta = "SELECT id_responsable_tecnico, nombres, apellido_paterno, apellido_materno, " +
+                          "correo, id_organizacion_vinculada FROM responsable_tecnico WHERE correo = ?";
+        try {
+            conexion = ConexionBD.abrirConexion();
+            prepararSentencia = conexion.prepareStatement(consulta);
+            prepararSentencia.setString(1, correo);
+            resultado = prepararSentencia.executeQuery();
+            if (resultado.next()) {
+                responsable = new ResponsableTecnico();
+                responsable.setIdResponsableTecnico(resultado.getInt("id_responsable_tecnico"));
+                responsable.setNombres(resultado.getString("nombres"));
+                responsable.setApellidoPaterno(resultado.getString("apellido_paterno"));
+                responsable.setApellidoMaterno(resultado.getString("apellido_materno"));
+                responsable.setCorreo(resultado.getString("correo"));
+                
+                OrganizacionVinculada ov = new OrganizacionVinculada();
+                ov.setIdOrganizacionVinculada(resultado.getInt("id_organizacion_vinculada"));
+                responsable.setOrganizacionVinculada(ov);
+            }
+        } finally {
+            if (resultado != null) {
+                resultado.close();
+            }
+            if (prepararSentencia != null) {
+                prepararSentencia.close();
+            }
+            ConexionBD.cerrarConexion(conexion);
+        }
+        return responsable;
+    }
+
     public int registrarResponsableTecnico(ResponsableTecnico responsable) throws SQLException {
         int idGenerado = -1;
         Connection conexion = null;
@@ -23,7 +59,6 @@ public class ResponsableTecnicoDAO {
         ResultSet resultado = null;
         String consulta = "INSERT INTO responsable_tecnico (nombres, apellido_paterno, apellido_materno, " +
                           "correo, id_organizacion_vinculada) VALUES (?, ?, ?, ?, ?)";
-        
         try {
             conexion = ConexionBD.abrirConexion();
             prepararSentencia = conexion.prepareStatement(consulta, Statement.RETURN_GENERATED_KEYS);
@@ -57,13 +92,11 @@ public class ResponsableTecnicoDAO {
         ResultSet resultado = null;
         String consulta = "SELECT id_responsable_tecnico, nombres, apellido_paterno, apellido_materno, " +
                           "correo, id_organizacion_vinculada FROM responsable_tecnico WHERE id_responsable_tecnico = ?";
-        
         try {
             conexion = ConexionBD.abrirConexion();
             prepararSentencia = conexion.prepareStatement(consulta);
             prepararSentencia.setInt(1, idResponsableTecnico);
             resultado = prepararSentencia.executeQuery();
-            
             if (resultado.next()) {
                 responsable = new ResponsableTecnico();
                 responsable.setIdResponsableTecnico(resultado.getInt("id_responsable_tecnico"));

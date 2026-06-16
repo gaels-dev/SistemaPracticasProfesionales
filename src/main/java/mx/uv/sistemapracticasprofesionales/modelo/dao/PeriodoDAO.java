@@ -42,6 +42,37 @@ public class PeriodoDAO {
         return existe;
     }
 
+    public Periodo obtenerPeriodoAbierto() throws SQLException {
+        Periodo periodo = null;
+        Connection conexion = null;
+        PreparedStatement prepararSentencia = null;
+        ResultSet resultado = null;
+        String consulta = "SELECT id_periodo, nombre, fecha_inicio, fecha_fin, cerrado FROM periodo WHERE cerrado = 0 LIMIT 1";
+        
+        try {
+            conexion = ConexionBD.abrirConexion();
+            prepararSentencia = conexion.prepareStatement(consulta);
+            resultado = prepararSentencia.executeQuery();
+            if (resultado.next()) {
+                periodo = new Periodo();
+                periodo.setIdPeriodo(resultado.getInt("id_periodo"));
+                periodo.setNombre(resultado.getString("nombre"));
+                periodo.setFechaInicio(resultado.getDate("fecha_inicio"));
+                periodo.setFechaFin(resultado.getDate("fecha_fin"));
+                periodo.setCerrado(resultado.getBoolean("cerrado"));
+            }
+        } finally {
+            if (resultado != null) {
+                resultado.close();
+            }
+            if (prepararSentencia != null) {
+                prepararSentencia.close();
+            }
+            ConexionBD.cerrarConexion(conexion);
+        }
+        return periodo;
+    }
+
     public int registrarPeriodo(Periodo periodo) throws SQLException {
         int idGenerado = -1;
         Connection conexion = null;

@@ -14,7 +14,7 @@
             <Insets left="20.0" right="20.0" />
          </padding>
          <children>
-            <Button fx:id="btnVolver" mnemonicParsing="false" style="-fx-background-color: transparent; -fx-cursor: hand;" text="S">
+            <Button fx:id="btnVolver" mnemonicParsing="false" onAction="#handleVolver" style="-fx-background-color: transparent; -fx-cursor: hand;" text="S">
                <graphic>
                   <ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true" />
                </graphic>
@@ -34,7 +34,7 @@
                </children>
             </VBox>
             <Region HBox.hgrow="ALWAYS" />
-            <Button fx:id="btnNuevoProyecto" mnemonicParsing="false" prefHeight="35.0" style="-fx-background-color: #222222; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5; -fx-cursor: hand;" text="+ Nuevo Proyecto">
+            <Button fx:id="btnNuevoProyecto" mnemonicParsing="false" onAction="#handleNuevoProyecto" prefHeight="35.0" style="-fx-background-color: #222222; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5; -fx-cursor: hand;" text="+ Nuevo Proyecto">
                <padding>
                   <Insets left="15.0" right="15.0" />
                </padding>

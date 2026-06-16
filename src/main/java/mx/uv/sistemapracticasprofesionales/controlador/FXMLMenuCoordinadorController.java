@@ -14,6 +14,18 @@ import mx.uv.sistemapracticasprofesionales.utilidades.Sesion;
  * Fecha creación: 14/06/2026
  * Descripción: Controlador para el menú principal del coordinador.
  */
+import java.io.IOException;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
+
+/**
+ * Autor: Gael Samei Amores Rivas
+ * Fecha creación: 2026-06-15
+ * Descripción: Controlador para el menú principal del coordinador.
+ */
 public class FXMLMenuCoordinadorController implements Initializable {
 
     @FXML
@@ -38,6 +50,20 @@ public class FXMLMenuCoordinadorController implements Initializable {
         if (Sesion.getUsuario() != null) {
             lblNombre.setText(Sesion.getUsuario().getNombre());
         }
-    }    
-    
+    }
+
+    @FXML
+    private void handleGestionProyectos(ActionEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/FXMLGestionProyectos.fxml"));
+            Parent root = loader.load();
+            Scene scene = new Scene(root);
+            Stage stage = (Stage) btnGestionProyectos.getScene().getWindow();
+            stage.setScene(scene);
+            stage.setTitle("Gestión de Proyectos");
+            stage.show();
+        } catch (IOException e) {
+            System.err.println("Error al cargar la vista de gestión de proyectos: " + e.getMessage());
+        }
+    }
 }

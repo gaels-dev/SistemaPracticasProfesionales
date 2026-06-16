@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import mx.uv.sistemapracticasprofesionales.configuracion.ConexionBD;
@@ -18,6 +19,78 @@ import mx.uv.sistemapracticasprofesionales.modelo.pojo.ResponsableTecnico;
  */
 public class ProyectoDAO {
 
+    public int registrarProyecto(Proyecto proyecto) throws SQLException {
+        int idGenerado = -1;
+        Connection conexion = null;
+        PreparedStatement prepararSentencia = null;
+        ResultSet resultado = null;
+        String consulta = "INSERT INTO proyecto (nombre, descripcion, cupo_maximo, id_periodo, " +
+                          "id_organizacion_vinculada, id_responsable_tecnico, activo) " +
+                          "VALUES (?, ?, ?, ?, ?, ?, 1)";
+        try {
+            conexion = ConexionBD.abrirConexion();
+            prepararSentencia = conexion.prepareStatement(consulta, Statement.RETURN_GENERATED_KEYS);
+            prepararSentencia.setString(1, proyecto.getNombre());
+            prepararSentencia.setString(2, proyecto.getDescripcion());
+            prepararSentencia.setInt(3, proyecto.getCupoMaximo());
+            prepararSentencia.setInt(4, proyecto.getPeriodo().getIdPeriodo());
+            prepararSentencia.setInt(5, proyecto.getOrganizacionVinculada().getIdOrganizacionVinculada());
+            prepararSentencia.setInt(6, proyecto.getResponsableTecnico().getIdResponsableTecnico());
+            
+            prepararSentencia.executeUpdate();
+            resultado = prepararSentencia.getGeneratedKeys();
+            if (resultado.next()) {
+                idGenerado = resultado.getInt(1);
+            }
+        } finally {
+            if (resultado != null) {
+                resultado.close();
+            }
+            if (prepararSentencia != null) {
+                prepararSentencia.close();
+            }
+            ConexionBD.cerrarConexion(conexion);
+        }
+        return idGenerado;
+    }
+
+    public List<Proyecto> obtenerTodosProyectosActivos() throws SQLException {
+        List<Proyecto> listaProyectos = new ArrayList<>();
+        Connection conexion = null;
+        PreparedStatement prepararSentencia = null;
+        ResultSet resultado = null;
+        String consulta = "SELECT p.id_proyecto, p.nombre, p.descripcion, p.cupo_maximo, p.activo, " +
+                          "ov.id_organizacion_vinculada, ov.razon_social, " +
+                          "rt.id_responsable_tecnico, rt.nombres AS nombres_rt, rt.apellido_paterno AS paterno_rt, " +
+                          "(SELECT COUNT(*) FROM asignacion_proyecto ap WHERE ap.id_proyecto = p.id_proyecto AND ap.estado = 'Activa') AS asignados " +
+                          "FROM proyecto p " +
+                          "INNER JOIN organizacion_vinculada ov ON p.id_organizacion_vinculada = ov.id_organizacion_vinculada " +
+                          "INNER JOIN responsable_tecnico rt ON p.id_responsable_tecnico = rt.id_responsable_tecnico " +
+                          "INNER JOIN periodo per ON p.id_periodo = per.id_periodo " +
+                          "WHERE p.activo = 1 AND per.cerrado = 0 " +
+                          "ORDER BY p.nombre ASC";
+        
+        try {
+            conexion = ConexionBD.abrirConexion();
+            prepararSentencia = conexion.prepareStatement(consulta);
+            resultado = prepararSentencia.executeQuery();
+            while (resultado.next()) {
+                Proyecto proyecto = mapearProyecto(resultado);
+                proyecto.setPracticantesAsignados(resultado.getInt("asignados"));
+                listaProyectos.add(proyecto);
+            }
+        } finally {
+            if (resultado != null) {
+                resultado.close();
+            }
+            if (prepararSentencia != null) {
+                prepararSentencia.close();
+            }
+            ConexionBD.cerrarConexion(conexion);
+        }
+        return listaProyectos;
+    }
+
     public List<Proyecto> obtenerProyectosActivosConCupo() throws SQLException {
         List<Proyecto> listaProyectos = new ArrayList<>();
         Connection conexion = null;
@@ -29,7 +102,8 @@ public class ProyectoDAO {
                           "FROM proyecto p " +
                           "INNER JOIN organizacion_vinculada ov ON p.id_organizacion_vinculada = ov.id_organizacion_vinculada " +
                           "INNER JOIN responsable_tecnico rt ON p.id_responsable_tecnico = rt.id_responsable_tecnico " +
-                          "WHERE p.activo = 1 " +
+                          "INNER JOIN periodo per ON p.id_periodo = per.id_periodo " +
+                          "WHERE p.activo = 1 AND per.cerrado = 0 " +
                           "  AND p.cupo_maximo > ( " +
                           "      SELECT COUNT(*) FROM asignacion_proyecto ap " +
                           "      WHERE ap.id_proyecto = p.id_proyecto " +
