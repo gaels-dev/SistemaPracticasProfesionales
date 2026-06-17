@@ -6,7 +6,10 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.event.ActionEvent;
+import javafx.stage.Stage;
 import mx.uv.sistemapracticasprofesionales.utilidades.Sesion;
+import mx.uv.sistemapracticasprofesionales.utilidades.UtilidadesVistas;
 
 /**
  * FXML Controller class
@@ -34,6 +37,14 @@ public class FXMLMenuProfesorController implements Initializable {
         if (Sesion.getUsuario() != null) {
             lblNombre.setText(Sesion.getUsuario().getNombre());
         }
-    }    
-    
+    }
+
+    @FXML
+    private void handleCerrarSesion(ActionEvent event) {
+        Sesion.cerrarSesion();
+        Stage escenario = (Stage) lblNombre.getScene().getWindow();
+        UtilidadesVistas.cargarVista(escenario, 
+                "/fxml/FXMLInicioSesion.fxml", 
+                "Inicio de Sesión");
+    }
 }

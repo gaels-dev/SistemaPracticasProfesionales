@@ -75,16 +75,6 @@
                   </VBox>
                   <VBox spacing="5.0">
                      <children>
-                        <Label text="Nombre de usuario">
-                           <font>
-                              <Font name="System Bold" size="14.0" />
-                           </font>
-                        </Label>
-                        <TextField fx:id="txtUsuario" prefHeight="35.0" promptText="Ej. juanperez" style="-fx-background-color: #F0F0F0;" />
-                     </children>
-                  </VBox>
-                  <VBox spacing="5.0">
-                     <children>
                         <Label text="Contraseña">
                            <font>
                               <Font name="System Bold" size="14.0" />

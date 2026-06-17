@@ -13,6 +13,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import mx.uv.sistemapracticasprofesionales.utilidades.UtilidadesVistas;
 
 /**
  * FXML Controller class
@@ -106,5 +107,14 @@ public class FXMLMenuCoordinadorController implements Initializable {
         } catch (IOException e) {
             System.err.println("Error al cargar la vista de asignación de proyectos: " + e.getMessage());
         }
+    }
+
+    @FXML
+    private void handleCerrarSesion(ActionEvent event) {
+        Sesion.cerrarSesion();
+        Stage escenario = (Stage) lblNombre.getScene().getWindow();
+        UtilidadesVistas.cargarVista(escenario, 
+                "/fxml/FXMLInicioSesion.fxml", 
+                "Inicio de Sesión");
     }
 }

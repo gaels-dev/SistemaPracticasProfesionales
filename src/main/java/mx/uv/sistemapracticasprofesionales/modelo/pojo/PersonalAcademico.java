@@ -12,6 +12,7 @@ public class PersonalAcademico {
     private String nombres;
     private String apellidoPaterno;
     private String apellidoMaterno;
+    private String correo;
     private Boolean activo;
     private Usuario usuario;
 
@@ -20,12 +21,13 @@ public class PersonalAcademico {
 
     public PersonalAcademico(Integer idPersonalAcademico, String noPersonal, 
             String nombres, String apellidoPaterno, String apellidoMaterno, 
-            Boolean activo, Usuario usuario) {
+            String correo, Boolean activo, Usuario usuario) {
         this.idPersonalAcademico = idPersonalAcademico;
         this.noPersonal = noPersonal;
         this.nombres = nombres;
         this.apellidoPaterno = apellidoPaterno;
         this.apellidoMaterno = apellidoMaterno;
+        this.correo = correo;
         this.activo = activo;
         this.usuario = usuario;
     }
@@ -70,6 +72,14 @@ public class PersonalAcademico {
         this.apellidoMaterno = apellidoMaterno;
     }
 
+    public String getCorreo() {
+        return correo;
+    }
+
+    public void setCorreo(String correo) {
+        this.correo = correo;
+    }
+
     public Boolean getActivo() {
         return activo;
     }
@@ -85,6 +95,4 @@ public class PersonalAcademico {
     public void setUsuario(Usuario usuario) {
         this.usuario = usuario;
     }
-    
-    
 }

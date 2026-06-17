@@ -40,8 +40,6 @@ public class FXMLGestionarPersonalController implements Initializable {
     @FXML
     private TextField txtCorreo;
     @FXML
-    private TextField txtUsuario;
-    @FXML
     private PasswordField txtContrasenia;
     @FXML
     private Button btnCancelar;
@@ -101,7 +99,15 @@ public class FXMLGestionarPersonalController implements Initializable {
                             Alert.AlertType.ERROR);
                 }
             } catch (SQLException e) {
-                UtilidadesVistas.mostrarAlerta("Error", e.getMessage(), 
+                String mensajeError = e.getMessage();
+                if (mensajeError != null && mensajeError.contains("Duplicate entry")) {
+                    if (mensajeError.contains("uq_personal_correo")) {
+                        mensajeError = "El correo electrónico ya se encuentra registrado.";
+                    } else if (mensajeError.contains("uq_personal_no_personal")) {
+                        mensajeError = "El número de personal ya se encuentra registrado.";
+                    }
+                }
+                UtilidadesVistas.mostrarAlerta("Error", mensajeError, 
                         Alert.AlertType.ERROR);
             }
         } else {
@@ -112,17 +118,17 @@ public class FXMLGestionarPersonalController implements Initializable {
 
     private String validarCampos() {
         StringBuilder errores = new StringBuilder();
-        
-        validarNombre(txtNombres.getText().trim(), "Nombre(s)", errores);
-        validarNombre(txtApellidoPaterno.getText().trim(), 
+
+        validarNombre(limpiarTexto(txtNombres.getText()), "Nombre(s)", errores);
+        validarNombre(limpiarTexto(txtApellidoPaterno.getText()), 
                 "Apellido Paterno", errores);
-        validarNombre(txtApellidoMaterno.getText().trim(), 
+        validarNombre(limpiarTexto(txtApellidoMaterno.getText()), 
                 "Apellido Materno", errores);
 
         if (txtNumPersonal.getText().trim().isEmpty()) {
             errores.append("- Número de personal es obligatorio.\n");
         }
-        
+
         String correo = txtCorreo.getText().trim();
         if (correo.isEmpty()) {
             errores.append("- Correo electrónico es obligatorio.\n");
@@ -131,17 +137,13 @@ public class FXMLGestionarPersonalController implements Initializable {
                     + "dominio @uv.mx\n");
         }
 
-        if (txtUsuario.getText().trim().isEmpty()) {
-            errores.append("- Nombre de usuario es obligatorio.\n");
-        }
-        
         if (txtContrasenia.getText().trim().isEmpty()) {
             errores.append("- Contraseña es obligatoria.\n");
         } else if (txtContrasenia.getText().length() < 6) {
             errores.append("- La contraseña debe tener al menos "
                     + "6 caracteres.\n");
         }
-        
+
         return errores.toString();
     }
 
@@ -163,22 +165,28 @@ public class FXMLGestionarPersonalController implements Initializable {
         }
     }
 
+    private String limpiarTexto(String texto) {
+        if (texto == null) return "";
+        return texto.trim().replaceAll("\\s{2,}", " ");
+    }
+
     private PersonalAcademico recolectarDatos() {
         PersonalAcademico personal = new PersonalAcademico();
         personal.setNoPersonal(txtNumPersonal.getText().trim());
-        personal.setNombres(txtNombres.getText().trim());
-        personal.setApellidoPaterno(txtApellidoPaterno.getText().trim());
-        personal.setApellidoMaterno(txtApellidoMaterno.getText().trim());
+        personal.setNombres(limpiarTexto(txtNombres.getText()));
+        personal.setApellidoPaterno(limpiarTexto(txtApellidoPaterno.getText()));
+        personal.setApellidoMaterno(limpiarTexto(txtApellidoMaterno.getText()));
+        personal.setCorreo(txtCorreo.getText().trim());
         personal.setActivo(true);
-        
+
         Usuario usuario = new Usuario();
-        usuario.setNombre(txtUsuario.getText().trim());
+        usuario.setNombre(txtCorreo.getText().trim());
         usuario.setContrasenia(HasheoContrasenia.hashPassword(
                 txtContrasenia.getText().trim()));
         usuario.setActivo(true);
-        
+
         personal.setUsuario(usuario);
-        
+
         return personal;
     }
 

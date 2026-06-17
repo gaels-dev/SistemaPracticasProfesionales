@@ -56,5 +56,14 @@ public class FXMLMenuAdministradorController implements Initializable {
                 "/fxml/FXMLGestionPersonal.fxml", 
                 "Gestion de Profesores");
     }
+
+    @FXML
+    private void handleCerrarSesion(ActionEvent event) {
+        Sesion.cerrarSesion();
+        Stage escenario = (Stage) lblNombre.getScene().getWindow();
+        UtilidadesVistas.cargarVista(escenario, 
+                "/fxml/FXMLInicioSesion.fxml", 
+                "Inicio de Sesión");
+    }
     
 }

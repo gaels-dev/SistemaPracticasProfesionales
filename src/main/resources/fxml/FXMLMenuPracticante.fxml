@@ -41,7 +41,7 @@
                         <ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true" />
                      </graphic>
                   </Button>
-                  <Button fx:id="btnCerrarSesion" mnemonicParsing="false" style="-fx-background-color: transparent; -fx-cursor: hand;" text="Salir">
+                  <Button fx:id="btnCerrarSesion" mnemonicParsing="false" onAction="#handleCerrarSesion" style="-fx-background-color: transparent; -fx-cursor: hand;" text="Salir">
                      <graphic>
                         <ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true" />
                      </graphic>

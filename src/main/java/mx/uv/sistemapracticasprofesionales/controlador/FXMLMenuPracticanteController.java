@@ -92,5 +92,14 @@ public class FXMLMenuPracticanteController implements Initializable {
                 "/fxml/FXMLSeleccionarDocumento.fxml", 
                 "Subir Actividades");
     }
+
+    @FXML
+    private void handleCerrarSesion(ActionEvent event) {
+        Sesion.cerrarSesion();
+        Stage escenario = (Stage) lblNombre.getScene().getWindow();
+        UtilidadesVistas.cargarVista(escenario, 
+                "/fxml/FXMLInicioSesion.fxml", 
+                "Inicio de Sesión");
+    }
     
 }
