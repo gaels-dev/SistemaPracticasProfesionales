@@ -68,4 +68,11 @@ public class FXMLTarjetaProyectoController implements Initializable {
             lblResponsable.setText("Responsable: No asignado");
         }
     }
+
+    public void ocultarBotonesAccion() {
+        btnEditar.setVisible(false);
+        btnEditar.setManaged(false);
+        btnEliminar.setVisible(false);
+        btnEliminar.setManaged(false);
+    }
 }

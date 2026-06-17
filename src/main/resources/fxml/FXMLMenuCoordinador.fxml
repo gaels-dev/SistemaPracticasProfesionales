@@ -75,7 +75,7 @@
                         </Button>
                      </children>
                   </HBox>
-                  <Button fx:id="btnAsignarProyectos" mnemonicParsing="false" prefHeight="130.0" prefWidth="220.0" style="-fx-background-color: #222222; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5; -fx-cursor: hand;" text="Asignar Proyectos">
+                  <Button fx:id="btnAsignarProyectos" mnemonicParsing="false" onAction="#handleAsignarProyectos" prefHeight="130.0" prefWidth="220.0" style="-fx-background-color: #222222; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5; -fx-cursor: hand;" text="Asignar Proyectos">
                      <font>
                         <Font size="15.0" />
                      </font>

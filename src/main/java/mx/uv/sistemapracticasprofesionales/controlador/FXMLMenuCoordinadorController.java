@@ -75,4 +75,19 @@ public class FXMLMenuCoordinadorController implements Initializable {
             System.err.println("Error al cargar la vista de gestión de practicantes: " + e.getMessage());
         }
     }
+
+    @FXML
+    private void handleAsignarProyectos(ActionEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/FXMLAsignarProyecto.fxml"));
+            Parent root = loader.load();
+            Scene scene = new Scene(root);
+            Stage stage = (Stage) btnAsignarProyectos.getScene().getWindow();
+            stage.setScene(scene);
+            stage.setTitle("Asignar Proyectos");
+            stage.show();
+        } catch (IOException e) {
+            System.err.println("Error al cargar la vista de asignación de proyectos: " + e.getMessage());
+        }
+    }
 }

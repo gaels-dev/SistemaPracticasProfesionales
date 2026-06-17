@@ -18,6 +18,39 @@ import mx.uv.sistemapracticasprofesionales.modelo.pojo.Usuario;
  */
 public class PracticanteDAO {
 
+    public Practicante buscarPorIdUsuario(int idUsuario) throws SQLException {
+        Practicante practicante = null;
+        Connection conexion = null;
+        PreparedStatement prepararSentencia = null;
+        ResultSet resultado = null;
+        String consulta = "SELECT p.id_practicante, p.matricula, p.nombres, p.apellido_paterno, " +
+                          "p.apellido_materno, p.correo, p.sexo, p.activo, " +
+                          "u.id_usuario, u.nombre " +
+                          "FROM practicante p " +
+                          "INNER JOIN usuario u ON p.id_usuario = u.id_usuario " +
+                          "WHERE p.id_usuario = ?";
+        
+        try {
+            conexion = ConexionBD.abrirConexion();
+            prepararSentencia = conexion.prepareStatement(consulta);
+            prepararSentencia.setInt(1, idUsuario);
+            resultado = prepararSentencia.executeQuery();
+            
+            if (resultado.next()) {
+                practicante = mapearPracticante(resultado);
+            }
+        } finally {
+            if (resultado != null) {
+                resultado.close();
+            }
+            if (prepararSentencia != null) {
+                prepararSentencia.close();
+            }
+            ConexionBD.cerrarConexion(conexion);
+        }
+        return practicante;
+    }
+
     public Practicante buscarPorMatricula(String matricula) throws SQLException {
         Practicante practicante = null;
         Connection conexion = null;
@@ -211,22 +244,20 @@ public class PracticanteDAO {
         Connection conexion = null;
         PreparedStatement prepararSentencia = null;
         ResultSet resultado = null;
+        
+        // NOTA: Esta consulta está modificada para evitar verificar la tabla de inscripciones
+        // ya que esa lógica de esta sección aún no está.
         String consulta = "SELECT p.id_practicante, p.matricula, p.nombres, p.apellido_paterno, " +
                           "p.apellido_materno, p.correo, p.sexo, p.activo, " +
                           "u.id_usuario, u.nombre " +
                           "FROM practicante p " +
                           "INNER JOIN usuario u ON p.id_usuario = u.id_usuario " +
-                          "INNER JOIN inscripcion_experiencia_educativa iee ON p.id_practicante = iee.id_practicante " +
-                          "INNER JOIN experiencia_educativa ee ON iee.id_experiencia_educativa = ee.id_experiencia_educativa " +
-                          "INNER JOIN periodo per ON ee.id_periodo = per.id_periodo " +
                           "WHERE p.activo = 1 " +
-                          "  AND per.cerrado = 0 " +
-                          "  AND iee.estado IN ('Inscrito', 'Cursando') " +
                           "  AND NOT EXISTS ( " +
                           "      SELECT 1 FROM asignacion_proyecto ap " +
                           "      WHERE ap.id_practicante = p.id_practicante " +
                           "        AND ap.estado = 'Activa' " +
-                          "  )";
+                          ")";
         
         try {
             conexion = ConexionBD.abrirConexion();

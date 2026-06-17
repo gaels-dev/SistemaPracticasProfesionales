@@ -26,12 +26,20 @@ public class PracticanteService {
         return practicanteDAO.obtenerPracticantesInscritosPeriodoActual();
     }
 
+    public List<Practicante> obtenerPracticantesDisponiblesParaProyecto() throws SQLException {
+        return practicanteDAO.obtenerPracticantesDisponiblesParaProyecto();
+    }
+
     public boolean existePracticanteActivoPorMatricula(String matricula) throws SQLException {
         return practicanteDAO.existePracticanteActivoPorMatricula(matricula);
     }
 
     public Practicante buscarPorMatricula(String matricula) throws SQLException {
         return practicanteDAO.buscarPorMatricula(matricula);
+    }
+
+    public Practicante buscarPorIdUsuario(int idUsuario) throws SQLException {
+        return practicanteDAO.buscarPorIdUsuario(idUsuario);
     }
 
     public boolean reactivarPracticante(int idPracticante) throws SQLException {

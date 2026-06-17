@@ -13,7 +13,7 @@
             <Insets left="20.0" right="20.0" />
          </padding>
          <children>
-            <Button fx:id="btnVolver" mnemonicParsing="false" style="-fx-background-color: transparent; -fx-cursor: hand;" text="←">
+            <Button fx:id="btnVolver" mnemonicParsing="false" onAction="#handleVolver" style="-fx-background-color: transparent; -fx-cursor: hand;" text="←">
                <font>
                   <Font name="System Bold" size="22.0" />
                </font>
@@ -81,8 +81,8 @@
             </HBox>
             <HBox alignment="CENTER_RIGHT" spacing="20.0">
                <children>
-                  <Button fx:id="btnCancelar" mnemonicParsing="false" prefHeight="40.0" prefWidth="130.0" style="-fx-background-color: #555555; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5; -fx-cursor: hand;" text="Cancelar" />
-                  <Button fx:id="btnRegistrar" mnemonicParsing="false" prefHeight="40.0" prefWidth="130.0" style="-fx-background-color: #222222; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5; -fx-cursor: hand;" text="Registrar" />
+                  <Button fx:id="btnCancelar" mnemonicParsing="false" onAction="#handleCancelar" prefHeight="40.0" prefWidth="130.0" style="-fx-background-color: #555555; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5; -fx-cursor: hand;" text="Cancelar" />
+                  <Button fx:id="btnRegistrar" mnemonicParsing="false" onAction="#handleRegistrar" prefHeight="40.0" prefWidth="130.0" style="-fx-background-color: #222222; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5; -fx-cursor: hand;" text="Registrar" />
                </children>
                <VBox.margin>
                   <Insets bottom="40.0" right="60.0" />

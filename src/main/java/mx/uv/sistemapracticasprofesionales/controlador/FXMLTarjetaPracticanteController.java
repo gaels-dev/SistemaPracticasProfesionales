@@ -43,4 +43,11 @@ public class FXMLTarjetaPracticanteController implements Initializable {
         lblNombre.setText(nombreCompleto.trim());
         lblMatricula.setText("Matrícula: " + practicante.getMatricula());
     }
+
+    public void ocultarBotonesAccion() {
+        btnEditar.setVisible(false);
+        btnEditar.setManaged(false);
+        btnEliminar.setVisible(false);
+        btnEliminar.setManaged(false);
+    }
 }
