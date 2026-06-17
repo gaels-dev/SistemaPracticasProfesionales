@@ -37,12 +37,29 @@ public class FXMLMenuCoordinadorController implements Initializable {
     @FXML
     private Button btnAsignarProyectos;
     @FXML
+    private Button btnGestionOrganizaciones;
+    @FXML
     private Label lblNombre;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         if (Sesion.getUsuario() != null) {
             lblNombre.setText(Sesion.getUsuario().getNombre());
+        }
+    }
+
+    @FXML
+    private void handleGestionOrganizaciones(ActionEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/FXMLGestionOrganizaciones.fxml"));
+            Parent root = loader.load();
+            Scene scene = new Scene(root);
+            Stage stage = (Stage) btnGestionOrganizaciones.getScene().getWindow();
+            stage.setScene(scene);
+            stage.setTitle("Gestión de Organizaciones");
+            stage.show();
+        } catch (IOException e) {
+            System.err.println("Error al cargar la vista de gestión de organizaciones: " + e.getMessage());
         }
     }
 

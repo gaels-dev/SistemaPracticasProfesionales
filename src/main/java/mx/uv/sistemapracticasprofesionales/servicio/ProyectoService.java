@@ -64,6 +64,8 @@ public class ProyectoService {
         
         if (proyecto.getNombre() == null || proyecto.getNombre().trim().isEmpty()) {
             errores.append("- Nombre del proyecto es obligatorio.\n");
+        } else if (proyecto.getNombre().length() > 50) {
+            errores.append("- El nombre del proyecto no puede exceder los 50 caracteres.\n");
         }
         if (proyecto.getDescripcion() == null || proyecto.getDescripcion().trim().isEmpty()) {
             errores.append("- Descripción del proyecto es obligatoria.\n");
@@ -72,6 +74,8 @@ public class ProyectoService {
         }
         if (proyecto.getCupoMaximo() == null || proyecto.getCupoMaximo() <= 0) {
             errores.append("- El cupo máximo debe ser mayor a 0.\n");
+        } else if (proyecto.getCupoMaximo() > 20) {
+            errores.append("- El cupo máximo no puede exceder las 20 vacantes.\n");
         }
         if (proyecto.getOrganizacionVinculada() == null) {
             errores.append("- Debe seleccionar una organización vinculada.\n");
@@ -86,12 +90,25 @@ public class ProyectoService {
         } else {
             if (rt.getNombres() == null || rt.getNombres().trim().isEmpty()) {
                 errores.append("- Nombre del responsable es obligatorio.\n");
+            } else if (rt.getNombres().length() > 50) {
+                errores.append("- El nombre del responsable no puede exceder los 50 caracteres.\n");
             }
             if (rt.getApellidoPaterno() == null || rt.getApellidoPaterno().trim().isEmpty()) {
                 errores.append("- Apellido paterno del responsable es obligatorio.\n");
+            } else if (rt.getApellidoPaterno().length() > 40) {
+                errores.append("- El apellido paterno no puede exceder los 40 caracteres.\n");
+            }
+            if (rt.getApellidoMaterno() == null || rt.getApellidoMaterno().trim().isEmpty()) {
+                errores.append("- Apellido materno del responsable es obligatorio.\n");
+            } else if (rt.getApellidoMaterno().length() > 40) {
+                errores.append("- El apellido materno no puede exceder los 40 caracteres.\n");
             }
             if (rt.getCorreo() == null || rt.getCorreo().trim().isEmpty()) {
                 errores.append("- Correo del responsable es obligatorio.\n");
+            } else if (rt.getCorreo().length() > 200) {
+                errores.append("- El correo electrónico no puede exceder los 200 caracteres.\n");
+            } else if (!rt.getCorreo().matches("^[\\w+-]+(?:\\.[\\w+-]+)*@[a-zA-Z0-9-]+(?:\\.[a-zA-Z0-9-]+)*\\.[a-zA-Z]{2,}$")) {
+                errores.append("- El formato del correo electrónico es inválido.\n");
             }
         }
         
