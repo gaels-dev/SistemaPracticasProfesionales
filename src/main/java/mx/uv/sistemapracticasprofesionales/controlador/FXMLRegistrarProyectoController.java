@@ -35,6 +35,8 @@ public class FXMLRegistrarProyectoController implements Initializable {
     @FXML
     private TextField txfNombreProyecto;
     @FXML
+    private Label lblContadorNombre;
+    @FXML
     private ComboBox<OrganizacionVinculada> cmbOrganizacion;
     @FXML
     private TextField txfNombresResponsable;
@@ -63,7 +65,7 @@ public class FXMLRegistrarProyectoController implements Initializable {
         configurarComboBox();
         cargarOrganizaciones();
         cargarPeriodoActual();
-        configurarContadorCaracteres();
+        configurarContadoresCaracteres();
     }
 
     private void configurarComboBox() {
@@ -99,14 +101,65 @@ public class FXMLRegistrarProyectoController implements Initializable {
         }
     }
 
-    private void configurarContadorCaracteres() {
+    private void configurarContadoresCaracteres() {
+        txfNombreProyecto.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue != null) {
+                if (newValue.length() > 50) {
+                    txfNombreProyecto.setText(oldValue);
+                } else {
+                    lblContadorNombre.setText(newValue.length() + "/50");
+                }
+            }
+        });
+
         txaDescripcion.textProperty().addListener((observable, oldValue, newValue) -> {
-            int length = newValue.length();
-            lblContadorCaracteres.setText(length + "/200");
-            if (length > 200) {
-                lblContadorCaracteres.setStyle("-fx-text-fill: red;");
-            } else {
-                lblContadorCaracteres.setStyle("-fx-text-fill: #666666;");
+            if (newValue != null) {
+                if (newValue.length() > 200) {
+                    txaDescripcion.setText(oldValue);
+                } else {
+                    lblContadorCaracteres.setText(newValue.length() + "/200");
+                }
+            }
+        });
+
+        txfNombresResponsable.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue != null && newValue.length() > 50) {
+                txfNombresResponsable.setText(oldValue);
+            }
+        });
+
+        txfApellidoPaternoResponsable.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue != null && newValue.length() > 40) {
+                txfApellidoPaternoResponsable.setText(oldValue);
+            }
+        });
+
+        txfApellidoMaternoResponsable.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue != null && newValue.length() > 40) {
+                txfApellidoMaternoResponsable.setText(oldValue);
+            }
+        });
+
+        txfCorreoResponsable.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue != null && newValue.length() > 200) {
+                txfCorreoResponsable.setText(oldValue);
+            }
+        });
+
+        txfVacantes.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue != null && !newValue.isEmpty()) {
+                if (!newValue.matches("\\d*")) {
+                    txfVacantes.setText(oldValue);
+                } else {
+                    try {
+                        int valor = Integer.parseInt(newValue);
+                        if (valor > 20) {
+                            txfVacantes.setText(oldValue);
+                        }
+                    } catch (NumberFormatException e) {
+                        txfVacantes.setText(oldValue);
+                    }
+                }
             }
         });
     }

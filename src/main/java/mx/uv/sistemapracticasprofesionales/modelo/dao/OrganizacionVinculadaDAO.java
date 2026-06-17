@@ -23,7 +23,7 @@ public class OrganizacionVinculadaDAO {
         PreparedStatement prepararSentencia = null;
         ResultSet resultado = null;
         String consulta = "SELECT id_organizacion_vinculada, razon_social, domicilio_fiscal, telefono, rfc, activo " +
-                          "FROM organizacion_vinculada WHERE activo = 1";
+                          "FROM organizacion_vinculada WHERE activo = 1 ORDER BY razon_social ASC";
         try {
             conexion = ConexionBD.abrirConexion();
             prepararSentencia = conexion.prepareStatement(consulta);
@@ -61,6 +61,58 @@ public class OrganizacionVinculadaDAO {
             conexion = ConexionBD.abrirConexion();
             prepararSentencia = conexion.prepareStatement(consulta);
             prepararSentencia.setString(1, rfc);
+            resultado = prepararSentencia.executeQuery();
+            if (resultado.next()) {
+                existe = resultado.getInt(1) > 0;
+            }
+        } finally {
+            if (resultado != null) {
+                resultado.close();
+            }
+            if (prepararSentencia != null) {
+                prepararSentencia.close();
+            }
+            ConexionBD.cerrarConexion(conexion);
+        }
+        return existe;
+    }
+
+    public boolean existeOrganizacionPorTelefono(String telefono) throws SQLException {
+        boolean existe = false;
+        Connection conexion = null;
+        PreparedStatement prepararSentencia = null;
+        ResultSet resultado = null;
+        String consulta = "SELECT COUNT(*) FROM organizacion_vinculada WHERE telefono = ?";
+        try {
+            conexion = ConexionBD.abrirConexion();
+            prepararSentencia = conexion.prepareStatement(consulta);
+            prepararSentencia.setString(1, telefono);
+            resultado = prepararSentencia.executeQuery();
+            if (resultado.next()) {
+                existe = resultado.getInt(1) > 0;
+            }
+        } finally {
+            if (resultado != null) {
+                resultado.close();
+            }
+            if (prepararSentencia != null) {
+                prepararSentencia.close();
+            }
+            ConexionBD.cerrarConexion(conexion);
+        }
+        return existe;
+    }
+
+    public boolean existeOrganizacionPorRazonSocial(String razonSocial) throws SQLException {
+        boolean existe = false;
+        Connection conexion = null;
+        PreparedStatement prepararSentencia = null;
+        ResultSet resultado = null;
+        String consulta = "SELECT COUNT(*) FROM organizacion_vinculada WHERE razon_social = ?";
+        try {
+            conexion = ConexionBD.abrirConexion();
+            prepararSentencia = conexion.prepareStatement(consulta);
+            prepararSentencia.setString(1, razonSocial);
             resultado = prepararSentencia.executeQuery();
             if (resultado.next()) {
                 existe = resultado.getInt(1) > 0;
