@@ -51,12 +51,12 @@
          <children>
             <HBox alignment="CENTER" spacing="40.0">
                <children>
-                  <Button fx:id="btnGestionCoordinadores" mnemonicParsing="false" prefHeight="130.0" prefWidth="220.0" style="-fx-background-color: #222222; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5; -fx-cursor: hand;" text="Gestión Coordinadores">
+                  <Button fx:id="btnGestionCoordinadores" mnemonicParsing="false" onAction="#handleGestionCoordinadores" prefHeight="130.0" prefWidth="220.0" style="-fx-background-color: #222222; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5; -fx-cursor: hand;" text="Gestión Coordinadores">
                      <font>
                         <Font size="15.0" />
                      </font>
                   </Button>
-                  <Button fx:id="btnGestionProfesores" mnemonicParsing="false" prefHeight="130.0" prefWidth="220.0" style="-fx-background-color: #222222; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5; -fx-cursor: hand;" text="Gestión Profesores">
+                  <Button fx:id="btnGestionProfesores" mnemonicParsing="false" onAction="#handleGestionProfesores" prefHeight="130.0" prefWidth="220.0" style="-fx-background-color: #222222; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5; -fx-cursor: hand;" text="Gestión Profesores">
                      <font>
                         <Font size="15.0" />
                      </font>

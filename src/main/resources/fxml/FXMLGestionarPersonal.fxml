@@ -25,12 +25,32 @@
                <children>
                   <VBox spacing="5.0">
                      <children>
-                        <Label text="Nombre completo">
+                        <Label text="Nombre(s)">
                            <font>
                               <Font name="System Bold" size="14.0" />
                            </font>
                         </Label>
-                        <TextField fx:id="txtNombre" prefHeight="35.0" promptText="Ej. Juan Pérez García" style="-fx-background-color: #F0F0F0;" />
+                        <TextField fx:id="txtNombres" prefHeight="35.0" promptText="Ej. Juan" style="-fx-background-color: #F0F0F0;" />
+                     </children>
+                  </VBox>
+                  <VBox spacing="5.0">
+                     <children>
+                        <Label text="Apellido Paterno">
+                           <font>
+                              <Font name="System Bold" size="14.0" />
+                           </font>
+                        </Label>
+                        <TextField fx:id="txtApellidoPaterno" prefHeight="35.0" promptText="Ej. Pérez" style="-fx-background-color: #F0F0F0;" />
+                     </children>
+                  </VBox>
+                  <VBox spacing="5.0">
+                     <children>
+                        <Label text="Apellido Materno">
+                           <font>
+                              <Font name="System Bold" size="14.0" />
+                           </font>
+                        </Label>
+                        <TextField fx:id="txtApellidoMaterno" prefHeight="35.0" promptText="Ej. García" style="-fx-background-color: #F0F0F0;" />
                      </children>
                   </VBox>
                   <VBox spacing="5.0">
@@ -53,6 +73,26 @@
                         <TextField fx:id="txtCorreo" prefHeight="35.0" promptText="ejemplo@uv.mx" style="-fx-background-color: #F0F0F0;" />
                      </children>
                   </VBox>
+                  <VBox spacing="5.0">
+                     <children>
+                        <Label text="Nombre de usuario">
+                           <font>
+                              <Font name="System Bold" size="14.0" />
+                           </font>
+                        </Label>
+                        <TextField fx:id="txtUsuario" prefHeight="35.0" promptText="Ej. juanperez" style="-fx-background-color: #F0F0F0;" />
+                     </children>
+                  </VBox>
+                  <VBox spacing="5.0">
+                     <children>
+                        <Label text="Contraseña">
+                           <font>
+                              <Font name="System Bold" size="14.0" />
+                           </font>
+                        </Label>
+                        <PasswordField fx:id="txtContrasenia" prefHeight="35.0" promptText="********" style="-fx-background-color: #F0F0F0;" />
+                     </children>
+                  </VBox>
                </children>
                <padding>
                   <Insets bottom="10.0" left="5.0" right="5.0" top="10.0" />
@@ -62,8 +102,8 @@
       </ScrollPane>
       <HBox alignment="CENTER" spacing="30.0">
          <children>
-            <Button fx:id="btnCancelar" mnemonicParsing="false" prefHeight="40.0" prefWidth="120.0" style="-fx-background-color: white; -fx-border-color: #222222; -fx-border-radius: 5; -fx-cursor: hand;" text="Cancelar" />
-            <Button fx:id="btnGuardar" mnemonicParsing="false" prefHeight="40.0" prefWidth="120.0" style="-fx-background-color: #222222; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5; -fx-cursor: hand;" text="Guardar" />
+            <Button fx:id="btnCancelar" mnemonicParsing="false" onAction="#handleCancelar" prefHeight="40.0" prefWidth="120.0" style="-fx-background-color: white; -fx-border-color: #222222; -fx-border-radius: 5; -fx-cursor: hand;" text="Cancelar" />
+            <Button fx:id="btnGuardar" mnemonicParsing="false" onAction="#handleGuardar" prefHeight="40.0" prefWidth="120.0" style="-fx-background-color: #222222; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5; -fx-cursor: hand;" text="Guardar" />
          </children>
          <VBox.margin>
             <Insets top="15.0" />

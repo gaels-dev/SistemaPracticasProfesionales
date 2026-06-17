@@ -45,6 +45,31 @@ public class PersonalAcademicoDAO {
         return idGenerado;
     }
 
+    public int registrarPersonalAcademico(PersonalAcademico personal, Connection conexion) throws SQLException {
+        int idGenerado = -1;
+        String consulta = "INSERT INTO personal_academico (no_personal, nombres, apellido_paterno, " +
+                          "apellido_materno, id_usuario, activo) " +
+                          "VALUES (?, ?, ?, ?, ?, ?)";
+        
+        try (PreparedStatement prepararSentencia = conexion.prepareStatement(consulta, PreparedStatement.RETURN_GENERATED_KEYS)) {
+            prepararSentencia.setString(1, personal.getNoPersonal());
+            prepararSentencia.setString(2, personal.getNombres());
+            prepararSentencia.setString(3, personal.getApellidoPaterno());
+            prepararSentencia.setString(4, personal.getApellidoMaterno());
+            prepararSentencia.setInt(5, personal.getUsuario().getIdUsuario());
+            prepararSentencia.setBoolean(6, personal.getActivo());
+            
+            prepararSentencia.executeUpdate();
+            
+            try (ResultSet resultado = prepararSentencia.getGeneratedKeys()) {
+                if (resultado.next()) {
+                    idGenerado = resultado.getInt(1);
+                }
+            }
+        }
+        return idGenerado;
+    }
+
     public List<PersonalAcademico> obtenerPersonalAcademicoPorRol(String rol) throws SQLException {
         List<PersonalAcademico> listaPersonal = new ArrayList<>();
         String consulta = "SELECT pa.id_personal_academico, pa.no_personal, pa.nombres, pa.apellido_paterno, " +
@@ -101,6 +126,28 @@ public class PersonalAcademicoDAO {
             dadoDeBaja = prepararSentencia.executeUpdate() > 0;
         }
         return dadoDeBaja;
+    }
+
+    public boolean existePersonalPorNumeroYRol(String noPersonal, String rol) throws SQLException {
+        boolean existe = false;
+        String consulta = "SELECT COUNT(*) FROM personal_academico pa " +
+                          "INNER JOIN usuario u ON pa.id_usuario = u.id_usuario " +
+                          "INNER JOIN tipo_usuario tu ON u.id_tipo_usuario = tu.id_tipo_usuario " +
+                          "WHERE pa.no_personal = ? AND tu.rol = ? AND pa.activo = 1";
+        
+        try (Connection conexion = ConexionBD.abrirConexion();
+             PreparedStatement prepararSentencia = conexion.prepareStatement(consulta)) {
+            
+            prepararSentencia.setString(1, noPersonal);
+            prepararSentencia.setString(2, rol);
+            
+            try (ResultSet resultado = prepararSentencia.executeQuery()) {
+                if (resultado.next()) {
+                    existe = resultado.getInt(1) > 0;
+                }
+            }
+        }
+        return existe;
     }
 
     private PersonalAcademico mapearPersonalAcademico(ResultSet resultado) throws SQLException {
