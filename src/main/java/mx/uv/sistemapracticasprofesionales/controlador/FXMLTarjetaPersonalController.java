@@ -7,10 +7,13 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 
+import mx.uv.sistemapracticasprofesionales.modelo.pojo.PersonalAcademico;
+
 /**
- * FXML Controller class
- *
- * @author oscar
+ * Autor:           Oscar Turrent Peña
+ * Fecha creación:  16/06/2026
+ * Descripción:     Controlador para la tarjeta de información del personal 
+ *                  académico.
  */
 public class FXMLTarjetaPersonalController implements Initializable {
 
@@ -21,12 +24,20 @@ public class FXMLTarjetaPersonalController implements Initializable {
     @FXML
     private Button btnEliminar;
 
-    /**
-     * Initializes the controller class.
-     */
+    private PersonalAcademico personal;
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+        
     }    
-    
+
+    public void inicializarPersonal(PersonalAcademico personal) {
+        this.personal = personal;
+        
+        String nombreCompleto = personal.getNombres() + " " + 
+                                personal.getApellidoPaterno() + " " + 
+                                (personal.getApellidoMaterno() != null ? 
+                                personal.getApellidoMaterno() : "");
+        lblNombre.setText(nombreCompleto.trim());
+    }
 }

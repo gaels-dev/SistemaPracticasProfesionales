@@ -13,7 +13,7 @@
             <Insets left="20.0" right="20.0" />
          </padding>
          <children>
-            <Button fx:id="btnVolver" mnemonicParsing="false" style="-fx-background-color: transparent; -fx-cursor: hand;" text="←">
+            <Button fx:id="btnVolver" mnemonicParsing="false" onAction="#handleVolver" style="-fx-background-color: transparent; -fx-cursor: hand;" text="←">
                <font>
                   <Font name="System Bold" size="22.0" />
                </font>
@@ -64,7 +64,7 @@
                         </ScrollPane>
                      </children>
                   </VBox>
-                  <Button fx:id="btnAgregar" mnemonicParsing="false" prefHeight="45.0" prefWidth="250.0" style="-fx-background-color: #222222; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5; -fx-cursor: hand;" text="Agregar nuevo personal" />
+                  <Button fx:id="btnAgregar" mnemonicParsing="false" onAction="#handleAgregar" prefHeight="45.0" prefWidth="250.0" style="-fx-background-color: #222222; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5; -fx-cursor: hand;" text="Agregar nuevo personal" />
                </children>
             </VBox>
          </children>
