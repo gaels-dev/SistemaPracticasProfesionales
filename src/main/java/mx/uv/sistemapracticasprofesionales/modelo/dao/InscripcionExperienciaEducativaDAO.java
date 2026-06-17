@@ -5,7 +5,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import mx.uv.sistemapracticasprofesionales.configuracion.ConexionBD;
+import mx.uv.sistemapracticasprofesionales.modelo.pojo.ExperienciaEducativa;
 import mx.uv.sistemapracticasprofesionales.modelo.pojo.InscripcionExperienciaEducativa;
+import mx.uv.sistemapracticasprofesionales.modelo.pojo.Practicante;
 
 /**
  * Autor: Gael Samei Amores Rivas
@@ -64,5 +66,37 @@ public class InscripcionExperienciaEducativaDAO {
             ConexionBD.cerrarConexion(conexion);
         }
         return existe;
+    }
+
+    public InscripcionExperienciaEducativa obtenerInscripcionActivaPorPracticante(int idPracticante) throws SQLException {
+        InscripcionExperienciaEducativa inscripcion = null;
+        String consulta = "SELECT id_experiencia_educativa, id_practicante, calificacion, estado, " +
+                          "fecha_inscripcion FROM inscripcion_experiencia_educativa " +
+                          "WHERE id_practicante = ? AND estado IN ('Inscrito', 'Cursando')";
+        
+        try (Connection conexion = ConexionBD.abrirConexion();
+             PreparedStatement prepararSentencia = conexion.prepareStatement(consulta)) {
+            
+            prepararSentencia.setInt(1, idPracticante);
+            
+            try (ResultSet resultado = prepararSentencia.executeQuery()) {
+                if (resultado.next()) {
+                    inscripcion = new InscripcionExperienciaEducativa();
+                    
+                    ExperienciaEducativa ee = new ExperienciaEducativa();
+                    ee.setIdExperienciaEducativa(resultado.getInt("id_experiencia_educativa"));
+                    inscripcion.setExperienciaEducativa(ee);
+                    
+                    Practicante practicante = new Practicante();
+                    practicante.setIdPracticante(resultado.getInt("id_practicante"));
+                    inscripcion.setPracticante(practicante);
+                    
+                    inscripcion.setCalificacion(resultado.getDouble("calificacion"));
+                    inscripcion.setEstado(resultado.getString("estado"));
+                    inscripcion.setFechaInscripcion(resultado.getDate("fecha_inscripcion"));
+                }
+            }
+        }
+        return inscripcion;
     }
 }

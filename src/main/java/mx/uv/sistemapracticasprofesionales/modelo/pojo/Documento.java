@@ -13,6 +13,7 @@ public class Documento {
     private Double calificacionMaxima;
     private byte[] formato;
     private Boolean activo;
+    private String extension;
 
     public Documento() {
     }
@@ -72,6 +73,14 @@ public class Documento {
 
     public void setActivo(Boolean activo) {
         this.activo = activo;
+    }
+    
+    public String getExtension() {
+        return extension;
+    }
+
+    public void setExtension(String extension) {
+        this.extension = extension;
     }
     
 }

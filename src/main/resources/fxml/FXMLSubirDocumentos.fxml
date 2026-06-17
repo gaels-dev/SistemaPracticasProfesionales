@@ -14,7 +14,7 @@
             <Insets left="20.0" right="20.0" />
          </padding>
          <children>
-            <Button fx:id="btnVolver" mnemonicParsing="false" style="-fx-background-color: transparent; -fx-cursor: hand;" text="←">
+            <Button fx:id="btnVolver" mnemonicParsing="false" onAction="#handleVolver" style="-fx-background-color: transparent; -fx-cursor: hand;" text="←">
                <font>
                   <Font name="System Bold" size="22.0" />
                </font>
@@ -61,14 +61,14 @@
                                     <Font name="System Bold" size="14.0" />
                                  </font>
                               </Label>
-                              <VBox fx:id="vboxDropArea" alignment="CENTER" prefHeight="150.0" spacing="10.0" style="-fx-border-color: #CCCCCC; -fx-border-style: dashed; -fx-border-width: 2; -fx-border-radius: 10; -fx-cursor: hand;">
+                              <VBox fx:id="vboxDropArea" alignment="CENTER" onMouseClicked="#handleExaminar" prefHeight="150.0" spacing="10.0" style="-fx-border-color: #CCCCCC; -fx-border-style: dashed; -fx-border-width: 2; -fx-border-radius: 10; -fx-cursor: hand;">
                                  <children>
                                     <Label text="↑" textFill="#999999">
                                        <font>
                                           <Font size="40.0" />
                                        </font>
                                     </Label>
-                                    <Label text="Haga clic para seleccionar o arrastre el archivo" textFill="#666666">
+                                    <Label text="Haga clic para seleccionar archivo" textFill="#666666">
                                        <font>
                                           <Font size="13.0" />
                                        </font>
@@ -78,16 +78,16 @@
                                           <Font size="11.0" />
                                        </font>
                                     </Label>
-                                    <TextField fx:id="txtRutaArchivo" editable="false" visible="false" managed="false" />
-                                    <Button fx:id="btnExaminar" visible="false" managed="false" />
+                                    <TextField fx:id="txtRutaArchivo" editable="false" prefWidth="300.0" />
                                  </children>
                               </VBox>
                            </children>
                         </VBox>
                         <HBox alignment="CENTER_LEFT" spacing="20.0">
                            <children>
-                              <Button fx:id="btnSubirReporte" mnemonicParsing="false" prefHeight="40.0" prefWidth="150.0" style="-fx-background-color: #222222; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5; -fx-cursor: hand;" text="Subir reporte" />
-                              <Button fx:id="btnCancelar" mnemonicParsing="false" prefHeight="40.0" prefWidth="120.0" style="-fx-background-color: white; -fx-border-color: #222222; -fx-border-radius: 5; -fx-cursor: hand;" text="Cancelar" />
+                              <Button fx:id="btnSubirReporte" mnemonicParsing="false" onAction="#handleSubirReporte" prefHeight="40.0" prefWidth="150.0" style="-fx-background-color: #222222; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5; -fx-cursor: hand;" text="Subir documento" />
+                              <Button fx:id="btnCancelarEntrega" managed="false" mnemonicParsing="false" onAction="#handleCancelarEntrega" prefHeight="40.0" prefWidth="150.0" style="-fx-background-color: #CC0000; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5; -fx-cursor: hand;" text="Cancelar entrega" visible="false" />
+                              <Button fx:id="btnCancelar" mnemonicParsing="false" onAction="#handleVolver" prefHeight="40.0" prefWidth="120.0" style="-fx-background-color: white; -fx-border-color: #222222; -fx-border-radius: 5; -fx-cursor: hand;" text="Cancelar" />
                            </children>
                         </HBox>
                      </children>
@@ -97,13 +97,13 @@
                         <Insets bottom="30.0" left="40.0" right="40.0" top="20.0" />
                      </padding>
                      <children>
-                        <Label text="Mis reportes">
+                        <Label fx:id="lblMiEntrega" text="Mi Entrega">
                            <font>
                               <Font name="System Bold" size="20.0" />
                            </font>
                         </Label>
                         <VBox fx:id="vboxReportes" spacing="15.0" />
-                        <VBox fx:id="vboxDocumentos" visible="false" managed="false" />
+                        <VBox fx:id="vboxDocumentos" managed="false" visible="false" />
                      </children>
                   </VBox>
                </children>

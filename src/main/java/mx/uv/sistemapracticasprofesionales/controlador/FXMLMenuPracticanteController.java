@@ -5,16 +5,19 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.ResourceBundle;
 import javafx.application.Platform;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.stage.Stage;
 import mx.uv.sistemapracticasprofesionales.modelo.pojo.Notificacion;
 import mx.uv.sistemapracticasprofesionales.modelo.pojo.Practicante;
 import mx.uv.sistemapracticasprofesionales.servicio.NotificacionService;
 import mx.uv.sistemapracticasprofesionales.servicio.PracticanteService;
 import mx.uv.sistemapracticasprofesionales.utilidades.Sesion;
+import mx.uv.sistemapracticasprofesionales.utilidades.UtilidadesVistas;
 
 /**
  * FXML Controller class
@@ -39,8 +42,10 @@ public class FXMLMenuPracticanteController implements Initializable {
     @FXML
     private Label lblNombre;
 
-    private final PracticanteService practicanteService = new PracticanteService();
-    private final NotificacionService notificacionService = new NotificacionService();
+    private final PracticanteService practicanteService = 
+            new PracticanteService();
+    private final NotificacionService notificacionService = 
+            new NotificacionService();
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -53,25 +58,39 @@ public class FXMLMenuPracticanteController implements Initializable {
     private void revisarNotificaciones() {
         Platform.runLater(() -> {
             try {
-                Practicante practicante = practicanteService.buscarPorIdUsuario(Sesion.getUsuario().getIdUsuario());
+                Practicante practicante = practicanteService.buscarPorIdUsuario(
+                        Sesion.getUsuario().getIdUsuario());
                 if (practicante != null) {
-                    List<Notificacion> notificaciones = notificacionService.obtenerNotificacionesPorPracticante(practicante.getIdPracticante());
+                    List<Notificacion> notificaciones = 
+                        notificacionService.obtenerNotificacionesPorPracticante(
+                                practicante.getIdPracticante());
                     for (Notificacion notificacion : notificaciones) {
-                        mostrarAlerta("Nueva Notificación", notificacion.getMensaje(), Alert.AlertType.INFORMATION);
-                        notificacionService.eliminarNotificacion(notificacion.getIdNotificacion());
+                        UtilidadesVistas.mostrarAlerta("Nueva notificacion", 
+                                notificacion.getMensaje(), 
+                                Alert.AlertType.INFORMATION);
                     }
                 }
             } catch (SQLException e) {
-                System.err.println("Error al obtener notificaciones: " + e.getMessage());
+                System.err.println("Error al obtener notificaciones: " 
+                        + e.getMessage());
             }
         });
     }
 
-    private void mostrarAlerta(String titulo, String mensaje, Alert.AlertType tipo) {
-        Alert alert = new Alert(tipo);
-        alert.setTitle(titulo);
-        alert.setHeaderText(null);
-        alert.setContentText(mensaje);
-        alert.showAndWait();
+    @FXML
+    private void handleSubirDocumentos(ActionEvent event) {
+        Stage escenario = (Stage) lblNombre.getScene().getWindow();
+        UtilidadesVistas.cargarVista(escenario, 
+                "/fxml/FXMLSeleccionarDocumento.fxml", 
+                "Subir Documentos");
     }
+
+    @FXML
+    private void handleReportes(ActionEvent event) {
+        Stage escenario = (Stage) lblNombre.getScene().getWindow();
+        UtilidadesVistas.cargarVista(escenario, 
+                "/fxml/FXMLSeleccionarDocumento.fxml", 
+                "Subir Actividades");
+    }
+    
 }

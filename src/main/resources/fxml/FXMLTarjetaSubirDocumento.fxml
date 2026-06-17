@@ -22,6 +22,11 @@
             </Label>
          </children>
       </VBox>
-      <Button fx:id="btnSubir" mnemonicParsing="false" prefWidth="100.0" style="-fx-background-color: white; -fx-border-color: #222222; -fx-border-radius: 5; -fx-cursor: hand;" text="Subir archivo" />
+      <HBox fx:id="hboxAcciones" alignment="CENTER" spacing="10.0">
+         <children>
+            <Button fx:id="btnDescargar" managed="false" mnemonicParsing="false" onAction="#handleDescargar" prefWidth="130.0" style="-fx-background-color: #222222; -fx-text-fill: white; -fx-background-radius: 5; -fx-cursor: hand;" text="Descargar" visible="false" />
+            <Button fx:id="btnSubir" mnemonicParsing="false" prefWidth="100.0" style="-fx-background-color: white; -fx-border-color: #222222; -fx-border-radius: 5; -fx-cursor: hand;" text="Subir archivo" />
+         </children>
+      </HBox>
    </children>
 </HBox>

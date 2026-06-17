@@ -56,7 +56,7 @@
          <children>
             <HBox alignment="CENTER" spacing="30.0">
                <children>
-                  <Button fx:id="btnSubirDocumentos" mnemonicParsing="false" prefHeight="130.0" prefWidth="220.0" style="-fx-background-color: #222222; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5; -fx-cursor: hand;" text="Subir documentos">
+                  <Button fx:id="btnSubirDocumentos" mnemonicParsing="false" onAction="#handleSubirDocumentos" prefHeight="130.0" prefWidth="220.0" style="-fx-background-color: #222222; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5; -fx-cursor: hand;" text="Subir documentos">
                      <font>
                         <Font size="15.0" />
                      </font>
@@ -66,7 +66,7 @@
                         <Font size="15.0" />
                      </font>
                   </Button>
-                  <Button fx:id="btnReportes" mnemonicParsing="false" prefHeight="130.0" prefWidth="220.0" style="-fx-background-color: #222222; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5; -fx-cursor: hand;" text="Reportes">
+                  <Button fx:id="btnReportes" mnemonicParsing="false" onAction="#handleReportes" prefHeight="130.0" prefWidth="220.0" style="-fx-background-color: #222222; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5; -fx-cursor: hand;" text="Reportes">
                      <font>
                         <Font size="15.0" />
                      </font>

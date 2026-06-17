@@ -18,6 +18,65 @@ import mx.uv.sistemapracticasprofesionales.modelo.pojo.SolicitudDocumento;
  */
 public class EntregaDocumentoDAO {
 
+    public EntregaDocumento buscarEntregaPorPracticanteYSolicitud(int idPracticante, int idSolicitud) throws SQLException {
+        EntregaDocumento entrega = null;
+        String consulta = "SELECT id_entrega_documento, archivo_entregado, fecha_entrega, estado, extension, nombre_archivo " +
+                          "FROM entrega_documento WHERE id_practicante = ? AND id_solicitud_documento = ?";
+        
+        try (Connection conexion = ConexionBD.abrirConexion();
+             PreparedStatement ps = conexion.prepareStatement(consulta)) {
+            
+            ps.setInt(1, idPracticante);
+            ps.setInt(2, idSolicitud);
+            
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    entrega = new EntregaDocumento();
+                    entrega.setIdEntregaDocumento(rs.getInt("id_entrega_documento"));
+                    entrega.setArchivoEntregado(rs.getBytes("archivo_entregado"));
+                    entrega.setFechaEntrega(rs.getDate("fecha_entrega"));
+                    entrega.setEstado(rs.getString("estado"));
+                    entrega.setExtension(rs.getString("extension"));
+                    entrega.setNombreArchivo(rs.getString("nombre_archivo"));
+                }
+            }
+        }
+        return entrega;
+    }
+
+    public boolean cancelarEntrega(int idPracticante, int idSolicitudDocumento) throws SQLException {
+        boolean eliminado = false;
+        String consulta = "DELETE FROM entrega_documento WHERE id_practicante = ? AND id_solicitud_documento = ?";
+        
+        try (Connection conexion = ConexionBD.abrirConexion();
+             PreparedStatement ps = conexion.prepareStatement(consulta)) {
+            ps.setInt(1, idPracticante);
+            ps.setInt(2, idSolicitudDocumento);
+            eliminado = ps.executeUpdate() > 0;
+        }
+        return eliminado;
+    }
+
+    public boolean registrarEntrega(EntregaDocumento entrega) throws SQLException {
+        boolean registrado = false;
+        String consulta = "INSERT INTO entrega_documento (id_practicante, id_solicitud_documento, " +
+                          "archivo_entregado, fecha_entrega, estado, extension, nombre_archivo) VALUES (?, ?, ?, ?, 'Pendiente de validacion', ?, ?)";
+        
+        try (Connection conexion = ConexionBD.abrirConexion();
+             PreparedStatement prepararSentencia = conexion.prepareStatement(consulta)) {
+            
+            prepararSentencia.setInt(1, entrega.getPracticante().getIdPracticante());
+            prepararSentencia.setInt(2, entrega.getSolicitudDocumento().getSolicitudDocumento());
+            prepararSentencia.setBytes(3, entrega.getArchivoEntregado());
+            prepararSentencia.setTimestamp(4, new java.sql.Timestamp(entrega.getFechaEntrega().getTime()));
+            prepararSentencia.setString(5, entrega.getExtension());
+            prepararSentencia.setString(6, entrega.getNombreArchivo());
+            
+            registrado = prepararSentencia.executeUpdate() > 0;
+        }
+        return registrado;
+    }
+
     public List<EntregaDocumento> obtenerDocumentosPendientesPorPracticante(int idPracticante) throws SQLException {
         List<EntregaDocumento> listaEntregas = new ArrayList<>();
         Connection conexion = null;
