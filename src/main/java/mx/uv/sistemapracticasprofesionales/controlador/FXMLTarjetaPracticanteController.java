@@ -6,6 +6,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.layout.HBox;
 import mx.uv.sistemapracticasprofesionales.modelo.pojo.Practicante;
 
 /**
@@ -16,6 +17,8 @@ import mx.uv.sistemapracticasprofesionales.modelo.pojo.Practicante;
 public class FXMLTarjetaPracticanteController implements Initializable {
 
     @FXML
+    private HBox rootHBox;
+    @FXML
     private Label lblNombre;
     @FXML
     private Label lblMatricula;
@@ -25,6 +28,7 @@ public class FXMLTarjetaPracticanteController implements Initializable {
     private Button btnEliminar;
 
     private Practicante practicante;
+    private FXMLGestionPracticantesController controladorPadre;
 
     /**
      * Initializes the controller class.
@@ -35,13 +39,37 @@ public class FXMLTarjetaPracticanteController implements Initializable {
     }    
 
     public void inicializarPracticante(Practicante practicante) {
+        this.inicializarPracticante(practicante, null);
+    }
+
+    public void inicializarPracticante(Practicante practicante, FXMLGestionPracticantesController controladorPadre) {
         this.practicante = practicante;
+        this.controladorPadre = controladorPadre;
         
         String nombreCompleto = practicante.getNombres() + " " + 
                                 practicante.getApellidoPaterno() + " " + 
                                 (practicante.getApellidoMaterno() != null ? practicante.getApellidoMaterno() : "");
         lblNombre.setText(nombreCompleto.trim());
         lblMatricula.setText("Matrícula: " + practicante.getMatricula());
+    }
+
+    @FXML
+    private void handleClicTarjeta(javafx.scene.input.MouseEvent event) {
+        if (controladorPadre != null) {
+            controladorPadre.seleccionarPracticante(this);
+        }
+    }
+
+    public void establecerEstiloSeleccionado(boolean seleccionado) {
+        if (seleccionado) {
+            rootHBox.setStyle("-fx-background-color: #E0E0E0; -fx-background-radius: 5; -fx-padding: 10; -fx-border-color: #222222; -fx-border-radius: 5;");
+        } else {
+            rootHBox.setStyle("-fx-background-color: #F8F8F8; -fx-background-radius: 5; -fx-padding: 10;");
+        }
+    }
+
+    public Practicante getPracticante() {
+        return practicante;
     }
 
     public void ocultarBotonesAccion() {

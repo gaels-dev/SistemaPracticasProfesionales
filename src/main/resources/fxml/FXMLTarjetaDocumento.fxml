@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<HBox alignment="CENTER_LEFT" spacing="15.0" style="-fx-background-color: #F5EFEF; -fx-background-radius: 12; -fx-padding: 15;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="mx.uv.sistemapracticasprofesionales.controlador.FXMLTarjetaDocumentoController">
+<HBox fx:id="rootHBox" alignment="CENTER_LEFT" onMouseClicked="#handleClicTarjeta" spacing="15.0" style="-fx-background-color: #F5EFEF; -fx-background-radius: 12; -fx-padding: 15;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="mx.uv.sistemapracticasprofesionales.controlador.FXMLTarjetaDocumentoController">
    <children>
       <VBox spacing="4.0" HBox.hgrow="ALWAYS">
          <children>
@@ -24,9 +24,9 @@
       </VBox>
       <HBox alignment="CENTER" spacing="15.0">
          <children>
-            <Label fx:id="lblEstado" alignment="CENTER" prefWidth="90.0" style="-fx-background-color: #008000; -fx-text-fill: white; -fx-background-radius: 8; -fx-padding: 5 10 5 10;" text="Validado">
+            <Label fx:id="lblEstado" alignment="CENTER" maxWidth="120.0" prefWidth="110.0" style="-fx-background-color: #008000; -fx-text-fill: white; -fx-background-radius: 8; -fx-padding: 5 10 5 10;" text="Validado" textAlignment="CENTER" wrapText="true">
                <font>
-                  <Font name="System Bold" size="13.0" />
+                  <Font name="System Bold" size="12.0" />
                </font>
             </Label>
             <Button fx:id="btnVer" mnemonicParsing="false" style="-fx-background-color: transparent; -fx-cursor: hand; -fx-padding: 0;" text="Descargar">

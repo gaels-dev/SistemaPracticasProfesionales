@@ -82,7 +82,7 @@ public class EntregaDocumentoDAO {
         Connection conexion = null;
         PreparedStatement prepararSentencia = null;
         ResultSet resultado = null;
-        String consulta = "SELECT ed.id_entrega_documento, ed.fecha_entrega, ed.estado, " +
+        String consulta = "SELECT ed.id_entrega_documento, ed.fecha_entrega, ed.estado, ed.extension, ed.nombre_archivo, " +
                           "sd.id_solicitud_documento, sd.fecha_limite, " +
                           "d.id_documento, d.nombre_documento " +
                           "FROM entrega_documento ed " +
@@ -100,6 +100,8 @@ public class EntregaDocumentoDAO {
                 entrega.setIdEntregaDocumento(resultado.getInt("id_entrega_documento"));
                 entrega.setFechaEntrega(resultado.getDate("fecha_entrega"));
                 entrega.setEstado(resultado.getString("estado"));
+                entrega.setExtension(resultado.getString("extension"));
+                entrega.setNombreArchivo(resultado.getString("nombre_archivo"));
                 
                 SolicitudDocumento solicitud = new SolicitudDocumento();
                 solicitud.setSolicitudDocumento(resultado.getInt("id_solicitud_documento"));

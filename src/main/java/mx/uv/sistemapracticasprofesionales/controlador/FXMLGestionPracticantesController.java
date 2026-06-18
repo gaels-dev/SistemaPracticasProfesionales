@@ -35,12 +35,15 @@ public class FXMLGestionPracticantesController implements Initializable {
     private Button btnValidarDocumentos;
 
     private final PracticanteService practicanteService = new PracticanteService();
+    private Practicante practicanteSeleccionado;
+    private FXMLTarjetaPracticanteController tarjetaSeleccionada;
 
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        btnValidarDocumentos.setDisable(true);
         cargarPracticantes();
     }    
 
@@ -54,13 +57,49 @@ public class FXMLGestionPracticantesController implements Initializable {
                 Parent tarjeta = loader.load();
                 
                 FXMLTarjetaPracticanteController controladorTarjeta = loader.getController();
-                controladorTarjeta.inicializarPracticante(practicante);
+                controladorTarjeta.inicializarPracticante(practicante, this);
                 
                 vboxPracticantes.getChildren().add(tarjeta);
             }
         } catch (SQLException | IOException e) {
             System.err.println("Error al cargar los practicantes: " + e.getMessage());
             mostrarAlerta("Error", "No se pudieron cargar los practicantes.", Alert.AlertType.ERROR);
+        }
+    }
+
+    public void seleccionarPracticante(FXMLTarjetaPracticanteController controladorTarjeta) {
+        if (tarjetaSeleccionada != null) {
+            tarjetaSeleccionada.establecerEstiloSeleccionado(false);
+        }
+        
+        this.tarjetaSeleccionada = controladorTarjeta;
+        this.practicanteSeleccionado = controladorTarjeta.getPracticante();
+        tarjetaSeleccionada.establecerEstiloSeleccionado(true);
+        btnValidarDocumentos.setDisable(false);
+    }
+
+    @FXML
+    private void handleValidarDocumentos(ActionEvent event) {
+        if (practicanteSeleccionado == null) {
+            mostrarAlerta("Atención", "Por favor seleccione un practicante.", Alert.AlertType.WARNING);
+            return;
+        }
+        
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/FXMLValidarDocumentos.fxml"));
+            Parent root = loader.load();
+            
+            FXMLValidarDocumentosController controlador = loader.getController();
+            controlador.inicializarDatos(practicanteSeleccionado);
+            
+            Scene scene = new Scene(root);
+            Stage stage = (Stage) btnValidarDocumentos.getScene().getWindow();
+            stage.setScene(scene);
+            stage.setTitle("Validar Documentos - " + practicanteSeleccionado.getNombres());
+            stage.show();
+        } catch (IOException e) {
+            System.err.println("Error al abrir la vista de validación de documentos: " + e.getMessage());
+            mostrarAlerta("Error", "No se pudo abrir la ventana de validación.", Alert.AlertType.ERROR);
         }
     }
 

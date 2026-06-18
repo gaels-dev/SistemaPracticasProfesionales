@@ -1,6 +1,7 @@
 package mx.uv.sistemapracticasprofesionales.servicio;
 
 import java.sql.SQLException;
+import java.util.List;
 import mx.uv.sistemapracticasprofesionales.modelo.dao.EntregaDocumentoDAO;
 import mx.uv.sistemapracticasprofesionales.modelo.pojo.EntregaDocumento;
 
@@ -24,6 +25,18 @@ public class EntregaDocumentoService {
 
     public byte[] obtenerArchivo(int idEntrega) throws SQLException {
         return entregaDAO.obtenerArchivoEntregado(idEntrega);
+    }
+
+    public List<EntregaDocumento> obtenerDocumentosPendientesPorPracticante(int idPracticante) throws SQLException {
+        return entregaDAO.obtenerDocumentosPendientesPorPracticante(idPracticante);
+    }
+
+    public boolean validarDocumento(int idEntregaDocumento) throws SQLException {
+        return entregaDAO.validarDocumento(idEntregaDocumento);
+    }
+
+    public boolean rechazarDocumento(int idEntregaDocumento, String motivoRechazo) throws SQLException {
+        return entregaDAO.rechazarDocumento(idEntregaDocumento, motivoRechazo);
     }
 
     public boolean cancelarEntrega(int idPracticante, int idSolicitud) throws SQLException {

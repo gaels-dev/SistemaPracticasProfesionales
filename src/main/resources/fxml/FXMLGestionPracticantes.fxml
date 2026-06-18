@@ -67,7 +67,7 @@
                   <HBox alignment="CENTER" spacing="50.0">
                      <children>
                         <Button fx:id="btnRegistrarPracticante" mnemonicParsing="false" onAction="#handleRegistrarPracticante" prefHeight="45.0" prefWidth="200.0" style="-fx-background-color: #222222; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5; -fx-cursor: hand;" text="Registrar practicante" />
-                        <Button fx:id="btnValidarDocumentos" mnemonicParsing="false" prefHeight="45.0" prefWidth="200.0" style="-fx-background-color: #222222; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5; -fx-cursor: hand;" text="Validar documentos del practicante" wrapText="true" />
+                        <Button fx:id="btnValidarDocumentos" mnemonicParsing="false" onAction="#handleValidarDocumentos" prefHeight="45.0" prefWidth="200.0" style="-fx-background-color: #222222; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5; -fx-cursor: hand;" text="Validar documentos del practicante" wrapText="true" />
                      </children>
                   </HBox>
                </children>
