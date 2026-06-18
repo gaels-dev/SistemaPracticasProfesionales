@@ -20,8 +20,10 @@ import mx.uv.sistemapracticasprofesionales.servicio.EntregaDocumentoService;
 
 /**
  * FXML Controller class
- *
- * @author oscar
+ * Autor:           Oscar Turrent Peña
+ * Fecha creación:  17/06/2026
+ * Descripción:     Controlador para la vista de tarjeta de un documento
+ *                  para mostrar la información de este
  */
 public class FXMLTarjetaDocumentoController implements Initializable {
 
@@ -40,9 +42,6 @@ public class FXMLTarjetaDocumentoController implements Initializable {
     private FXMLValidarDocumentosController controladorPadre;
     private final EntregaDocumentoService entregaService = new EntregaDocumentoService();
 
-    /**
-     * Initializes the controller class.
-     */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         btnVer.setOnAction(this::handleDescargar);
@@ -93,12 +92,24 @@ public class FXMLTarjetaDocumentoController implements Initializable {
             if (archivo != null) {
                 FileChooser fileChooser = new FileChooser();
                 fileChooser.setTitle("Guardar Documento");
-                fileChooser.setInitialFileName(entrega.getNombreArchivo() != null ? entrega.getNombreArchivo() : "documento");
-                
-                if (entrega.getExtension() != null) {
-                    fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Archivos " + entrega.getExtension(), "*" + entrega.getExtension()));
+
+                String extension = entrega.getExtension() != null ? entrega.getExtension() : "";
+                String nombreArchivo = entrega.getNombreArchivo();
+
+                if (nombreArchivo == null || nombreArchivo.isEmpty()) {
+                    nombreArchivo = "Documento_"
+                            + entrega.getSolicitudDocumento().getDocumento().getNombreDocumento()
+                            + (extension.isEmpty() ? "" : "." + extension);
                 }
-                
+
+                fileChooser.setInitialFileName(nombreArchivo);
+                if (!extension.isEmpty()) {
+                    fileChooser.getExtensionFilters().add(
+                            new FileChooser.ExtensionFilter(
+                                    "Archivo " + extension.toUpperCase(),
+                                    "*." + extension));
+                }
+
                 File destination = fileChooser.showSaveDialog(btnVer.getScene().getWindow());
                 if (destination != null) {
                     try (FileOutputStream fos = new FileOutputStream(destination)) {

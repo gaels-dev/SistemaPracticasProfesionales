@@ -89,10 +89,23 @@ public class FXMLSubirDocumentosController implements Initializable {
             
             if (entregaExistente != null) {
                 btnSubirReporte.setDisable(true);
-                btnCancelarEntrega.setVisible(true);
-                btnCancelarEntrega.setManaged(true);
-                txtRutaArchivo.setText("Archivo ya entregado (" 
+                
+                // Si ya fue evaluado, no permitir cancelar entrega
+                if (entregaExistente.getEstado().equals("Evaluado")) {
+                    btnCancelarEntrega.setVisible(false);
+                    btnCancelarEntrega.setManaged(false);
+                    String msg = "Actividad Evaluada";
+                    if (entregaExistente.getCalificacion() != null) {
+                        msg += " - Calificación: " + entregaExistente.getCalificacion();
+                    }
+                    txtRutaArchivo.setText(msg);
+                } else {
+                    btnCancelarEntrega.setVisible(true);
+                    btnCancelarEntrega.setManaged(true);
+                    txtRutaArchivo.setText("Archivo ya entregado (" 
                         + entregaExistente.getEstado() + ")");
+                }
+                
                 vboxDropArea.setDisable(true);
                 FXMLLoader loader = new FXMLLoader(
                         getClass().getResource(

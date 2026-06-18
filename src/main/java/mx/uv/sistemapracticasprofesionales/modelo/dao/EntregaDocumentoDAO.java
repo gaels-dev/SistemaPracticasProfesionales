@@ -20,7 +20,8 @@ public class EntregaDocumentoDAO {
 
     public EntregaDocumento buscarEntregaPorPracticanteYSolicitud(int idPracticante, int idSolicitud) throws SQLException {
         EntregaDocumento entrega = null;
-        String consulta = "SELECT id_entrega_documento, archivo_entregado, fecha_entrega, estado, extension, nombre_archivo " +
+        String consulta = "SELECT id_entrega_documento, archivo_entregado, fecha_entrega, estado, " +
+                          "extension, nombre_archivo, calificacion, retroalimentacion " +
                           "FROM entrega_documento WHERE id_practicante = ? AND id_solicitud_documento = ?";
         
         try (Connection conexion = ConexionBD.abrirConexion();
@@ -38,6 +39,11 @@ public class EntregaDocumentoDAO {
                     entrega.setEstado(rs.getString("estado"));
                     entrega.setExtension(rs.getString("extension"));
                     entrega.setNombreArchivo(rs.getString("nombre_archivo"));
+                    entrega.setCalificacion(rs.getDouble("calificacion"));
+                    if (rs.wasNull()) {
+                        entrega.setCalificacion(null);
+                    }
+                    entrega.setRetroalimentacion(rs.getString("retroalimentacion"));
                 }
             }
         }

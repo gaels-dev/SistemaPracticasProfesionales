@@ -28,8 +28,9 @@ import mx.uv.sistemapracticasprofesionales.utilidades.HasheoContrasenia;
 
 /**
  * FXML Controller class
- *
- * @author gaels
+ * Autor:           Gael Samei Amores Rivas
+ * Fecha creación:  17/06/2026
+ * Descripción:     Controlador para la vista de registrar un practicante
  */
 public class FXMLRegistrarPracticanteController implements Initializable {
 
@@ -60,9 +61,6 @@ public class FXMLRegistrarPracticanteController implements Initializable {
 
     private final PracticanteService practicanteService = new PracticanteService();
 
-    /**
-     * Initializes the controller class.
-     */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         cmbSexo.setItems(FXCollections.observableArrayList("Masculino", "Femenino", "Otro"));

@@ -14,6 +14,15 @@
             <Insets left="30.0" right="30.0" />
          </padding>
          <children>
+            <Button fx:id="btnVolver" mnemonicParsing="false" onAction="#handleVolver" style="-fx-background-color: transparent; -fx-cursor: hand;">
+               <graphic>
+                  <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../imagenes/imgRegresar.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
             <VBox alignment="CENTER_LEFT">
                <children>
                   <Label text="Menú Profesor">
@@ -36,14 +45,22 @@
                         <ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true" />
                      </graphic>
                   </Button>
-                  <Button fx:id="btnPerfil" mnemonicParsing="false" style="-fx-background-color: transparent; -fx-cursor: hand;" text="Perfil">
+                  <Button fx:id="btnPerfil" mnemonicParsing="false" style="-fx-background-color: transparent; -fx-cursor: hand;">
                      <graphic>
-                        <ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true" />
+                        <ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../imagenes/imgPerfil.png" />
+                           </image>
+                        </ImageView>
                      </graphic>
                   </Button>
-                  <Button fx:id="btnCerrarSesion" mnemonicParsing="false" onAction="#handleCerrarSesion" style="-fx-background-color: transparent; -fx-cursor: hand;" text="Salir">
+                  <Button fx:id="btnCerrarSesion" mnemonicParsing="false" onAction="#handleCerrarSesion" style="-fx-background-color: transparent; -fx-cursor: hand;">
                      <graphic>
-                        <ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true" />
+                        <ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../imagenes/imgCerrarSesion.png" />
+                           </image>
+                        </ImageView>
                      </graphic>
                   </Button>
                </children>

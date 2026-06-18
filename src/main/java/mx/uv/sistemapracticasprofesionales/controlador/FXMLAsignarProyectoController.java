@@ -26,8 +26,9 @@ import mx.uv.sistemapracticasprofesionales.servicio.ProyectoService;
 
 /**
  * FXML Controller class
- *
- * @author oscar
+ * Autor:           Oscar Turrent Peña
+ * Fecha creación:  17/06/2026
+ * Descripción:     Controlador para la vista de asignación de proyecto
  */
 public class FXMLAsignarProyectoController implements Initializable {
 
@@ -52,9 +53,6 @@ public class FXMLAsignarProyectoController implements Initializable {
     private javafx.scene.layout.HBox tarjetaPracticanteSeleccionada = null;
     private VBox tarjetaProyectoSeleccionada = null;
 
-    /**
-     * Initializes the controller class.
-     */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         btnRegistrar.setDisable(true);

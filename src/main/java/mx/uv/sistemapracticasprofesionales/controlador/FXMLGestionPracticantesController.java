@@ -20,8 +20,9 @@ import mx.uv.sistemapracticasprofesionales.servicio.PracticanteService;
 
 /**
  * FXML Controller class
- *
- * @author oscar
+ * Autor:           Oscar Turrent Peña
+ * Fecha creación:  17/06/2026
+ * Descripción:     Controlador para la vista de getstión de practicantes
  */
 public class FXMLGestionPracticantesController implements Initializable {
 

@@ -25,8 +25,9 @@ import mx.uv.sistemapracticasprofesionales.servicio.EntregaDocumentoService;
 
 /**
  * FXML Controller class
- *
- * @author oscar
+ * Autor:           Gael Samei Amores Rivas
+ * Fecha creación:  17/06/2026
+ * Descripción:     Controlador para la vista de validacion de documentos
  */
 public class FXMLValidarDocumentosController implements Initializable {
 
@@ -47,14 +48,10 @@ public class FXMLValidarDocumentosController implements Initializable {
     private final EntregaDocumentoService entregaService = new EntregaDocumentoService();
     private FXMLTarjetaDocumentoController tarjetaSeleccionada;
 
-    /**
-     * Initializes the controller class.
-     */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         btnValidarDocumento.setDisable(true);
         btnRechazarDocumento.setDisable(true);
-        btnVolver.setOnAction(this::handleVolver);
     }    
 
     public void inicializarDatos(Practicante practicante) {
@@ -163,6 +160,7 @@ public class FXMLValidarDocumentosController implements Initializable {
         }
     }
 
+    @FXML
     private void handleVolver(ActionEvent event) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/FXMLGestionPracticantes.fxml"));

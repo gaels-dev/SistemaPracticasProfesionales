@@ -3,6 +3,7 @@
 <?import java.lang.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
@@ -13,10 +14,14 @@
             <Insets left="20.0" right="20.0" />
          </padding>
          <children>
-            <Button fx:id="btnVolver" mnemonicParsing="false" style="-fx-background-color: transparent; -fx-cursor: hand;" text="←">
-               <font>
-                  <Font name="System Bold" size="22.0" />
-               </font>
+            <Button fx:id="btnVolver" mnemonicParsing="false" onAction="#handleVolver" style="-fx-background-color: transparent; -fx-cursor: hand;">
+               <graphic>
+                  <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../imagenes/imgRegresar.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
             </Button>
             <VBox alignment="CENTER_LEFT">
                <children>

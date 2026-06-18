@@ -10,8 +10,10 @@ import mx.uv.sistemapracticasprofesionales.modelo.pojo.Proyecto;
 
 /**
  * FXML Controller class
- *
- * @author oscar
+ * Autor:           Gael Samei Amores Rivas
+ * Fecha creación:  17/06/2026
+ * Descripción:     Controlador para la vista de tarjeta de proyecto
+ *                  donde cargar la información de estos
  */
 public class FXMLTarjetaProyectoController implements Initializable {
 
@@ -32,12 +34,9 @@ public class FXMLTarjetaProyectoController implements Initializable {
 
     private Proyecto proyecto;
 
-    /**
-     * Initializes the controller class.
-     */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+
     }    
 
     public void inicializarProyecto(Proyecto proyecto) {

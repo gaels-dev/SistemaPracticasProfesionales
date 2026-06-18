@@ -20,6 +20,8 @@ import mx.uv.sistemapracticasprofesionales.utilidades.UtilidadesVistas;
 public class FXMLMenuProfesorEESeleccionadaController implements Initializable {
 
     @FXML
+    private Button btnVolver;
+    @FXML
     private Button btnNotificaciones;
     @FXML
     private Button btnPerfil;
@@ -49,6 +51,14 @@ public class FXMLMenuProfesorEESeleccionadaController implements Initializable {
         UtilidadesVistas.cargarVista(escenario, 
                 "/fxml/FXMLActividades.fxml", 
                 "Actividades - " + Sesion.getEeSeleccionada().getNombre());
+    }
+
+    @FXML
+    private void handleVolver(ActionEvent event) {
+        Stage escenario = (Stage) btnVolver.getScene().getWindow();
+        UtilidadesVistas.cargarVista(escenario, 
+                "/fxml/FXMLMenuProfesor.fxml", 
+                "Menú Principal - Profesor");
     }
 
     @FXML

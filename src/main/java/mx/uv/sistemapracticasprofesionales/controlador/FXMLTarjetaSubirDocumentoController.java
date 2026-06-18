@@ -30,6 +30,8 @@ public class FXMLTarjetaSubirDocumentoController implements Initializable {
     @FXML
     private Label lblEstado;
     @FXML
+    private Label lblCalificacion;
+    @FXML
     private Button btnDescargar;
     @FXML
     private Button btnSubir;
@@ -69,7 +71,18 @@ public class FXMLTarjetaSubirDocumentoController implements Initializable {
         this.esModoEntrega = true;
         lblNombreDocumento.setText(
                 solicitud.getDocumento().getNombreDocumento());
-        lblEstado.setText("Estado: Entregado");
+        
+        if (entrega.getEstado().equals("Evaluado")) {
+            lblEstado.setText("Estado: Evaluado");
+            lblEstado.setStyle("-fx-text-fill: #008000;");
+            if (entrega.getCalificacion() != null) {
+                lblCalificacion.setText("Calificación: " + entrega.getCalificacion());
+                lblCalificacion.setVisible(true);
+                lblCalificacion.setManaged(true);
+            }
+        } else {
+            lblEstado.setText("Estado: " + entrega.getEstado());
+        }
         
         btnSubir.setVisible(false);
         btnSubir.setManaged(false);

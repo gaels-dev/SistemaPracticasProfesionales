@@ -20,6 +20,11 @@
                   <Font size="13.0" />
                </font>
             </Label>
+            <Label fx:id="lblCalificacion" managed="false" text="Calificación: 0.0" textFill="#0066cc" visible="false">
+               <font>
+                  <Font name="System Bold" size="13.0" />
+               </font>
+            </Label>
          </children>
       </VBox>
       <HBox fx:id="hboxAcciones" alignment="CENTER" spacing="10.0">

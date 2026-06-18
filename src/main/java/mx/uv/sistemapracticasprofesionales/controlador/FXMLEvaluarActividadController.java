@@ -29,9 +29,10 @@ import mx.uv.sistemapracticasprofesionales.modelo.pojo.SolicitudDocumento;
 import mx.uv.sistemapracticasprofesionales.utilidades.UtilidadesVistas;
 
 /**
- * Autor: Oscar Turrent Peña Fecha creación: 17/06/2026 Descripción: Controlador
- * para la vista de evaluación de una actividad específica, permitiendo
- * seleccionar practicantes y ver entregas.
+ * Autor: Oscar Turrent Peña 
+ * Fecha creación: 17/06/2026 
+ * Descripción: Controlador para la vista de evaluación de una actividad 
+ * específica, permitiendo seleccionar practicantes y ver entregas.
  */
 public class FXMLEvaluarActividadController implements Initializable {
 
@@ -94,8 +95,8 @@ public class FXMLEvaluarActividadController implements Initializable {
 
     private void configurarVisibilidadDinamica() {
         cbPracticantes.getSelectionModel().selectedItemProperty().addListener(
-                (observable, oldValue, newValue) -> {
-                    boolean visible = (newValue != null);
+                (observable, valorAntiguo, nuevoValor) -> {
+                    boolean visible = (nuevoValor != null);
                     vboxDetallesReporte.setVisible(visible);
                     vboxDetallesReporte.setManaged(visible);
                 });
@@ -118,16 +119,29 @@ public class FXMLEvaluarActividadController implements Initializable {
         });
 
         cbPracticantes.getSelectionModel().selectedItemProperty().addListener(
-                (observable, oldValue, newValue) -> {
-            if (newValue != null) {
-                if (newValue.getIdEntregaDocumento() != null) {
-                    lblFechaEntrega.setText("Entregado: "
-                            + newValue.getFechaEntrega().toString());
+                (observable, valorAntiguo, nuevoValor) -> {
+            if (nuevoValor != null) {
+                if (nuevoValor.getIdEntregaDocumento() != null) {
+                    String infoEntrega = "Entregado: " 
+                            + nuevoValor.getFechaEntrega().toString();
+                    
+                    if (nuevoValor.getEstado().equals("Evaluado")) {
+                        btnCalificar.setText("Editar calificación");
+                        if (nuevoValor.getCalificacion() != null) {
+                            infoEntrega += " | Calificación: " 
+                                    + nuevoValor.getCalificacion();
+                        }
+                    } else {
+                        btnCalificar.setText("Calificar");
+                    }
+                    
+                    lblFechaEntrega.setText(infoEntrega);
                     btnDescargar.setDisable(false);
                     btnCalificar.setDisable(false);
                 } else {
                     lblFechaEntrega.setText(
                             "Aún no ha entregado este documento");
+                    btnCalificar.setText("Calificar");
                     btnDescargar.setDisable(true);
                     btnCalificar.setDisable(true);
                 }
@@ -156,16 +170,26 @@ public class FXMLEvaluarActividadController implements Initializable {
                     FileChooser selectorArchivo = new FileChooser();
                     selectorArchivo.setTitle("Guardar entrega");
 
+                    String extension = seleccionado.getExtension() != null
+                            ? seleccionado.getExtension() : "";
                     String nombreArchivo = seleccionado.getNombreArchivo();
+
                     if (nombreArchivo == null || nombreArchivo.isEmpty()) {
-                        nombreArchivo = "entrega_"
-                                + seleccionado.getPracticante().getMatricula();
-                        if (seleccionado.getExtension() != null) {
-                            nombreArchivo += seleccionado.getExtension();
-                        }
+                        nombreArchivo = "Entrega_"
+                                + actividad.getDocumento().getNombreDocumento()
+                                + "_" 
+                                + seleccionado.getPracticante().getMatricula()
+                                + (extension.isEmpty() ? "" : "." + extension);
                     }
 
                     selectorArchivo.setInitialFileName(nombreArchivo);
+                    if (!extension.isEmpty()) {
+                        selectorArchivo.getExtensionFilters().add(
+                                new FileChooser.ExtensionFilter(
+                                        "Archivo " + extension.toUpperCase(),
+                                        "*." + extension));
+                    }
+
                     File destino = selectorArchivo.showSaveDialog(
                             btnDescargar.getScene().getWindow());
                     if (destino != null) {
@@ -180,14 +204,14 @@ public class FXMLEvaluarActividadController implements Initializable {
                     }
                 } else {
                     UtilidadesVistas.mostrarAlerta(
-                            "Sin archivo", 
-                            "No se encontró el archivo de la entrega.", 
+                            "Sin archivo",
+                            "No se encontró el archivo de la entrega.",
                             Alert.AlertType.WARNING);
                 }
             } catch (SQLException | IOException e) {
                 UtilidadesVistas.mostrarAlerta(
-                        "Error", 
-                        "No se pudo descargar el archivo: " + e.getMessage(), 
+                        "Error",
+                        "No se pudo descargar el archivo: " + e.getMessage(),
                         Alert.AlertType.ERROR);
             }
         }
@@ -213,7 +237,14 @@ public class FXMLEvaluarActividadController implements Initializable {
                 ventanaModal.initOwner(btnCalificar.getScene().getWindow());
                 ventanaModal.showAndWait();
                 
+                int indiceSeleccionado = 
+                        cbPracticantes.getSelectionModel().getSelectedIndex();
                 cargarEntregas();
+                if (indiceSeleccionado >= 0 && 
+                        indiceSeleccionado < cbPracticantes.getItems().size()) {
+                    cbPracticantes.getSelectionModel().select(
+                            indiceSeleccionado);
+                }
             } catch (IOException e) {
                 UtilidadesVistas.mostrarAlerta(
                         "Error", 

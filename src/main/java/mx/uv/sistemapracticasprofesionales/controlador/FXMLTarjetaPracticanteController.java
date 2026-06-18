@@ -11,8 +11,10 @@ import mx.uv.sistemapracticasprofesionales.modelo.pojo.Practicante;
 
 /**
  * FXML Controller class
- *
- * @author oscar
+ * Autor:           Oscar Turrent Peña
+ * Fecha creación:  17/06/2026
+ * Descripción:     Controlador para la vista de tarjeta de practicante
+ *                  donde cargar su información
  */
 public class FXMLTarjetaPracticanteController implements Initializable {
 
