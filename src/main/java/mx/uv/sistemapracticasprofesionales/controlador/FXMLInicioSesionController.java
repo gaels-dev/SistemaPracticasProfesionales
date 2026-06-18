@@ -18,6 +18,8 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import mx.uv.sistemapracticasprofesionales.excepciones.ConexionException;
 import mx.uv.sistemapracticasprofesionales.excepciones.CredencialesInvalidasException;
+import mx.uv.sistemapracticasprofesionales.modelo.dao.PersonalAcademicoDAO;
+import mx.uv.sistemapracticasprofesionales.modelo.pojo.PersonalAcademico;
 import mx.uv.sistemapracticasprofesionales.modelo.pojo.Usuario;
 import mx.uv.sistemapracticasprofesionales.servicio.UsuarioService;
 import mx.uv.sistemapracticasprofesionales.utilidades.Sesion;
@@ -61,15 +63,27 @@ public class FXMLInicioSesionController implements Initializable {
         try {
             btnIniciarSesion.setDisable(true);
 
-            Usuario usuarioAutenticado = usuarioService.autenticar(username, contrasenia);
+            Usuario usuarioAutenticado = usuarioService.autenticar(username, 
+                    contrasenia);
             Sesion.setUsuario(usuarioAutenticado);
+
+            if (usuarioAutenticado.getTipoUsuario().getRol().equals("Profesor") 
+                || usuarioAutenticado.getTipoUsuario().getRol().equals(
+                        "Coordinador")) {
+                PersonalAcademicoDAO personalDAO = new PersonalAcademicoDAO();
+                PersonalAcademico personal = 
+                        personalDAO.obtenerPersonalAcademicoPorIdUsuario(
+                        usuarioAutenticado.getIdUsuario());
+                Sesion.setPersonalAcademico(personal);
+            }
 
             redireccionarPorRol(usuarioAutenticado);
 
         } catch (CredencialesInvalidasException e) {
             mostrarError("Usuario y/o contraseña incorrecta.");
         } catch (SQLException e) {
-            mostrarError("Error al procesar la información. Intente de nuevo más tarde.");
+            mostrarError("Error al procesar la información. "
+                    + "Intente de nuevo más tarde.");
         } catch (ConexionException e) {
             mostrarError("No se pudo conectar a la base de datos.");
         } catch (IOException e) {

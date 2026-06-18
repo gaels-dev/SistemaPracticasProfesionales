@@ -153,6 +153,30 @@ public class PersonalAcademicoDAO {
         return existe;
     }
 
+    public PersonalAcademico obtenerPersonalAcademicoPorIdUsuario(int idUsuario) throws SQLException {
+        PersonalAcademico personal = null;
+        String consulta = "SELECT pa.id_personal_academico, pa.no_personal, pa.nombres, pa.apellido_paterno, " +
+                          "pa.apellido_materno, pa.correo, pa.activo, " +
+                          "u.id_usuario, u.nombre, tu.id_tipo_usuario, tu.rol " +
+                          "FROM personal_academico pa " +
+                          "INNER JOIN usuario u ON pa.id_usuario = u.id_usuario " +
+                          "INNER JOIN tipo_usuario tu ON u.id_tipo_usuario = tu.id_tipo_usuario " +
+                          "WHERE pa.id_usuario = ?";
+        
+        try (Connection conexion = ConexionBD.abrirConexion();
+             PreparedStatement prepararSentencia = conexion.prepareStatement(consulta)) {
+            
+            prepararSentencia.setInt(1, idUsuario);
+            
+            try (ResultSet resultado = prepararSentencia.executeQuery()) {
+                if (resultado.next()) {
+                    personal = mapearPersonalAcademico(resultado);
+                }
+            }
+        }
+        return personal;
+    }
+
     private PersonalAcademico mapearPersonalAcademico(ResultSet resultado) throws SQLException {
         PersonalAcademico personal = new PersonalAcademico();
         personal.setIdPersonalAcademico(resultado.getInt("id_personal_academico"));

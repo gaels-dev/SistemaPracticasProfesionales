@@ -192,4 +192,82 @@ public class EntregaDocumentoDAO {
         }
         return rechazado;
     }
+
+    public boolean evaluarEntrega(EntregaDocumento entrega) throws SQLException {
+        boolean evaluado = false;
+        Connection conexion = null;
+        PreparedStatement prepararSentencia = null;
+        String consulta = "UPDATE entrega_documento SET calificacion = ?, retroalimentacion = ?, " +
+                          "estado = 'Evaluado', id_profesor_evaluador = ? WHERE id_entrega_documento = ?";
+        
+        try {
+            conexion = ConexionBD.abrirConexion();
+            prepararSentencia = conexion.prepareStatement(consulta);
+            prepararSentencia.setDouble(1, entrega.getCalificacion());
+            prepararSentencia.setString(2, entrega.getRetroalimentacion());
+            prepararSentencia.setInt(3, entrega.getProfesorEvaluador().getIdPersonalAcademico());
+            prepararSentencia.setInt(4, entrega.getIdEntregaDocumento());
+            evaluado = prepararSentencia.executeUpdate() > 0;
+        } finally {
+            if (prepararSentencia != null) {
+                prepararSentencia.close();
+            }
+            ConexionBD.cerrarConexion(conexion);
+        }
+        return evaluado;
+    }
+
+    public List<EntregaDocumento> obtenerEntregasPorSolicitud(int idSolicitud) throws SQLException {
+        List<EntregaDocumento> listaEntregas = new ArrayList<>();
+        Connection conexion = null;
+        PreparedStatement prepararSentencia = null;
+        ResultSet resultado = null;
+        String consulta = "SELECT p.id_practicante, p.nombres, p.apellido_paterno, p.apellido_materno, p.matricula, " +
+                          "ed.id_entrega_documento, ed.fecha_entrega, ed.estado, ed.calificacion, ed.retroalimentacion, " +
+                          "ed.nombre_archivo, ed.extension " +
+                          "FROM practicante p " +
+                          "INNER JOIN inscripcion_experiencia_educativa iee ON p.id_practicante = iee.id_practicante " +
+                          "INNER JOIN solicitud_documento sd ON iee.id_experiencia_educativa = sd.id_experiencia_educativa " +
+                          "LEFT JOIN entrega_documento ed ON p.id_practicante = ed.id_practicante AND ed.id_solicitud_documento = sd.id_solicitud_documento " +
+                          "WHERE sd.id_solicitud_documento = ?";
+        
+        try {
+            conexion = ConexionBD.abrirConexion();
+            prepararSentencia = conexion.prepareStatement(consulta);
+            prepararSentencia.setInt(1, idSolicitud);
+            resultado = prepararSentencia.executeQuery();
+            while (resultado.next()) {
+                EntregaDocumento entrega = new EntregaDocumento();
+                int idEntrega = resultado.getInt("id_entrega_documento");
+                if (!resultado.wasNull()) {
+                    entrega.setIdEntregaDocumento(idEntrega);
+                    entrega.setFechaEntrega(resultado.getDate("fecha_entrega"));
+                    entrega.setEstado(resultado.getString("estado"));
+                    entrega.setCalificacion(resultado.getDouble("calificacion"));
+                    entrega.setRetroalimentacion(resultado.getString("retroalimentacion"));
+                    entrega.setNombreArchivo(resultado.getString("nombre_archivo"));
+                    entrega.setExtension(resultado.getString("extension"));
+                }
+                
+                mx.uv.sistemapracticasprofesionales.modelo.pojo.Practicante practicante = new mx.uv.sistemapracticasprofesionales.modelo.pojo.Practicante();
+                practicante.setIdPracticante(resultado.getInt("id_practicante"));
+                practicante.setNombres(resultado.getString("nombres"));
+                practicante.setApellidoPaterno(resultado.getString("apellido_paterno"));
+                practicante.setApellidoMaterno(resultado.getString("apellido_materno"));
+                practicante.setMatricula(resultado.getString("matricula"));
+                
+                entrega.setPracticante(practicante);
+                listaEntregas.add(entrega);
+            }
+        } finally {
+            if (resultado != null) {
+                resultado.close();
+            }
+            if (prepararSentencia != null) {
+                prepararSentencia.close();
+            }
+            ConexionBD.cerrarConexion(conexion);
+        }
+        return listaEntregas;
+    }
 }

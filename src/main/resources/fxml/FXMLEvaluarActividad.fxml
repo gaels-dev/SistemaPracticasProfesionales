@@ -13,7 +13,7 @@
             <Insets left="20.0" right="20.0" />
          </padding>
          <children>
-            <Button fx:id="btnVolver" mnemonicParsing="false" style="-fx-background-color: transparent; -fx-cursor: hand;" text="←">
+            <Button fx:id="btnVolver" mnemonicParsing="false" onAction="#handleVolver" style="-fx-background-color: transparent; -fx-cursor: hand;" text="←">
                <font>
                   <Font name="System Bold" size="22.0" />
                </font>
@@ -70,12 +70,12 @@
                         <Region VBox.vgrow="ALWAYS" />
                         <HBox alignment="CENTER_RIGHT" spacing="20.0">
                            <children>
-                              <Button fx:id="btnDescargar" mnemonicParsing="false" prefHeight="40.0" prefWidth="130.0" style="-fx-background-color: white; -fx-border-color: #222222; -fx-border-radius: 5; -fx-cursor: hand;" text="Descargar">
+                              <Button fx:id="btnDescargar" mnemonicParsing="false" onAction="#handleDescargar" prefHeight="40.0" prefWidth="130.0" style="-fx-background-color: white; -fx-border-color: #222222; -fx-border-radius: 5; -fx-cursor: hand;" text="Descargar">
                                  <font>
                                     <Font name="System Bold" size="13.0" />
                                  </font>
                               </Button>
-                              <Button fx:id="btnCalificar" mnemonicParsing="false" prefHeight="40.0" prefWidth="130.0" style="-fx-background-color: white; -fx-border-color: #222222; -fx-border-radius: 5; -fx-cursor: hand;" text="Calificar">
+                              <Button fx:id="btnCalificar" mnemonicParsing="false" onAction="#handleCalificar" prefHeight="40.0" prefWidth="130.0" style="-fx-background-color: white; -fx-border-color: #222222; -fx-border-radius: 5; -fx-cursor: hand;" text="Calificar">
                                  <font>
                                     <Font name="System Bold" size="13.0" />
                                  </font>

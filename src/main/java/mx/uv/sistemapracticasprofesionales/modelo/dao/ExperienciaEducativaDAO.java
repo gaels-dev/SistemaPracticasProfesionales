@@ -52,10 +52,11 @@ public class ExperienciaEducativaDAO {
 
     public List<ExperienciaEducativa> obtenerExperienciasPorPeriodo(int idPeriodo) throws SQLException {
         List<ExperienciaEducativa> listaEE = new ArrayList<>();
-        String consulta = "SELECT ee.id_experiencia_educativa, ee.nombre, ee.horario, ee.seccion, ee.cupo_maximo, " +
-                          "p.id_periodo, p.nombre AS nombre_periodo, " +
-                          "pa.id_personal_academico, pa.nombres AS nombre_profesor, pa.apellido_paterno AS paterno_profesor " +
-                          "pa.apellido_materno AS materno_profesor FROM experiencia_educativa ee " +
+        String consulta = "SELECT ee.id_experiencia_educativa AS id_ee, ee.nombre AS nombre_ee, ee.horario AS horario_ee, " +
+                          "ee.seccion AS seccion_ee, ee.cupo_maximo AS cupo_ee, " +
+                          "p.id_periodo AS id_p, p.nombre AS nombre_p, " +
+                          "pa.id_personal_academico AS id_pa, pa.nombres AS nombre_pa, pa.apellido_paterno AS paterno_pa, " +
+                          "pa.apellido_materno AS materno_pa FROM experiencia_educativa ee " +
                           "INNER JOIN periodo p ON ee.id_periodo = p.id_periodo " +
                           "LEFT JOIN personal_academico pa ON ee.id_profesor = pa.id_personal_academico " +
                           "WHERE ee.id_periodo = ?";
@@ -116,26 +117,51 @@ public class ExperienciaEducativaDAO {
         return actualizado;
     }
 
+    public List<ExperienciaEducativa> obtenerExperienciasPorProfesor(int idProfesor) throws SQLException {
+        List<ExperienciaEducativa> listaEE = new ArrayList<>();
+        String consulta = "SELECT ee.id_experiencia_educativa AS id_ee, ee.nombre AS nombre_ee, ee.horario AS horario_ee, " +
+                          "ee.seccion AS seccion_ee, ee.cupo_maximo AS cupo_ee, " +
+                          "p.id_periodo AS id_p, p.nombre AS nombre_p, " +
+                          "pa.id_personal_academico AS id_pa, pa.nombres AS nombre_pa, pa.apellido_paterno AS paterno_pa, " +
+                          "pa.apellido_materno AS materno_pa FROM experiencia_educativa ee " +
+                          "INNER JOIN periodo p ON ee.id_periodo = p.id_periodo " +
+                          "LEFT JOIN personal_academico pa ON ee.id_profesor = pa.id_personal_academico " +
+                          "WHERE ee.id_profesor = ?";
+        
+        try (Connection conexion = ConexionBD.abrirConexion();
+             PreparedStatement prepararSentencia = conexion.prepareStatement(consulta)) {
+            
+            prepararSentencia.setInt(1, idProfesor);
+            
+            try (ResultSet resultado = prepararSentencia.executeQuery()) {
+                while (resultado.next()) {
+                    listaEE.add(mapearExperienciaEducativa(resultado));
+                }
+            }
+        }
+        return listaEE;
+    }
+
     private ExperienciaEducativa mapearExperienciaEducativa(ResultSet resultado) throws SQLException {
         ExperienciaEducativa ee = new ExperienciaEducativa();
-        ee.setIdExperienciaEducativa(resultado.getInt("id_experiencia_educativa"));
-        ee.setNombre(resultado.getString("nombre"));
-        ee.setHorario(resultado.getBytes("horario"));
-        ee.setSeccion(resultado.getString("seccion"));
-        ee.setCupoMaximo(resultado.getInt("cupo_maximo"));
+        ee.setIdExperienciaEducativa(resultado.getInt("id_ee"));
+        ee.setNombre(resultado.getString("nombre_ee"));
+        ee.setHorario(resultado.getBytes("horario_ee"));
+        ee.setSeccion(resultado.getString("seccion_ee"));
+        ee.setCupoMaximo(resultado.getInt("cupo_ee"));
         
         Periodo periodo = new Periodo();
-        periodo.setIdPeriodo(resultado.getInt("id_periodo"));
-        periodo.setNombre(resultado.getString("nombre_periodo"));
+        periodo.setIdPeriodo(resultado.getInt("id_p"));
+        periodo.setNombre(resultado.getString("nombre_p"));
         ee.setPeriodo(periodo);
         
-        int idProfesor = resultado.getInt("id_personal_academico");
+        int idProfesor = resultado.getInt("id_pa");
         if (!resultado.wasNull()) {
             PersonalAcademico profesor = new PersonalAcademico();
             profesor.setIdPersonalAcademico(idProfesor);
-            profesor.setNombres(resultado.getString("nombre_profesor"));
-            profesor.setApellidoPaterno(resultado.getString("paterno_profesor"));
-            profesor.setApellidoMaterno(resultado.getString("materno_profesor"));
+            profesor.setNombres(resultado.getString("nombre_pa"));
+            profesor.setApellidoPaterno(resultado.getString("paterno_pa"));
+            profesor.setApellidoMaterno(resultado.getString("materno_pa"));
             ee.setProfesor(profesor);
         }
         

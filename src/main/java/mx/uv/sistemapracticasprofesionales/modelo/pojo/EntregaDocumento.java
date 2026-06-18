@@ -20,6 +20,7 @@ public class EntregaDocumento {
     private String motivoRechazo;
     private String extension;
     private String nombreArchivo;
+    private PersonalAcademico profesorEvaluador;
 
     public EntregaDocumento() {
     }
@@ -37,7 +38,8 @@ public class EntregaDocumento {
     public EntregaDocumento(Integer idEntregaDocumento, Practicante practicante, 
             SolicitudDocumento solicitudDocumento, byte[] archivoEntregado, 
             Date fechaEntrega, Double calificacion, String estado, 
-            String retroalimentacion, String motivoRechazo, String nombreArchivo) {
+            String retroalimentacion, String motivoRechazo, String nombreArchivo,
+            PersonalAcademico profesorEvaluador) {
         this.idEntregaDocumento = idEntregaDocumento;
         this.practicante = practicante;
         this.solicitudDocumento = solicitudDocumento;
@@ -48,6 +50,7 @@ public class EntregaDocumento {
         this.retroalimentacion = retroalimentacion;
         this.motivoRechazo = motivoRechazo;
         this.nombreArchivo = nombreArchivo;
+        this.profesorEvaluador = profesorEvaluador;
     }
 
     public Integer getIdEntregaDocumento() {
@@ -136,6 +139,14 @@ public class EntregaDocumento {
 
     public void setNombreArchivo(String nombreArchivo) {
         this.nombreArchivo = nombreArchivo;
+    }
+
+    public PersonalAcademico getProfesorEvaluador() {
+        return profesorEvaluador;
+    }
+
+    public void setProfesorEvaluador(PersonalAcademico profesorEvaluador) {
+        this.profesorEvaluador = profesorEvaluador;
     }
 
 }

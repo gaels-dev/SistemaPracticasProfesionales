@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<VBox prefHeight="450.0" prefWidth="500.0" spacing="20.0" style="-fx-background-color: white; -fx-padding: 30;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="mx.uv.sistemapracticasprofesionales.controlador.FXMLEvaluarEntregaPracticanteController">
+   <children>
+      <Label text="Evaluar Entrega">
+         <font>
+            <Font name="System Bold" size="20.0" />
+         </font>
+      </Label>
+      <VBox spacing="5.0">
+         <children>
+            <Label text="Practicante:">
+               <font>
+                  <Font name="System Bold" size="13.0" />
+               </font>
+            </Label>
+            <Label fx:id="lblNombrePracticante" text="Nombre del practicante" />
+         </children>
+      </VBox>
+      <VBox spacing="10.0">
+         <children>
+            <Label text="Calificación (0-10):">
+               <font>
+                  <Font name="System Bold" size="13.0" />
+               </font>
+            </Label>
+            <TextField fx:id="txfCalificacion" prefHeight="35.0" prefWidth="100.0" promptText="Ej. 9.5" style="-fx-border-color: #CCCCCC; -fx-border-radius: 5; -fx-background-color: white;" />
+         </children>
+      </VBox>
+      <VBox spacing="10.0" VBox.vgrow="ALWAYS">
+         <children>
+            <Label text="Retroalimentación:">
+               <font>
+                  <Font name="System Bold" size="13.0" />
+               </font>
+            </Label>
+            <TextArea fx:id="txaRetroalimentacion" prefHeight="150.0" promptText="Ingrese sus observaciones aquí..." style="-fx-border-color: #CCCCCC; -fx-border-radius: 5;" wrapText="true" />
+         </children>
+      </VBox>
+      <HBox alignment="CENTER_RIGHT" spacing="15.0">
+         <children>
+            <Button fx:id="btnCancelar" mnemonicParsing="false" onAction="#handleCancelar" prefHeight="40.0" prefWidth="120.0" style="-fx-background-color: white; -fx-border-color: #222222; -fx-border-radius: 5; -fx-cursor: hand;" text="Cancelar" />
+            <Button fx:id="btnRegistrar" mnemonicParsing="false" onAction="#handleRegistrar" prefHeight="40.0" prefWidth="160.0" style="-fx-background-color: #222222; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5; -fx-cursor: hand;" text="Registrar calificación" />
+         </children>
+      </HBox>
+   </children>
+</VBox>
