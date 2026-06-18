@@ -67,6 +67,55 @@ public class FXMLRegistrarPracticanteController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         cmbSexo.setItems(FXCollections.observableArrayList("Masculino", "Femenino", "Otro"));
         configurarDatePicker();
+        configurarMatriculaYUsuario();
+    }
+
+    private void configurarMatriculaYUsuario() {
+        String anioActual = String.valueOf(LocalDate.now().getYear()).substring(2);
+        String prefijo = "S" + anioActual;
+        tfMatricula.setText(prefijo);
+
+        tfMatricula.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue == null) return;
+            if (!newValue.startsWith(prefijo)) {
+                tfMatricula.setText(prefijo);
+            } else if (newValue.length() > 9) {
+                tfMatricula.setText(oldValue);
+            } else {
+                String resto = newValue.substring(prefijo.length());
+                if (!resto.matches("\\d*")) {
+                    tfMatricula.setText(oldValue);
+                } else {
+                    tfNombreUsuario.setText(tfMatricula.getText());
+                }
+            }
+        });
+
+        tfNombres.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue != null && newValue.length() > 50) {
+                tfNombres.setText(oldValue);
+            }
+        });
+
+        tfApellidoPaterno.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue != null && newValue.length() > 40) {
+                tfApellidoPaterno.setText(oldValue);
+            }
+        });
+
+        tfApellidoMaterno.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue != null && newValue.length() > 40) {
+                tfApellidoMaterno.setText(oldValue);
+            }
+        });
+
+        tfCorreo.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue != null && newValue.length() > 200) {
+                tfCorreo.setText(oldValue);
+            }
+        });
+
+        tfNombreUsuario.setText(tfMatricula.getText());
     }
 
     private void configurarDatePicker() {
@@ -98,14 +147,14 @@ public class FXMLRegistrarPracticanteController implements Initializable {
 
     @FXML
     private void handleRegistrar(ActionEvent event) {
-        String errores = validarCampos();
+        Practicante practicante = recolectarDatos();
+        String errores = practicanteService.validarPracticante(practicante);
+        
         if (!errores.isEmpty()) {
             mostrarAlerta("Datos inválidos o incompletos", "Por favor corrija lo siguiente:\n" + errores, Alert.AlertType.WARNING);
             return;
         }
 
-        Practicante practicante = recolectarDatos();
-        
         try {
             if (practicanteService.existePracticanteActivoPorMatricula(practicante.getMatricula())) {
                 mostrarAlerta("Practicante registrado", "El practicante ya se encuentra registrado y activo.", Alert.AlertType.WARNING);
@@ -136,7 +185,7 @@ public class FXMLRegistrarPracticanteController implements Initializable {
         } catch (SQLException e) {
             String mensajeError = "Error de conexión con la base de datos.";
             if (e.getMessage() != null) {
-                if (e.getMessage().contains("nombre de usuario") || e.getMessage().contains("tipo de usuario")) {
+                if (e.getMessage().contains("nombre de usuario") || e.getMessage().contains("tipo de usuario") || e.getMessage().contains("ya está en uso")) {
                     mensajeError = e.getMessage();
                 } else if (e.getMessage().contains("Duplicate entry")) {
                     mensajeError = "El correo electrónico ya se encuentra en uso por otra persona.";
@@ -144,58 +193,6 @@ public class FXMLRegistrarPracticanteController implements Initializable {
             }
             mostrarAlerta("Error", mensajeError, Alert.AlertType.ERROR);
         }
-    }
-
-    private String validarCampos() {
-        StringBuilder errores = new StringBuilder();
-
-        if (tfMatricula.getText().trim().isEmpty()) {
-            errores.append("- La matrícula es obligatoria.\n");
-        } else if (tfMatricula.getText().trim().length() != 9) {
-            errores.append("- La matrícula debe tener exactamente 9 caracteres.\n");
-        }
-
-        if (tfNombres.getText().trim().isEmpty()) {
-            errores.append("- El nombre es obligatorio.\n");
-        } else if (tfNombres.getText().trim().length() > 45) {
-            errores.append("- El nombre no puede exceder los 45 caracteres.\n");
-        }
-
-        if (tfApellidoPaterno.getText().trim().isEmpty()) {
-            errores.append("- El apellido paterno es obligatorio.\n");
-        } else if (tfApellidoPaterno.getText().trim().length() > 45) {
-            errores.append("- El apellido paterno no puede exceder los 45 caracteres.\n");
-        }
-        
-        if (tfApellidoMaterno.getText().trim().length() > 45) {
-            errores.append("- El apellido materno no puede exceder los 45 caracteres.\n");
-        }
-
-        if (tfCorreo.getText().trim().isEmpty()) {
-            errores.append("- El correo electrónico es obligatorio.\n");
-        } else if (tfCorreo.getText().trim().length() > 45) {
-            errores.append("- El correo electrónico no puede exceder los 45 caracteres.\n");
-        }
-
-        if (cmbSexo.getValue() == null) {
-            errores.append("- Debe seleccionar un sexo.\n");
-        }
-
-        if (dpFechaNacimiento.getValue() == null) {
-            errores.append("- La fecha de nacimiento es obligatoria.\n");
-        }
-
-        if (tfNombreUsuario.getText().trim().isEmpty()) {
-            errores.append("- El nombre de usuario es obligatorio.\n");
-        } else if (tfNombreUsuario.getText().trim().length() > 45) {
-            errores.append("- El nombre de usuario no puede exceder los 45 caracteres.\n");
-        }
-
-        if (pfContrasena.getText().trim().isEmpty()) {
-            errores.append("- La contraseña es obligatoria.\n");
-        }
-
-        return errores.toString();
     }
 
     private Practicante recolectarDatos() {
@@ -210,7 +207,8 @@ public class FXMLRegistrarPracticanteController implements Initializable {
 
         Usuario usuario = new Usuario();
         usuario.setNombre(tfNombreUsuario.getText().trim());
-        usuario.setContrasenia(HasheoContrasenia.hashPassword(pfContrasena.getText().trim()));
+        String pass = pfContrasena.getText().trim();
+        usuario.setContrasenia(pass.isEmpty() ? "" : HasheoContrasenia.hashPassword(pass));
         practicante.setUsuario(usuario);
 
         return practicante;

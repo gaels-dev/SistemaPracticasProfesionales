@@ -97,7 +97,7 @@
                         </Label>
                         
                         <Label text="Nombre de usuario" />
-                        <TextField fx:id="tfNombreUsuario" promptText="Ej. JAnt2026" />
+                        <TextField fx:id="tfNombreUsuario" editable="false" promptText="Matrícula" />
 
                         <Label text="Contraseña del usuario" />
                         <PasswordField fx:id="pfContrasena" promptText="Ej. 12345" />

@@ -63,8 +63,7 @@ public class FXMLInicioSesionController implements Initializable {
         try {
             btnIniciarSesion.setDisable(true);
 
-            Usuario usuarioAutenticado = usuarioService.autenticar(username, 
-                    contrasenia);
+            Usuario usuarioAutenticado = usuarioService.autenticar(username, contrasenia);
             Sesion.setUsuario(usuarioAutenticado);
 
             if (usuarioAutenticado.getTipoUsuario().getRol().equals("Profesor") 
@@ -82,8 +81,7 @@ public class FXMLInicioSesionController implements Initializable {
         } catch (CredencialesInvalidasException e) {
             mostrarError("Usuario y/o contraseña incorrecta.");
         } catch (SQLException e) {
-            mostrarError("Error al procesar la información. "
-                    + "Intente de nuevo más tarde.");
+            mostrarError("Error al procesar la información. Intente de nuevo más tarde.");
         } catch (ConexionException e) {
             mostrarError("No se pudo conectar a la base de datos.");
         } catch (IOException e) {
