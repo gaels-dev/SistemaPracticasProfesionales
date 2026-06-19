@@ -42,10 +42,8 @@ public class FXMLMenuPracticanteController implements Initializable {
     @FXML
     private Label lblNombre;
 
-    private final PracticanteService practicanteService = 
-            new PracticanteService();
-    private final NotificacionService notificacionService = 
-            new NotificacionService();
+    private final PracticanteService practicanteService = new PracticanteService();
+    private final NotificacionService notificacionService = new NotificacionService();
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -68,11 +66,11 @@ public class FXMLMenuPracticanteController implements Initializable {
                         UtilidadesVistas.mostrarAlerta("Nueva notificacion", 
                                 notificacion.getMensaje(), 
                                 Alert.AlertType.INFORMATION);
+                        notificacionService.eliminarNotificacion(notificacion.getIdNotificacion());
                     }
                 }
             } catch (SQLException e) {
-                System.err.println("Error al obtener notificaciones: " 
-                        + e.getMessage());
+                System.err.println("Error al obtener notificaciones: " + e.getMessage());
             }
         });
     }

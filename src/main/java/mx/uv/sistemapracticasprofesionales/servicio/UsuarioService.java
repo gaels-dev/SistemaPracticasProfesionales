@@ -29,7 +29,7 @@ public class UsuarioService {
             throw new CredencialesInvalidasException("No se encontró usuario activo con nombre: " + nombre);
         }
  
-        String hashIngresado = HasheoContrasenia.hashPassword(contrasenia);
+        String hashIngresado = HasheoContrasenia.hashContrasenia(contrasenia);
         if (!hashIngresado.equals(usuario.getContrasenia())) {
             throw new CredencialesInvalidasException("Contraseña incorrecta para usuario: " + nombre);
         }

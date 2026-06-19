@@ -10,6 +10,9 @@ import javafx.stage.Stage;
 
 /**
  * JavaFX App
+ * Autor: Gael Samei Amores Rivas
+ * Fecha creación: 12/06/2026
+ * Descripción: Clase principal desde donde se inicia toda la aplicación
  */
 public class App extends Application {
 

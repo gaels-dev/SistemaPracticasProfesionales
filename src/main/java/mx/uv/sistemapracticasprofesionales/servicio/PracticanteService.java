@@ -85,6 +85,10 @@ public class PracticanteService {
             errores.append("- Debe seleccionar un sexo.\n");
         }
 
+        if (practicante.getFechaNacimiento() == null) {
+            errores.append("- La fecha de nacimiento es obligatoria.\n");
+        }
+
         if (practicante.getUsuario() == null || practicante.getUsuario().getNombre() == null || practicante.getUsuario().getNombre().trim().isEmpty()) {
             errores.append("- El nombre de usuario es obligatorio.\n");
         }

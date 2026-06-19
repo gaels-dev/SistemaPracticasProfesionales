@@ -1,5 +1,7 @@
 package mx.uv.sistemapracticasprofesionales.modelo.pojo;
 
+import java.util.Date;
+
 /**
  * Autor:           Oscar Turrent Peña
  * Fecha creación:  14/06/2026
@@ -14,6 +16,7 @@ public class Practicante {
     private String apellidoMaterno;
     private String correo;
     private String sexo;
+    private Date fechaNacimiento;
     private Boolean activo;
     private Usuario usuario;
 
@@ -22,7 +25,7 @@ public class Practicante {
 
     public Practicante(Integer idPracticante, String matricula, String nombres, 
             String apellidoPaterno, String apellidoMaterno, String correo, 
-            String sexo, Boolean activo, Usuario usuario) {
+            String sexo, Date fechaNacimiento, Boolean activo, Usuario usuario) {
         this.idPracticante = idPracticante;
         this.matricula = matricula;
         this.nombres = nombres;
@@ -30,6 +33,7 @@ public class Practicante {
         this.apellidoMaterno = apellidoMaterno;
         this.correo = correo;
         this.sexo = sexo;
+        this.fechaNacimiento = fechaNacimiento;
         this.activo = activo;
         this.usuario = usuario;
     }
@@ -88,6 +92,14 @@ public class Practicante {
 
     public void setSexo(String sexo) {
         this.sexo = sexo;
+    }
+
+    public Date getFechaNacimiento() {
+        return fechaNacimiento;
+    }
+
+    public void setFechaNacimiento(Date fechaNacimiento) {
+        this.fechaNacimiento = fechaNacimiento;
     }
 
     public Boolean getActivo() {

@@ -39,8 +39,7 @@ public class ProyectoService {
         return proyectoDAO.obtenerProyectosActivosConCupo();
     }
 
-    public boolean registrarProyecto(Proyecto proyecto) throws SQLException {
-        // Checar posibilidad de hacerlo con transacción     
+    public boolean registrarProyecto(Proyecto proyecto) throws SQLException { 
         ResponsableTecnico rt = proyecto.getResponsableTecnico();
         ResponsableTecnico existente = responsableDAO.buscarResponsablePorCorreo(rt.getCorreo());
         

@@ -28,9 +28,9 @@ import mx.uv.sistemapracticasprofesionales.utilidades.HasheoContrasenia;
 
 /**
  * FXML Controller class
- * Autor:           Gael Samei Amores Rivas
+ * Autor: Gael Samei Amores Rivas
  * Fecha creación:  17/06/2026
- * Descripción:     Controlador para la vista de registrar un practicante
+ * Descripción: Controlador para la vista de registrar un practicante
  */
 public class FXMLRegistrarPracticanteController implements Initializable {
 
@@ -201,12 +201,15 @@ public class FXMLRegistrarPracticanteController implements Initializable {
         practicante.setApellidoMaterno(tfApellidoMaterno.getText().trim());
         practicante.setCorreo(tfCorreo.getText().trim());
         practicante.setSexo(cmbSexo.getValue());
+        if (dpFechaNacimiento.getValue() != null) {
+            practicante.setFechaNacimiento(java.sql.Date.valueOf(dpFechaNacimiento.getValue()));
+        }
         practicante.setActivo(true);
 
         Usuario usuario = new Usuario();
         usuario.setNombre(tfNombreUsuario.getText().trim());
         String pass = pfContrasena.getText().trim();
-        usuario.setContrasenia(pass.isEmpty() ? "" : HasheoContrasenia.hashPassword(pass));
+        usuario.setContrasenia(pass.isEmpty() ? "" : HasheoContrasenia.hashContrasenia(pass));
         practicante.setUsuario(usuario);
 
         return practicante;

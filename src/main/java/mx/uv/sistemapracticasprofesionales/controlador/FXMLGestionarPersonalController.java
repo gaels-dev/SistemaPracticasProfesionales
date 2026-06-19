@@ -181,7 +181,7 @@ public class FXMLGestionarPersonalController implements Initializable {
 
         Usuario usuario = new Usuario();
         usuario.setNombre(txtCorreo.getText().trim());
-        usuario.setContrasenia(HasheoContrasenia.hashPassword(
+        usuario.setContrasenia(HasheoContrasenia.hashContrasenia(
                 txtContrasenia.getText().trim()));
         usuario.setActivo(true);
 

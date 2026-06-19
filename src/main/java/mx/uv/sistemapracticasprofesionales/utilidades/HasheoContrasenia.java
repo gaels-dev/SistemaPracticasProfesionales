@@ -13,7 +13,7 @@ public class HasheoContrasenia {
 
     private static final String SALT = "ClaveSecretaProyecto2026";
 
-    public static String hashPassword(String password) {
+    public static String hashContrasenia(String password) {
         try {
             String saltedPassword = password + SALT;
 

@@ -98,7 +98,8 @@ public class ProyectoDAO {
         ResultSet resultado = null;
         String consulta = "SELECT p.id_proyecto, p.nombre, p.descripcion, p.cupo_maximo, p.activo, " +
                           "ov.id_organizacion_vinculada, ov.razon_social, " +
-                          "rt.id_responsable_tecnico, rt.nombres AS nombres_rt, rt.apellido_paterno AS paterno_rt " +
+                          "rt.id_responsable_tecnico, rt.nombres AS nombres_rt, rt.apellido_paterno AS paterno_rt, " +
+                          "(SELECT COUNT(*) FROM asignacion_proyecto ap WHERE ap.id_proyecto = p.id_proyecto AND ap.estado = 'Activa') AS asignados " +
                           "FROM proyecto p " +
                           "INNER JOIN organizacion_vinculada ov ON p.id_organizacion_vinculada = ov.id_organizacion_vinculada " +
                           "INNER JOIN responsable_tecnico rt ON p.id_responsable_tecnico = rt.id_responsable_tecnico " +
@@ -115,7 +116,9 @@ public class ProyectoDAO {
             prepararSentencia = conexion.prepareStatement(consulta);
             resultado = prepararSentencia.executeQuery();
             while (resultado.next()) {
-                listaProyectos.add(mapearProyecto(resultado));
+                Proyecto proyecto = mapearProyecto(resultado);
+                proyecto.setPracticantesAsignados(resultado.getInt("asignados"));
+                listaProyectos.add(proyecto);
             }
         } finally {
             if (resultado != null) {

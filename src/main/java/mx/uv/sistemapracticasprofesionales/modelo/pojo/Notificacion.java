@@ -5,7 +5,7 @@ import java.sql.Timestamp;
 /**
  * Autor: Gael Samei Amores Rivas
  * Fecha creación: 15/06/2026
- * Descripción: POJO que representa una notificación para un practicante.
+ * Descripción: Clase que representa una notificación para un practicante.
  */
 public class Notificacion {
     private int idNotificacion;

@@ -24,7 +24,7 @@ public class PracticanteDAO {
         PreparedStatement prepararSentencia = null;
         ResultSet resultado = null;
         String consulta = "SELECT p.id_practicante, p.matricula, p.nombres, p.apellido_paterno, " +
-                          "p.apellido_materno, p.correo, p.sexo, p.activo, " +
+                          "p.apellido_materno, p.correo, p.sexo, p.fecha_nacimiento, p.activo, " +
                           "u.id_usuario, u.nombre " +
                           "FROM practicante p " +
                           "INNER JOIN usuario u ON p.id_usuario = u.id_usuario " +
@@ -57,7 +57,7 @@ public class PracticanteDAO {
         PreparedStatement prepararSentencia = null;
         ResultSet resultado = null;
         String consulta = "SELECT p.id_practicante, p.matricula, p.nombres, p.apellido_paterno, " +
-                          "p.apellido_materno, p.correo, p.sexo, p.activo, " +
+                          "p.apellido_materno, p.correo, p.sexo, p.fecha_nacimiento, p.activo, " +
                           "u.id_usuario, u.nombre " +
                           "FROM practicante p " +
                           "INNER JOIN usuario u ON p.id_usuario = u.id_usuario " +
@@ -117,8 +117,8 @@ public class PracticanteDAO {
         PreparedStatement prepararSentencia = null;
         ResultSet resultado = null;
         String consulta = "INSERT INTO practicante (matricula, nombres, apellido_paterno, " +
-                          "apellido_materno, correo, sexo, id_usuario, activo) " +
-                          "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+                          "apellido_materno, correo, sexo, fecha_nacimiento, id_usuario, activo) " +
+                          "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
         
         try {
             conexion = ConexionBD.abrirConexion();
@@ -129,8 +129,9 @@ public class PracticanteDAO {
             prepararSentencia.setString(4, practicante.getApellidoMaterno());
             prepararSentencia.setString(5, practicante.getCorreo());
             prepararSentencia.setString(6, practicante.getSexo());
-            prepararSentencia.setInt(7, practicante.getUsuario().getIdUsuario());
-            prepararSentencia.setBoolean(8, practicante.getActivo());
+            prepararSentencia.setDate(7, practicante.getFechaNacimiento() != null ? new java.sql.Date(practicante.getFechaNacimiento().getTime()) : null);
+            prepararSentencia.setInt(8, practicante.getUsuario().getIdUsuario());
+            prepararSentencia.setBoolean(9, practicante.getActivo());
             
             prepararSentencia.executeUpdate();
             resultado = prepararSentencia.getGeneratedKeys();
@@ -154,8 +155,8 @@ public class PracticanteDAO {
         PreparedStatement prepararSentencia = null;
         ResultSet resultado = null;
         String consulta = "INSERT INTO practicante (matricula, nombres, apellido_paterno, " +
-                          "apellido_materno, correo, sexo, id_usuario, activo) " +
-                          "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+                          "apellido_materno, correo, sexo, fecha_nacimiento, id_usuario, activo) " +
+                          "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
         
         try {
             prepararSentencia = conexion.prepareStatement(consulta, Statement.RETURN_GENERATED_KEYS);
@@ -165,8 +166,9 @@ public class PracticanteDAO {
             prepararSentencia.setString(4, practicante.getApellidoMaterno());
             prepararSentencia.setString(5, practicante.getCorreo());
             prepararSentencia.setString(6, practicante.getSexo());
-            prepararSentencia.setInt(7, practicante.getUsuario().getIdUsuario());
-            prepararSentencia.setBoolean(8, practicante.getActivo());
+            prepararSentencia.setDate(7, practicante.getFechaNacimiento() != null ? new java.sql.Date(practicante.getFechaNacimiento().getTime()) : null);
+            prepararSentencia.setInt(8, practicante.getUsuario().getIdUsuario());
+            prepararSentencia.setBoolean(9, practicante.getActivo());
             
             prepararSentencia.executeUpdate();
             resultado = prepararSentencia.getGeneratedKeys();
@@ -213,7 +215,7 @@ public class PracticanteDAO {
         // NOTA: Temporalmente esta consulta trae a todos los practicantes activos,
         // ya que la lógica de "Inscripción a Experiencia Educativa" aún no está implementada en los datos de la BD
         String consulta = "SELECT p.id_practicante, p.matricula, p.nombres, p.apellido_paterno, " +
-                          "p.apellido_materno, p.correo, p.sexo, p.activo, " +
+                          "p.apellido_materno, p.correo, p.sexo, p.fecha_nacimiento, p.activo, " +
                           "u.id_usuario, u.nombre " +
                           "FROM practicante p " +
                           "INNER JOIN usuario u ON p.id_usuario = u.id_usuario " +
@@ -248,7 +250,7 @@ public class PracticanteDAO {
         // NOTA: Esta consulta está modificada para evitar verificar la tabla de inscripciones
         // ya que esa lógica de esta sección aún no está.
         String consulta = "SELECT p.id_practicante, p.matricula, p.nombres, p.apellido_paterno, " +
-                          "p.apellido_materno, p.correo, p.sexo, p.activo, " +
+                          "p.apellido_materno, p.correo, p.sexo, p.fecha_nacimiento, p.activo, " +
                           "u.id_usuario, u.nombre " +
                           "FROM practicante p " +
                           "INNER JOIN usuario u ON p.id_usuario = u.id_usuario " +
@@ -310,7 +312,7 @@ public class PracticanteDAO {
         Connection conexion = null;
         PreparedStatement prepararSentencia = null;
         String consulta = "UPDATE practicante SET matricula = ?, nombres = ?, apellido_paterno = ?, " +
-                          "apellido_materno = ?, correo = ?, sexo = ?, activo = ? " +
+                          "apellido_materno = ?, correo = ?, sexo = ?, fecha_nacimiento = ?, activo = ? " +
                           "WHERE id_practicante = ?";
         
         try {
@@ -322,8 +324,9 @@ public class PracticanteDAO {
             prepararSentencia.setString(4, practicante.getApellidoMaterno());
             prepararSentencia.setString(5, practicante.getCorreo());
             prepararSentencia.setString(6, practicante.getSexo());
-            prepararSentencia.setBoolean(7, practicante.getActivo());
-            prepararSentencia.setInt(8, practicante.getIdPracticante());
+            prepararSentencia.setDate(7, practicante.getFechaNacimiento() != null ? new java.sql.Date(practicante.getFechaNacimiento().getTime()) : null);
+            prepararSentencia.setBoolean(8, practicante.getActivo());
+            prepararSentencia.setInt(9, practicante.getIdPracticante());
             
             actualizado = prepararSentencia.executeUpdate() > 0;
         } finally {
@@ -344,6 +347,7 @@ public class PracticanteDAO {
         practicante.setApellidoMaterno(resultado.getString("apellido_materno"));
         practicante.setCorreo(resultado.getString("correo"));
         practicante.setSexo(resultado.getString("sexo"));
+        practicante.setFechaNacimiento(resultado.getDate("fecha_nacimiento"));
         practicante.setActivo(resultado.getBoolean("activo"));
         
         Usuario usuario = new Usuario();
