@@ -88,7 +88,7 @@ public class FXMLEvaluarActividadController implements Initializable {
         } catch (SQLException e) {
             UtilidadesVistas.mostrarAlerta(
                     "Error de BD",
-                    "No se pudieron cargar las entregas: " + e.getMessage(),
+                    "No se pudieron cargar las entregas",
                     Alert.AlertType.ERROR);
         }
     }

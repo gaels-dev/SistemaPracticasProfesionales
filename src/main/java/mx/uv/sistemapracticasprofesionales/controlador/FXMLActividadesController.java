@@ -13,9 +13,9 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import mx.uv.sistemapracticasprofesionales.modelo.dao.SolicitudDocumentoDAO;
 import mx.uv.sistemapracticasprofesionales.modelo.pojo.ExperienciaEducativa;
 import mx.uv.sistemapracticasprofesionales.modelo.pojo.SolicitudDocumento;
+import mx.uv.sistemapracticasprofesionales.servicio.SolicitudDocumentoService;
 import mx.uv.sistemapracticasprofesionales.utilidades.Sesion;
 import mx.uv.sistemapracticasprofesionales.utilidades.UtilidadesVistas;
 
@@ -35,6 +35,8 @@ public class FXMLActividadesController implements Initializable {
     private Button btnAgregarActividad;
 
     private ExperienciaEducativa eeSeleccionada;
+    private final SolicitudDocumentoService solicitudService = 
+            new SolicitudDocumentoService();
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -46,10 +48,9 @@ public class FXMLActividadesController implements Initializable {
 
     private void cargarActividades() {
         vboxActividades.getChildren().clear();
-        SolicitudDocumentoDAO dao = new SolicitudDocumentoDAO();
         try {
             List<SolicitudDocumento> listaActividades = 
-                    dao.obtenerSolicitudesPorExperiencia(
+                    solicitudService.obtenerActividadesPorExperiencia(
                             eeSeleccionada.getIdExperienciaEducativa());
             if (listaActividades.isEmpty()) {
                 UtilidadesVistas.mostrarAlerta(
@@ -66,7 +67,7 @@ public class FXMLActividadesController implements Initializable {
         } catch (SQLException e) {
             UtilidadesVistas.mostrarAlerta(
                     "Error de BD", 
-                    "No se pudieron cargar las actividades: " + e.getMessage(), 
+                    "No se pudieron cargar las actividades", 
                     Alert.AlertType.ERROR);
         }
     }

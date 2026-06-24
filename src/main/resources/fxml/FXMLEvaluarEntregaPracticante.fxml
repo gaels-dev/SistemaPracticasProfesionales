@@ -20,6 +20,7 @@
                   <Font name="System Bold" size="13.0" />
                </font>
             </Label>
+            <Label fx:id="lblFechaLimite" text="Entrega fuera de la fecha límite" textFill="#ff1616" />
             <Label fx:id="lblNombrePracticante" text="Nombre del practicante" />
          </children>
       </VBox>
@@ -40,7 +41,7 @@
                   <Font name="System Bold" size="13.0" />
                </font>
             </Label>
-            <TextArea fx:id="txaRetroalimentacion" prefHeight="150.0" promptText="Ingrese sus observaciones aquí..." style="-fx-border-color: #CCCCCC; -fx-border-radius: 5;" wrapText="true" />
+            <TextArea fx:id="txaRetroalimentacion" prefHeight="150.0" promptText="Ingrese sus observaciones aquí... (maximo 200 caracteres)" style="-fx-border-color: #CCCCCC; -fx-border-radius: 5;" wrapText="true" />
          </children>
       </VBox>
       <HBox alignment="CENTER_RIGHT" spacing="15.0">

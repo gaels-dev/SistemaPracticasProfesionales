@@ -25,7 +25,7 @@
             </Button>
             <VBox alignment="CENTER_LEFT">
                <children>
-                  <Label text="Subida de reportes">
+                  <Label fx:id="lblTitulo" text="Subida de reportes">
                      <font>
                         <Font name="System Bold" size="22.0" />
                      </font>

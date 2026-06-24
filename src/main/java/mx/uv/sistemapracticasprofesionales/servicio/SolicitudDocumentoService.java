@@ -44,4 +44,20 @@ public class SolicitudDocumentoService {
         
         return listaFiltrada;
     }
+    
+    public List<SolicitudDocumento> obtenerActividadesPorExperiencia(
+            int idExperiencia) throws SQLException {
+        List<SolicitudDocumento> listaFiltrada = new ArrayList<>();
+        List<SolicitudDocumento> todasLasSolicitudes = 
+                solicitudDAO.obtenerSolicitudesPorExperiencia(idExperiencia);
+        for (SolicitudDocumento solicitud : todasLasSolicitudes) {
+            if (solicitud.getDocumento().getTipoDocumento().equals("Reporte")) {
+                listaFiltrada.add(solicitud);
+            } else if (solicitud.getDocumento().getTipoDocumento().equals("Evidencia")) {
+                listaFiltrada.add(solicitud);
+            }
+        }
+        
+        return listaFiltrada;
+    }
 }

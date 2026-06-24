@@ -14,6 +14,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import mx.uv.sistemapracticasprofesionales.modelo.pojo.Practicante;
@@ -41,6 +42,8 @@ public class FXMLSeleccionarDocumentoController implements Initializable {
     private final PracticanteService practicanteService = 
             new PracticanteService();
     private String[] tiposPermitidos;
+    @FXML
+    private Label lblTitulo;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -50,8 +53,10 @@ public class FXMLSeleccionarDocumentoController implements Initializable {
             
             if (titulo.contains("Documentos")) {
                 tiposPermitidos = new String[]{"Administrativo"};
+                lblTitulo.setText("Subida de documentos");
             } else {
                 tiposPermitidos = new String[]{"Reporte", "Evidencia"};
+                lblTitulo.setText("Subida de reportes/evidencias");
             }
             cargarSolicitudes();
         });

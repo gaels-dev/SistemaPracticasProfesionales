@@ -62,6 +62,8 @@ public class FXMLSubirDocumentosController implements Initializable {
     private final PracticanteService practicanteService = 
             new PracticanteService();
     private EntregaDocumento entregaExistente;
+    @FXML
+    private Label lblTitulo;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -70,6 +72,11 @@ public class FXMLSubirDocumentosController implements Initializable {
 
     public void inicializarContexto(SolicitudDocumento solicitud) {
         this.solicitud = solicitud;
+        if (solicitud.getDocumento().getTipoDocumento().equals("Administrativo")) {
+            lblTitulo.setText("Subida de documentos");
+        } else {
+            lblTitulo.setText("Subida de reportes/evidencias");
+        }
         if (lblMiEntrega != null) {
             lblMiEntrega.setText("Mi Entrega: " 
                     + solicitud.getDocumento().getNombreDocumento());
@@ -90,7 +97,6 @@ public class FXMLSubirDocumentosController implements Initializable {
             if (entregaExistente != null) {
                 btnSubirReporte.setDisable(true);
                 
-                // Si ya fue evaluado, no permitir cancelar entrega
                 if (entregaExistente.getEstado().equals("Evaluado")) {
                     btnCancelarEntrega.setVisible(false);
                     btnCancelarEntrega.setManaged(false);
@@ -99,6 +105,16 @@ public class FXMLSubirDocumentosController implements Initializable {
                         msg += " - Calificación: " + entregaExistente.getCalificacion();
                     }
                     txtRutaArchivo.setText(msg);
+                } else if (entregaExistente.getEstado().equals("Validado")) {
+                    btnCancelarEntrega.setVisible(false);
+                    btnCancelarEntrega.setManaged(false);
+                    txtRutaArchivo.setText("Documento Validado");
+                } else if (entregaExistente.getEstado().equals("Rechazado")) {
+                    btnCancelarEntrega.setVisible(true);
+                    btnCancelarEntrega.setManaged(true);
+                    txtRutaArchivo.setText(
+                            "Documento rechazado, por favor, cancele la entrega y "
+                            + "suba otro documento");
                 } else {
                     btnCancelarEntrega.setVisible(true);
                     btnCancelarEntrega.setManaged(true);
@@ -249,7 +265,6 @@ public class FXMLSubirDocumentosController implements Initializable {
                 tituloRegreso);
     }
     
-    @FXML
     private void handleCancelar(ActionEvent event) {
         archivoSeleccionado = null;
         txtRutaArchivo.clear();

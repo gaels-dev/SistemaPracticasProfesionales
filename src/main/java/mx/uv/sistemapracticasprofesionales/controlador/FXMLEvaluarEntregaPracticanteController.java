@@ -37,6 +37,8 @@ public class FXMLEvaluarEntregaPracticanteController implements Initializable {
     private Button btnRegistrar;
 
     private EntregaDocumento entrega;
+    @FXML
+    private Label lblFechaLimite;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -52,6 +54,14 @@ public class FXMLEvaluarEntregaPracticanteController implements Initializable {
         }
         if (entrega.getRetroalimentacion() != null) {
             txaRetroalimentacion.setText(entrega.getRetroalimentacion());
+        }
+        if (entrega.getFechaEntrega().after(
+                entrega.getSolicitudDocumento().getFechaLimite())) {
+            lblFechaLimite.setVisible(true);
+            lblFechaLimite.setManaged(true);
+        } else {
+            lblFechaLimite.setVisible(false);
+            lblFechaLimite.setManaged(false);
         }
     }
 
@@ -76,6 +86,12 @@ public class FXMLEvaluarEntregaPracticanteController implements Initializable {
             UtilidadesVistas.mostrarAlerta(
                     "Campos vacíos", 
                     "Por favor, ingrese la calificación y las observaciones.", 
+                    Alert.AlertType.WARNING);
+            return false;
+        } else if (retroalimentacion.length() > 200) {
+            UtilidadesVistas.mostrarAlerta(
+                    "Retroalimentacion muy larga", 
+                    "Excedió el límite de caracteres en la retroalimentacion (200)", 
                     Alert.AlertType.WARNING);
             return false;
         }

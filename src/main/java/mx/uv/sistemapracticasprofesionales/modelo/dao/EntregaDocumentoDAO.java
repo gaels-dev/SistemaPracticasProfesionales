@@ -232,7 +232,8 @@ public class EntregaDocumentoDAO {
         ResultSet resultado = null;
         String consulta = "SELECT p.id_practicante, p.nombres, p.apellido_paterno, p.apellido_materno, p.matricula, " +
                           "ed.id_entrega_documento, ed.fecha_entrega, ed.estado, ed.calificacion, ed.retroalimentacion, " +
-                          "ed.nombre_archivo, ed.extension " +
+                          "ed.nombre_archivo, ed.extension, " + 
+                          "sd.fecha_limite " +
                           "FROM practicante p " +
                           "INNER JOIN inscripcion_experiencia_educativa iee ON p.id_practicante = iee.id_practicante " +
                           "INNER JOIN solicitud_documento sd ON iee.id_experiencia_educativa = sd.id_experiencia_educativa " +
@@ -265,6 +266,13 @@ public class EntregaDocumentoDAO {
                 practicante.setMatricula(resultado.getString("matricula"));
                 
                 entrega.setPracticante(practicante);
+                
+                SolicitudDocumento solicitud = new SolicitudDocumento();
+                solicitud.setSolicitudDocumento(idSolicitud);
+                solicitud.setFechaLimite(resultado.getDate("fecha_limite"));
+
+                entrega.setSolicitudDocumento(solicitud);
+                
                 listaEntregas.add(entrega);
             }
         } finally {
