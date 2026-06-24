@@ -67,28 +67,30 @@ public class FXMLTarjetaPersonalController implements Initializable {
 
     @FXML
     private void handleActivar(ActionEvent event) {
-        Alert alertaConfirmacion = new Alert(Alert.AlertType.CONFIRMATION);
-        alertaConfirmacion.setTitle("Confirmar activación");
-        alertaConfirmacion.setHeaderText("Activar coordinador");
-        alertaConfirmacion.setContentText("Al activar este coordinador se desactivará"
-                + " al coordinador activo actualmente. ¿Deseas continuar?");
+        if (personal.getUsuario().getTipoUsuario().getRol().equals("Coordinador")) {
+            Alert alertaConfirmacion = new Alert(Alert.AlertType.CONFIRMATION);
+            alertaConfirmacion.setTitle("Confirmar activación");
+            alertaConfirmacion.setHeaderText("Activar coordinador");
+            alertaConfirmacion.setContentText("Al activar este coordinador se desactivará"
+                    + " al coordinador activo actualmente. ¿Deseas continuar?");
         
-        Optional<ButtonType> resultado = alertaConfirmacion.showAndWait();
+            Optional<ButtonType> resultado = alertaConfirmacion.showAndWait();
         
-        if (resultado.get() == ButtonType.OK) {
-            try {
-                if (personalService.activarCoordinador(personal)) {
-                    UtilidadesVistas.mostrarAlerta("Activación exitosa", 
-                            "El nuevo coordinador fue activado de manera exitosa", 
-                            Alert.AlertType.INFORMATION);
-                    if (controllerPadre != null) {
-                        controllerPadre.recargarVista();
+            if (resultado.get() == ButtonType.OK) {
+                try {
+                    if (personalService.activarCoordinador(personal)) {
+                        UtilidadesVistas.mostrarAlerta("Activación exitosa", 
+                                "El nuevo coordinador fue activado de manera exitosa", 
+                                Alert.AlertType.INFORMATION);
+                        if (controllerPadre != null) {
+                            controllerPadre.recargarVista();
+                        }
                     }
+                } catch (SQLException e) {
+                    UtilidadesVistas.mostrarAlerta("Error", 
+                            "Error al activar al " + personal.getUsuario().getTipoUsuario().getRol(),
+                            Alert.AlertType.INFORMATION);
                 }
-            } catch (SQLException e) {
-                UtilidadesVistas.mostrarAlerta("Error", 
-                        "Error al activar al " + personal.getUsuario().getTipoUsuario().getRol(),
-                        Alert.AlertType.INFORMATION);
             }
         }
     }
