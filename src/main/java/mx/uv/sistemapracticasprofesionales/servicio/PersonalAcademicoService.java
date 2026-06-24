@@ -29,11 +29,42 @@ public class PersonalAcademicoService {
     public boolean existePersonalPorNumeroYRol(String noPersonal, String rol) throws SQLException {
         return personalAcademicoDAO.existePersonalPorNumeroYRol(noPersonal, rol);
     }
+    
+    public String validarFormato(PersonalAcademico personal) {
+        StringBuilder errores = new StringBuilder();
+        
+        validarNombre(personal.getNombres(), "Nombre", errores);
+        validarNombre(personal.getApellidoPaterno(), "Apellido paterno", errores);
+        validarNombre(personal.getApellidoMaterno(), "Apellido materno", errores);
+        
+        if (!personal.getCorreo().matches("^[\\w.-]+@uv\\.mx$")) {
+            errores.append("- El correo electrónico debe pertenecer al "
+                    + "dominio @uv.mx\n");
+        }
+        if (!personal.getNoPersonal().matches("NP\\d{4}")) {
+            errores.append("- El numero de personal debe empezar con \"NP\""
+                    + " seguido de 4 digitos.\n");
+        }
+        
+        return errores.toString();
+    }
+    
+    private void validarNombre(String texto, String nombreCampo, 
+            StringBuilder errores) {
+        if (texto.length() < 3) {
+            errores.append("- ").append(nombreCampo).append(
+                    " debe tener al menos 3 letras.\n");
+        } else if (!texto.matches("^[a-zA-ZáéíóúÁÉÍÓÚñÑ ]+$")) {
+            errores.append("- ").append(nombreCampo)
+                .append(" solo debe contener letras y espacios.\n");
+        } else if (texto.toLowerCase().matches(".*(.)\\1{2,}.*")) {
+            errores.append("- ").append(nombreCampo)
+                .append(" no puede tener un mismo carácter repetido 3 o más "
+                        + "veces consecutivas.\n");
+        }
+    }
 
     public boolean registrarPersonal(PersonalAcademico personal, String rol) throws SQLException {
-        if (usuarioDAO.existeUsuarioPorNombre(personal.getUsuario().getNombre())) {
-            throw new SQLException("El nombre de usuario ingresado ya está en uso.");
-        }
 
         TipoUsuario tipoUsuario = tipoUsuarioDAO.buscarTipoUsuarioPorRol(rol);
         if (tipoUsuario == null) {
@@ -83,5 +114,44 @@ public class PersonalAcademicoService {
                 }
             }
         }
+    }
+    
+    public Boolean activarPersonalAcademico(PersonalAcademico personal) throws SQLException {
+        int idPersonal = (int) personal.getIdPersonalAcademico();
+        personalAcademicoDAO.activarPersonalAcademico(idPersonal);
+        int idUsuario = (int) personal.getUsuario().getIdUsuario();
+        usuarioDAO.activarUsuario(idUsuario);
+        
+        return true;
+    }
+    
+    public Boolean desactivarPersonalAcademico(PersonalAcademico personal) throws SQLException {
+        int idPersonal = (int) personal.getIdPersonalAcademico();
+        personalAcademicoDAO.darDeBajaPersonalAcademico(idPersonal);
+        int idUsuario = (int) personal.getUsuario().getIdUsuario();
+        usuarioDAO.desactivarUsuario(idUsuario);
+        
+        return true;
+    }
+    
+    public boolean activarCoordinador(PersonalAcademico coordinador) throws SQLException {
+        PersonalAcademico coordinadorActual = personalAcademicoDAO.obtenerCoordinadorActivo();
+        Boolean activado = activarPersonalAcademico(coordinador);
+        if (activado == null) {
+            throw new SQLException("Error al activar al coordinador, intentelo más tarde");
+        }
+        
+        if (activado) {
+            coordinador.setActivo(true);
+            coordinador.getUsuario().setActivo(true);
+            
+            if (coordinadorActual != null) {
+                desactivarPersonalAcademico(coordinadorActual);
+            }
+        } else {
+            activado = false;
+        }
+        
+        return activado;
     }
 }

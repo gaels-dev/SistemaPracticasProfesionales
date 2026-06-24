@@ -67,6 +67,10 @@ public class FXMLGestionPersonalController implements Initializable {
             cargarPersonal();
         });
     }
+    
+    public void recargarVista() {
+        cargarPersonal();
+    }
 
     private void configurarVista(String titulo, String subtitulo, 
             String listaTitulo, String textoBotonAgregar) {
@@ -90,6 +94,7 @@ public class FXMLGestionPersonalController implements Initializable {
                 FXMLTarjetaPersonalController 
                         controladorTarjeta = cargador.getController();
                 controladorTarjeta.inicializarPersonal(personal);
+                controladorTarjeta.setControllerPadre(this);
                 
                 vboxPersonal.getChildren().add(tarjeta);
             }

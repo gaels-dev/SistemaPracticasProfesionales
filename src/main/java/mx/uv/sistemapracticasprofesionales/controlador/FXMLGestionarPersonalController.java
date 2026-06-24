@@ -73,16 +73,13 @@ public class FXMLGestionarPersonalController implements Initializable {
 
     @FXML
     private void handleGuardar(ActionEvent event) {
-        String errores = validarCampos();
-        if (errores.isEmpty()) {
-            PersonalAcademico personal = recolectarDatos();
+        PersonalAcademico personal = recolectarDatos();
+        if (validarCampos(personal)) {
             try {
                 if (personalService.existePersonalPorNumeroYRol(
                         personal.getNoPersonal(), rolActual)) {
-                    UtilidadesVistas.mostrarAlerta("Número de Personal "
-                            + "Duplicado", 
-                            "Ya existe un " + rolActual + 
-                                    " con el mismo número de personal.", 
+                    UtilidadesVistas.mostrarAlerta("Número de Personal Duplicado", 
+                            "Ya existe un " + rolActual + " con el mismo número de personal.", 
                             Alert.AlertType.WARNING);
                     return;
                 }
@@ -101,7 +98,7 @@ public class FXMLGestionarPersonalController implements Initializable {
             } catch (SQLException e) {
                 String mensajeError = e.getMessage();
                 if (mensajeError != null && mensajeError.contains("Duplicate entry")) {
-                    if (mensajeError.contains("uq_personal_correo")) {
+                    if (mensajeError.contains("correo_unico")) {
                         mensajeError = "El correo electrónico ya se encuentra registrado.";
                     } else if (mensajeError.contains("uq_personal_no_personal")) {
                         mensajeError = "El número de personal ya se encuentra registrado.";
@@ -110,59 +107,54 @@ public class FXMLGestionarPersonalController implements Initializable {
                 UtilidadesVistas.mostrarAlerta("Error", mensajeError, 
                         Alert.AlertType.ERROR);
             }
+        }
+    }
+    
+    private boolean validarCampos(PersonalAcademico personal) {
+        String camposVacios = validarCamposVacios();
+        if (camposVacios.isEmpty()) {
+            String errores = personalService.validarFormato(personal);
+            if (txtContrasenia.getText().length() < 5) {
+                errores += "-La contraseña debe tener al menos 5 caracteres.\n";
+            }
+            if (errores.isEmpty()) {
+                return true;
+            } else {
+                UtilidadesVistas.mostrarAlerta("Formato de datos invalido", 
+                        errores, 
+                        Alert.AlertType.WARNING);
+            }
         } else {
-            UtilidadesVistas.mostrarAlerta("Campos Inválidos", errores, 
+            UtilidadesVistas.mostrarAlerta("Campos Vacíos", camposVacios, 
                     Alert.AlertType.WARNING);
         }
+        return false;
     }
 
-    private String validarCampos() {
-        StringBuilder errores = new StringBuilder();
-
-        validarNombre(limpiarTexto(txtNombres.getText()), "Nombre(s)", errores);
-        validarNombre(limpiarTexto(txtApellidoPaterno.getText()), 
-                "Apellido Paterno", errores);
-        validarNombre(limpiarTexto(txtApellidoMaterno.getText()), 
-                "Apellido Materno", errores);
-
-        if (txtNumPersonal.getText().trim().isEmpty()) {
-            errores.append("- Número de personal es obligatorio.\n");
+    private String validarCamposVacios() {
+        StringBuilder camposVacios = new StringBuilder();
+        
+        if (txtNombres.getText().trim().isEmpty()) {
+            camposVacios.append("- Nombres es obligatorio.\n");
         }
-
+        if (txtApellidoPaterno.getText().trim().isEmpty()) {
+            camposVacios.append("- Apellido paterno es obligatorio.\n");
+        }
+        if (txtApellidoMaterno.getText().trim().isEmpty()) {
+            camposVacios.append("- Apellido materno es obligatorio.\n");
+        }
+        if (txtNumPersonal.getText().trim().isEmpty()) {
+            camposVacios.append("- Número de personal es obligatorio.\n");
+        }
         String correo = txtCorreo.getText().trim();
         if (correo.isEmpty()) {
-            errores.append("- Correo electrónico es obligatorio.\n");
-        } else if (!correo.matches("^[\\w.-]+@uv\\.mx$")) {
-            errores.append("- El correo electrónico debe pertenecer al "
-                    + "dominio @uv.mx\n");
-        }
-
+            camposVacios.append("- Correo electrónico es obligatorio.\n");
+        } 
         if (txtContrasenia.getText().trim().isEmpty()) {
-            errores.append("- Contraseña es obligatoria.\n");
-        } else if (txtContrasenia.getText().length() < 6) {
-            errores.append("- La contraseña debe tener al menos "
-                    + "6 caracteres.\n");
-        }
+            camposVacios.append("- Contraseña es obligatoria.\n");
+        } 
 
-        return errores.toString();
-    }
-
-    private void validarNombre(String texto, String nombreCampo, 
-            StringBuilder errores) {
-        if (texto.isEmpty()) {
-            errores.append("- ").append(nombreCampo).append(""
-                    + " es obligatorio.\n");
-        } else if (texto.length() < 3) {
-            errores.append("- ").append(nombreCampo).append(
-                    " debe tener al menos 3 letras.\n");
-        } else if (!texto.matches("^[a-zA-ZáéíóúÁÉÍÓÚñÑ ]+$")) {
-            errores.append("- ").append(nombreCampo)
-                .append(" solo debe contener letras y espacios.\n");
-        } else if (texto.toLowerCase().matches(".*(.)\\1{2,}.*")) {
-            errores.append("- ").append(nombreCampo)
-                .append(" no puede tener un mismo carácter repetido 3 o más "
-                        + "veces consecutivas.\n");
-        }
+        return camposVacios.toString();
     }
 
     private String limpiarTexto(String texto) {
@@ -177,13 +169,21 @@ public class FXMLGestionarPersonalController implements Initializable {
         personal.setApellidoPaterno(limpiarTexto(txtApellidoPaterno.getText()));
         personal.setApellidoMaterno(limpiarTexto(txtApellidoMaterno.getText()));
         personal.setCorreo(txtCorreo.getText().trim());
-        personal.setActivo(true);
+        if (rolActual.equals("Coordinador")) {
+            personal.setActivo(false);
+        } else {
+            personal.setActivo(true);
+        }
 
         Usuario usuario = new Usuario();
         usuario.setNombre(txtCorreo.getText().trim());
         usuario.setContrasenia(HasheoContrasenia.hashContrasenia(
                 txtContrasenia.getText().trim()));
-        usuario.setActivo(true);
+        if (rolActual.equals("Coordinador")) {
+            usuario.setActivo(false);
+        } else {
+            usuario.setActivo(true);
+        }
 
         personal.setUsuario(usuario);
 

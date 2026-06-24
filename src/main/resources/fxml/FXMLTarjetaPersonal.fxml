@@ -20,7 +20,8 @@
       <HBox spacing="10.0">
          <children>
             <Button fx:id="btnEditar" mnemonicParsing="false" prefWidth="90.0" style="-fx-background-color: white; -fx-border-color: #222222; -fx-border-radius: 5; -fx-cursor: hand;" text="Editar" />
-            <Button fx:id="btnEliminar" mnemonicParsing="false" prefWidth="90.0" style="-fx-background-color: #CC0000; -fx-text-fill: white; -fx-background-radius: 5; -fx-cursor: hand;" text="Eliminar" />
+            <Button fx:id="btnInactivar" mnemonicParsing="false" prefWidth="90.0" style="-fx-background-color: DA2B0C; -fx-text-fill: white; -fx-background-radius: 5; -fx-cursor: hand;" text="Inactivar" />
+            <Button fx:id="btnActivar" mnemonicParsing="false" onAction="#handleActivar" prefWidth="90.0" style="-fx-background-color: #1DD510; -fx-text-fill: white; -fx-background-radius: 5; -fx-cursor: hand;" text="Activar" />
          </children>
       </HBox>
    </children>

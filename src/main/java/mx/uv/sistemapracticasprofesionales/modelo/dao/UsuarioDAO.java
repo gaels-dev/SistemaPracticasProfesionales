@@ -213,7 +213,7 @@ public class UsuarioDAO {
         return idGenerado;
     }
 
-    public boolean reactivarUsuario(int idUsuario) throws SQLException {
+    public boolean activarUsuario(int idUsuario) throws SQLException {
         boolean reactivado = false;
         Connection conexion = null;
         PreparedStatement prepararSentencia = null;

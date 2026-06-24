@@ -80,7 +80,7 @@ public class PersonalAcademicoDAO {
                           "FROM personal_academico pa " +
                           "INNER JOIN usuario u ON pa.id_usuario = u.id_usuario " +
                           "INNER JOIN tipo_usuario tu ON u.id_tipo_usuario = tu.id_tipo_usuario " +
-                          "WHERE tu.rol = ? AND pa.activo = 1";
+                          "WHERE tu.rol = ?";
         
         try (Connection conexion = ConexionBD.abrirConexion();
              PreparedStatement prepararSentencia = conexion.prepareStatement(consulta)) {
@@ -116,6 +116,19 @@ public class PersonalAcademicoDAO {
             actualizado = prepararSentencia.executeUpdate() > 0;
         }
         return actualizado;
+    }
+    
+    public boolean activarPersonalAcademico(int idPersonal) throws SQLException {
+        boolean activado = false;
+        String consulta = "UPDATE personal_academico SET activo = 1 WHERE id_personal_academico = ?";
+        
+        try (Connection conexion = ConexionBD.abrirConexion();
+             PreparedStatement prepararSentencia = conexion.prepareStatement(consulta)) {
+            prepararSentencia.setInt(1, idPersonal);
+            
+            activado = prepararSentencia.executeUpdate() > 0;
+        }
+        return activado;
     }
 
     public boolean darDeBajaPersonalAcademico(int idPersonalAcademico) throws SQLException {
@@ -167,6 +180,28 @@ public class PersonalAcademicoDAO {
              PreparedStatement prepararSentencia = conexion.prepareStatement(consulta)) {
             
             prepararSentencia.setInt(1, idUsuario);
+            
+            try (ResultSet resultado = prepararSentencia.executeQuery()) {
+                if (resultado.next()) {
+                    personal = mapearPersonalAcademico(resultado);
+                }
+            }
+        }
+        return personal;
+    }
+    
+    public PersonalAcademico obtenerCoordinadorActivo() throws SQLException {
+        PersonalAcademico personal = null;
+        String consulta = "SELECT pa.id_personal_academico, pa.no_personal, pa.nombres, pa.apellido_paterno, " +
+                          "pa.apellido_materno, pa.correo, pa.activo, " +
+                          "u.id_usuario, u.nombre, tu.id_tipo_usuario, tu.rol " +
+                          "FROM personal_academico pa " +
+                          "INNER JOIN usuario u ON pa.id_usuario = u.id_usuario " +
+                          "INNER JOIN tipo_usuario tu ON u.id_tipo_usuario = tu.id_tipo_usuario " +
+                          "WHERE tu.id_tipo_usuario = 2 AND pa.activo = 1";
+        
+        try (Connection conexion = ConexionBD.abrirConexion();
+             PreparedStatement prepararSentencia = conexion.prepareStatement(consulta)) {
             
             try (ResultSet resultado = prepararSentencia.executeQuery()) {
                 if (resultado.next()) {
