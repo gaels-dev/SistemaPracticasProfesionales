@@ -54,6 +54,9 @@ public class PersonalAcademicoService {
         if (texto.length() < 3) {
             errores.append("- ").append(nombreCampo).append(
                     " debe tener al menos 3 letras.\n");
+        } else if (texto.length() > 50) {
+            errores.append("- ").append(nombreCampo).
+                    append(" excedió el límite de 50 caracteres.\n");
         } else if (!texto.matches("^[a-zA-ZáéíóúÁÉÍÓÚñÑ ]+$")) {
             errores.append("- ").append(nombreCampo)
                 .append(" solo debe contener letras y espacios.\n");

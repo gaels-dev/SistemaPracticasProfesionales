@@ -53,7 +53,8 @@ public class FXMLTarjetaSubirDocumentoController implements Initializable {
         lblNombreDocumento.setText(
                 solicitud.getDocumento().getNombreDocumento());
         lblEstado.setText(
-                "Tipo: " + solicitud.getDocumento().getTipoDocumento());
+                "Tipo: " + solicitud.getDocumento().getTipoDocumento() 
+                + " | Límite: " + solicitud.getFechaLimite());
         
         if (solicitud.getDocumento().getTipoDocumento().equalsIgnoreCase(
                 "Administrativo")) {
